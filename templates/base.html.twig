@@ -23,7 +23,7 @@
                 </div>
                 {% if app.user %}
                     <div class="mb-3">
-                        Bienvenu {{ app.user.pseudo }} !
+                        Bienvenue {{ app.user.pseudo }} !
                     </div>
                 {% endif %}
                 </div>
@@ -38,12 +38,12 @@
                             {% endif %}
 
                         {% if app.user %}
-                            <li><a href="{{ path('app_login') }}">MON PROFIL</a></li>
+                            <li><a href="{{ path('participant_modifierprofil',{'id':app.user.id}) }}">MON PROFIL</a></li>
                             <li><a href="{{ path('app_logout') }}">SE DECONNECTER</a></li>
                         {% endif %}
 
 {#                            {% if  app.user %}#}
-{#                                <li><a href="{{ path('ajouter') }}">Ajouter une sortie</a></li>#}
+{#                                <li><a href="{{ path('ajouter') }}">Ajouter un souhait</a></li>#}
 {#                            {% endif %}#}
 
                         </ul>
@@ -51,7 +51,15 @@
                 {% endblock %}
             </nav>
         </header>
+        {% for label, messages in app.flashes(['success', 'danger']) %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} text-center" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <main>
+
             <div>
                 {% block body %}{% endblock %}
             </div>
@@ -61,4 +69,3 @@
         </footer>
     </body>
 </html>
-
