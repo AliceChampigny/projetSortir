@@ -33,13 +33,18 @@
 
                             {% if not app.user %}
                             <li><a href="{{ path('app_login') }}">SE CONNECTER</a></li>
-                            <li><a href="{{ path('app_login') }}">S'INSCRIRE</a></li>
+                            <li><a href="{{ path('app_register') }}">S'INSCRIRE</a></li>
                             {% endif %}
 
                         {% if app.user %}
                             <li><a href="{{ path('app_login') }}">MON PROFIL</a></li>
                             <li><a href="{{ path('app_logout') }}">SE DECONNECTER</a></li>
                         {% endif %}
+
+                            {% if  app.user %}
+                                <li><a href="{{ path('ajouter') }}">Ajouter un souhait</a></li>
+                            {% endif %}
+
                         </ul>
                     </div>
                 {% endblock %}
