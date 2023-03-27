@@ -1,0 +1,80 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    margin: 10px 10px 10px 10px;
+
+
+}
+
+header nav{
+    width: 75%;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    border-bottom: solid 0.1em;
+    border-bottom-color: black;
+    padding: 30px 30px 30px 30px;
+
+}
+
+.logo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width : 100px;
+    height : 100px;
+
+}
+
+.menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 30px 20px 0px 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+main {
+    display: flex;
+    justify-content: flex-start;
+}
+
+
+
+div.body{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    align-items: flex-start;
+    margin: 30px 30px 30px 30px;
+
+}
+
+
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    align-self: center;
+    align-items: flex-end;
+    border-top: solid 0.1em;
+    border-top-color: black;
+    padding: 30px 30px 0px 30px;
+
+}
+
+h2{
+    font-family: 'Roboto', sans-serif;
+
+}
+
