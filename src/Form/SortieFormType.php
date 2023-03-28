@@ -25,7 +25,6 @@ class SortieFormType extends AbstractType
             ->add('dateLimiteInscription', null, ['html5' => true, 'widget' => 'single_text'])
             ->add('nbInscriptionsMax')
             ->add('infosSortie')
-            ->add('Ajouter', SubmitType::class);
             ->add('lieu', EntityType::class,[
                 'class' => Lieu::class,
                     'choice_label' => 'nom',
