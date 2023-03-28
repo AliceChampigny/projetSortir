@@ -38,7 +38,7 @@
                             {% endif %}
 
                         {% if app.user %}
-                            <li><a href="{{ path('app_login') }}">MON PROFIL</a></li>
+                            <li><a href="{{ path('participant_modifierprofil',{'id' :app.user.id}) }}">MON PROFIL</a></li>
                             <li><a href="{{ path('app_logout') }}">SE DECONNECTER</a></li>
                         {% endif %}
 
