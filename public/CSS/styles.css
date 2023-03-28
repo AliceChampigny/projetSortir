@@ -84,6 +84,15 @@ table {
     width: 100%;
     border-collapse: collapse;
     border: 3px solid purple;
+
+}
+
+.scroller {
+    width: 100%;
+    height: 65%;
+    overflow-y: scroll;
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: thin;
 }
 
 thead th:nth-child(1) {

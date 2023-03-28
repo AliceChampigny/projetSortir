@@ -6,7 +6,8 @@
 
 
      <h2>Filtrer les sorties</h2>
-     <table>
+     <div class="scroller">
+         <table>
      <thead>
      <tr>
          <th scope="col">Nom de sortie</th>
@@ -42,9 +43,9 @@
              </td>
          </tr>
      {% endfor %}
-
          </tbody>
          </table>
+     </div>
          <a href="{{path('sortie_ajouter') }}"><button>Créer une sortie</button></a>
      {% endif %}
 
