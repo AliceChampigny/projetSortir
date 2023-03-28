@@ -44,7 +44,7 @@
 
          </tbody>
          </table>
-         <a href="{{path('sortie_ajouter') }}"><button>Créer une sortie</button></a>
+         <a href="{{path('sortie_ajouter',{'organisateur' : app.user.id}) }}"><button>Créer une sortie</button></a>
      {% endif %}
 
      {% if not app.user %}
