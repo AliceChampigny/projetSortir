@@ -4,5 +4,29 @@
  {% block body %}
 
      <h2>Filtrer les sorties</h2>
-
+     <table>
+     <thead>
+     <tr>
+         <th scope="col">Nom de sortie</th>
+         <th scope="col">Date de la sortie</th>
+         <th scope="col">Date de clotûre</th>
+         <th scope="col">Inscrits/places</th>
+         <th scope="col">Etat</th>
+         <th scope="col">Inscrit</th>
+         <th scope="col">Organisateur</th>
+         <th scope="col">Actions</th>
+     </tr>
+    <tbody>
+     {% for sortie in sorties %}
+         <tr>
+             <th></th>
+             <td>{{ sortie.nom }}</td>
+             <td>{{ sortie.dateHeureDebut | date('m/d/Y H:i') }}</td>
+             <td>{{ sortie.dateLimiteInscription | date('m/d/Y H:i') }}</td>
+            <td> {{ sortie.nbInscriptionsMax }} </td>
+             <td>{{ sortie.duree }}</td>
+         </tr>
+         </table>
+         </tbody>
+     {% endfor %}
  {% endblock %}
