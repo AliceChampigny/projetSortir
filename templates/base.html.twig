@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,15 +42,22 @@
                             <li><a href="{{ path('app_logout') }}">SE DECONNECTER</a></li>
                         {% endif %}
 
-{#                            {% if  app.user %}#}
-{#                                <li><a href="{{ path('ajouter') }}">Ajouter un souhait</a></li>#}
-{#                            {% endif %}#}
+                            {% if  app.user %}
+                                <li><a href="{{ path('ajouter') }}">Ajouter une sortie</a></li>
+                            {% endif %}
 
                         </ul>
                     </div>
                 {% endblock %}
             </nav>
         </header>
+        {% for label, messages in app.flashes(['success', 'danger']) %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} text-center" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <main>
             <div>
                 {% block body %}{% endblock %}
@@ -60,3 +68,4 @@
         </footer>
     </body>
 </html>
+
