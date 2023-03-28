@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -20,6 +21,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Email(null,'Veuillez saisir un mail')]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -33,15 +35,22 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'participants')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank (null,'Veuillez choisir un campus')]
+    #[Assert\NotNull (null,'Veuillez choisir un campus')]
     private ?Campus $campus = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank (null,'Le nom ne peut pas être vide')]
+    #[Assert\NotNull (null,'Le nom ne peut pas être null')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank (null,'Le prénom ne peut pas être vide')]
+    #[Assert\NotNull (null,'Le prénom ne peut pas être null')]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 15)]
+    #[Assert\Regex('/^[0]{1}[1-9]{1}[0-9]{8}$/')]//TODO
     private ?string $telephone = null;
 
     #[ORM\Column]
@@ -50,7 +59,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $actif = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, unique: true)]
+    #[Assert\NotBlank (null,'Le pseudo ne peut pas être vide')]
+    #[Assert\NotNull (null,'Le pseudo ne peut pas être null')]
     private ?string $pseudo = null;
 
     #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'participants')]
