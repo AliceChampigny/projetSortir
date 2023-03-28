@@ -44,7 +44,9 @@
                         {% endif %}
 
                             {% if  app.user %}
-                                <li><a href="{{ path('sortie_ajouter') }}">Ajouter une sortie</a></li>
+
+                                <li><a href="{{ path('ajouter',{'organisateur':app.user.id}) }}">Ajouter une sortie</a></li>
+
                             {% endif %}
 
                         </ul>
