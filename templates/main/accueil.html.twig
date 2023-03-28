@@ -32,10 +32,9 @@
              <td>
                  {% if not sortie.participants.contains(app.user) %}
                      X
-
                  {% endif %}
              </td>
-             <td>{{ sortie.organisateur.nom }}</td>
+             <td><a href="{{ path('participant_afficherprofil',{'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
              <td>
                  <a href="{{path('sortie_liste', {'sortie' : sortie.id}) }}">Afficher</a>
                  <a href="{{path('sortie_liste', {'sortie' : sortie.id}) }}">Se désister</a>

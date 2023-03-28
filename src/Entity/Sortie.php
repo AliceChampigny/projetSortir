@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use http\Message;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
@@ -17,21 +19,57 @@ class Sortie
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\Assert\NotNull(
+        message: 'Le nom ne peut pas être nul'
+    )]
+    #[Assert\Assert\NotBlank(
+        message: 'Le nom ne peut pas être nul'
+    )]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\Assert\NotNull(
+        message: "Le date et l'heure de début ne peuvent pas être nulles"
+    )]
+    #[Assert\Assert\NotBlank(
+        message: "Le date et l'heure de début ne peuvent pas être nulles"
+    )]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column]
+    #[Assert\Assert\NotNull(
+        message: 'La durée ne peut pas être nulle'
+    )]
+    #[Assert\Assert\NotBlank(
+        message: 'Le durée ne peut pas être nulle'
+    )]
     private ?int $duree = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\Assert\NotNull(
+        message: "La date limite d'inscription ne peut pas être nulle"
+    )]
+    #[Assert\Assert\NotBlank(
+        message: "La date limite d'inscription ne peut pas être nulle"
+    )]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
+    #[Assert\Assert\NotNull(
+        message: "Le nombre maximum de participants ne peut pas être nul"
+    )]
+    #[Assert\Assert\NotBlank(
+        message: "Le nombre maximum de participants ne peut pas être nul"
+    )]
     private ?int $nbInscriptionsMax = null;
 
     #[ORM\Column(length: 500)]
+    #[Assert\Assert\NotNull(
+        message: "La description de l'évènement ne peut pas être nulle"
+    )]
+    #[Assert\Assert\NotBlank(
+        message: "La description de l'évènement ne peut pas être nulle"
+    )]
     private ?string $infosSortie = null;
 
     #[ORM\ManyToMany(targetEntity: Participant::class, inversedBy: 'sorties')]
