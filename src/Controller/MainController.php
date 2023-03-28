@@ -12,12 +12,9 @@ class MainController extends AbstractController
 {
     #[Route('/', name: 'main_accueil')]
     public function index(
-        SortieRepository $sortieRepository
+
     ): Response
     {
-        $sorties = $sortieRepository->findAll();
-        return $this->render('main/accueil.html.twig',[
-        'sorties' => $sorties
-        ]);
+        return $this->render('main/accueil.html.twig');
     }
 }

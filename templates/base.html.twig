@@ -30,9 +30,10 @@
                 {% block menu %}
                     <div >
                         <ul class="menu">
-                        <li><a href="{{ path('main_accueil') }}">ACCUEIL</a></li>
+
 
                             {% if not app.user %}
+                            <li><a href="{{ path('main_accueil') }}">ACCUEIL</a></li>
                             <li><a href="{{ path('app_login') }}">SE CONNECTER</a></li>
                             <li><a href="{{ path('app_register') }}">S'INSCRIRE</a></li>
                             {% endif %}
@@ -43,7 +44,7 @@
                         {% endif %}
 
                             {% if  app.user %}
-                                <li><a href="{{ path('ajouter') }}">Ajouter une sortie</a></li>
+                                <li><a href="{{ path('sortie_ajouter') }}">Ajouter une sortie</a></li>
                             {% endif %}
 
                         </ul>

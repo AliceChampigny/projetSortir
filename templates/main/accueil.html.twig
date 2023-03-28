@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
-
  {% block body %}
+
+     {% if app.user %}
+
 
      <h2>Filtrer les sorties</h2>
      <table>
@@ -16,17 +18,37 @@
          <th scope="col">Organisateur</th>
          <th scope="col">Actions</th>
      </tr>
+     </thead>
     <tbody>
+
      {% for sortie in sorties %}
          <tr>
-             <th></th>
              <td>{{ sortie.nom }}</td>
              <td>{{ sortie.dateHeureDebut | date('m/d/Y H:i') }}</td>
              <td>{{ sortie.dateLimiteInscription | date('m/d/Y H:i') }}</td>
-            <td> {{ sortie.nbInscriptionsMax }} </td>
-             <td>{{ sortie.duree }}</td>
+             <td> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </td>
+             <td>{{ sortie.etat.libelle }}</td>
+             <td>
+                 {% if not sortie.participants.contains(app.user) %}
+                     X
+
+                 {% endif %}
+             </td>
+             <td>{{ sortie.organisateur.nom }}</td>
+             <td>
+                 <a href="{{path('sortie_liste', {'sortie' : sortie.id}) }}">Afficher</a>
+                 <a href="{{path('sortie_liste', {'sortie' : sortie.id}) }}">Se désister</a>
+                 <a href="{{path('sortie_liste', {'sortie' : sortie.id}) }}">S'inscrire</a>
+             </td>
          </tr>
-         </table>
-         </tbody>
      {% endfor %}
+
+         </tbody>
+         </table>
+         <a href="{{path('sortie_ajouter') }}"><button>Créer une sortie</button></a>
+     {% endif %}
+
+     {% if not app.user %}
+         <h1>Bienvenu !!</h1>
+     {% endif %}
  {% endblock %}
