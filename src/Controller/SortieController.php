@@ -24,11 +24,6 @@ class SortieController extends AbstractController
     ): Response
     {
         $sorties = $sortieRepository->findAll();
-//        $participantsInscrits = 1;
-//        foreach ($sorties as $sortie) {
-//            $nrParticipants = $sortieRepository->count($sortie->getParticipants());
-//        }
-
 
         return $this->render('main/accueil.html.twig',
             compact( 'sorties')
@@ -48,6 +43,7 @@ class SortieController extends AbstractController
         $sortie = new Sortie();
         $sortieForm = $this->createForm(SortieFormType::class, $sortie);
         $sortieForm->handleRequest($request);
+
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             try {
 
