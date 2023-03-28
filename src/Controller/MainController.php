@@ -15,6 +15,13 @@ class MainController extends AbstractController
 
     ): Response
     {
-        return $this->render('main/accueil.html.twig');
+        if($this->getUser()){
+            return $this->redirectToRoute('sortie_liste');
+        }
+        else{
+            $sorties = null;
+            return $this->render('main/accueil.html.twig',compact('sorties'));
+        }
+
     }
 }
