@@ -51,6 +51,13 @@
                 {% endblock %}
             </nav>
         </header>
+        {% for label, messages in app.flashes(['success', 'danger']) %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} text-center" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <main>
             <div>
                 {% block body %}{% endblock %}
