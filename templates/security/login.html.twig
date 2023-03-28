@@ -4,18 +4,18 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <form method="post">
+{#    <form method="post">#}
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
         {% if app.user %}
             <div class="mb-3">
-                Vous êtes connecté {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                Vous êtes connecté(e) en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
             </div>
         {% endif %}
         <section class="section_form">
-            <h1 class="h3 mb-3 font-weight-normal">Please LogIn</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Veuillez saisir vos identifiants</h1>
             {#    <label for="inputPseudo">Pseudo</label>#}
             {#    <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control" autocomplete="username" required autofocus>#}
             {#    <label for="inputPassword">Password</label>#}
@@ -24,15 +24,15 @@
 {#            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">#}
 
             {#    <button class="btn btn-lg btn-primary" type="submit">Sign in</button>#}
-    </form>
+{#    </form>#}
     <main>
 
         <section class="section_form">
             <form method="post" id="consultation-form" class="feed-form" action="#">
-                <input required="" name="email" placeholder="Email" type="text" value="{{ last_username }}">
+                <input required="" name="email" placeholder="E-mail" type="text" value="{{ last_username }}">
 
-                <input name="password" required="" placeholder="Password" type="password">
-                <button type="submit" class="button_submit">LOGIN</button>
+                <input name="password" required="" placeholder="Mot de Passe" type="password">
+                <button type="submit" class="button_submit">Se connecter</button>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             </form>
             <div class="checkbox mb-3">

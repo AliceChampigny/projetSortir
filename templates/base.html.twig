@@ -30,20 +30,23 @@
                 {% block menu %}
                     <div >
                         <ul class="menu">
-                        <li><a href="{{ path('main_accueil') }}">ACCUEIL</a></li>
+
 
                             {% if not app.user %}
+                            <li><a href="{{ path('main_accueil') }}">ACCUEIL</a></li>
                             <li><a href="{{ path('app_login') }}">SE CONNECTER</a></li>
                             <li><a href="{{ path('app_register') }}">S'INSCRIRE</a></li>
                             {% endif %}
 
                         {% if app.user %}
-                            <li><a href="{{ path('app_login') }}">MON PROFIL</a></li>
+                            <li><a href="{{ path('participant_modifierprofil',{'id' :app.user.id}) }}">MON PROFIL</a></li>
                             <li><a href="{{ path('app_logout') }}">SE DECONNECTER</a></li>
                         {% endif %}
 
                             {% if  app.user %}
+
                                 <li><a href="{{ path('ajouter',{'organisateur':app.user.id}) }}">Ajouter une sortie</a></li>
+
                             {% endif %}
 
                         </ul>

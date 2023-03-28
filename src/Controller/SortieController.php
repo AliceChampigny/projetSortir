@@ -15,20 +15,29 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/sortie',name:'sortie')]
 class SortieController extends AbstractController
 {
-    #[Route('/', name: 'sortie_liste')]
+    #[Route('/', name: '_liste')]
     public function ListeSorties(
       SortieRepository $sortieRepository
     ): Response
     {
         $sorties = $sortieRepository->findAll();
-        return $this->render('main/accueil.html.twig', [
-            'sorties' => $sorties
-        ]);
+//        $participantsInscrits = 1;
+//        foreach ($sorties as $sortie) {
+//            $nrParticipants = $sortieRepository->count($sortie->getParticipants());
+//        }
+
+
+        return $this->render('main/accueil.html.twig',
+            compact( 'sorties')
+        );
     }
+
     #[Route('/ajouter/{organisateur}',
-        name: 'ajouter')]
+        name: '_ajouter')]
+
     public function ajouterunesortie(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -37,17 +46,11 @@ class SortieController extends AbstractController
     ): Response {
 
         $sortie = new Sortie();
-
         $sortieForm = $this->createForm(SortieFormType::class, $sortie);
         $sortieForm->handleRequest($request);
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             try {
-//                $lieu = new Lieu();
-//                $lieu->setNom($lieu);
-//                $lieu->setRue('1, rue Franklin');
-//                $lieu->setLatitude(15);
-//                $lieu->setLongitude(15);
 
                 $ville = new Ville();
                 $ville->setNom('Nantes');
@@ -62,15 +65,12 @@ class SortieController extends AbstractController
                 $sortie->setOrganisateur($organisateur);
                 $sortie->setCampus($organisateur->getCampus());
 
-dump($sortie);
 
             $entityManager->persist($ville);
-//            $entityManager->persist($lieu);
             $entityManager->persist($etat);
 
             $sortie->setEtat($etat);
-//            $sortie->setLieu($lieu);
-//            $lieu->setVille($ville);
+
 
             $entityManager->persist($sortie);
             $entityManager->flush();

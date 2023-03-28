@@ -15,6 +15,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+//use Symfony\Bundle\SecurityBundle\Security;
 
 class AppAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -49,7 +50,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-         return new RedirectResponse($this->urlGenerator->generate('participant_accueilcnte'));
+         return new RedirectResponse($this->urlGenerator->generate('sortie_liste'));
     }
 
     protected function getLoginUrl(Request $request): string
