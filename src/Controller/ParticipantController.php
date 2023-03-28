@@ -15,15 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
     '/participant',
     name:'participant' )]
 class ParticipantController extends AbstractController{
-    #[Route(
-        '',
-        name: '_accueilcnte')]
-    public function accueilcnte(
-
-    ): Response{
-        return $this->redirectToRoute('main_accueil');
-
-    }
+//    #[Route(
+//        '',
+//        name: '_accueilcnte')]
+//    public function accueilcnte(
+//
+//    ): Response{
+//        return $this->redirectToRoute('main_accueil');
+//
+//    }
 //----------------------------------------------------------------------------------------------------------------------
     #[Route(
         '/profil/modifier/{id}',
@@ -53,4 +53,17 @@ class ParticipantController extends AbstractController{
         }
         return $this->render('participant/modifier.html.twig',compact('participantForm'));
     }
+//----------------------------------------------------------------------------------------------------------------------
+#[Route(
+    '/profil/{id}',
+    name: '_afficherprofil')]
+public function afficherProfil(
+    Participant $id,
+    ParticipantRepository $participantRepository
+) : Response{
+
+        $participant = $participantRepository->findOneBy(['id'=>$id->getId()]);
+        dump($participant);
+        return $this->render('participant/afficherprofil.html.twig',compact('participant'));
+}
 }
