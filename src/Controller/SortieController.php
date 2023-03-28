@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Sortie;
 use App\Form\SortieFormType;
 use App\Repository\SortieRepository;
@@ -14,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
-
     #[Route('/', name: 'sortie_liste')]
     public function ListeSorties(
       SortieRepository $sortieRepository
@@ -24,7 +22,7 @@ class SortieController extends AbstractController
         return $this->render('main/accueil.html.twig', [
             'sorties' => $sorties
         ]);
-
+    }
     #[Route('/ajouter',
         name: 'ajouter')]
     public function ajouterunesortie(
