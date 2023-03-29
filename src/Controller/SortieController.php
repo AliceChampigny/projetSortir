@@ -9,8 +9,10 @@ use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\SortieFormType;
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,7 +31,7 @@ class SortieController extends AbstractController
             compact( 'sorties')
         );
     }
-
+//----------------------------------------------------------------------------------------------------------------------
     #[Route('/ajouter/{organisateur}',
         name: '_ajouter')]
 
@@ -61,22 +63,22 @@ class SortieController extends AbstractController
                 $sortie->setCampus($organisateur->getCampus());
 
 
-            $entityManager->persist($ville);
-            $entityManager->persist($etat);
+                $entityManager->persist($ville);
+                $entityManager->persist($etat);
 
-            $sortie->setEtat($etat);
+                $sortie->setEtat($etat);
 
 
-            $entityManager->persist($sortie);
-            $entityManager->flush();
+                $entityManager->persist($sortie);
+                $entityManager->flush();
 
 
                 $this->addFlash('success', "Votre sortie a été ajoutée" );
-            return $this->redirectToRoute('participant_accueilcnte');
+                return $this->redirectToRoute('sortie_liste');
 
             } catch (\Exception $exception){
                 $this->addFlash('danger', "Votre sortie n'a pas été ajoutée". $exception->getMessage() );
-                return $this->redirectToRoute('ajouter',[
+                return $this->redirectToRoute('sortie_ajouter',[
                     'organisateur'=>$organisateur->getId()
                 ]);
             }
@@ -85,6 +87,15 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/ajouterunesortie.html.twig',
             compact('sortieForm'));
-
     }
+//----------------------------------------------------------------------------------------------------------------------
+    #[Route('/recup/lieux/{ville}')]
+    public function recupererLieux(
+        Ville $ville,
+        VilleRepository $villeRepository
+    ) : Response{
+        $villeEtLieux = $villeRepository->findWithLocations($ville->getId());
+
+        return $this->render('sortie/_ville_et_lieux.html.twig', compact('villeEtLieux'));
+        }
 }

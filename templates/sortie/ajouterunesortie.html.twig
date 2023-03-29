@@ -1,24 +1,41 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Créer une sortie{% endblock %}
 {% block body %}
 
-    <div>{{ form_start(sortieForm) }}
+    <div >{{ form_start(sortieForm) }}
         {{ form_row(sortieForm.nom) }}
         {{ form_row(sortieForm.dateHeureDebut) }}
         {{ form_row(sortieForm.duree) }}
         {{ form_row(sortieForm.dateLimiteInscription) }}
         {{ form_row(sortieForm.nbInscriptionsMax) }}
         {{ form_row(sortieForm.infosSortie) }}
-        {{ form_row(sortieForm.lieu) }}
-
-
+        {{ form_row(sortieForm.ville,{'attr' :{'onclick': 'recupLieux()'} }) }}
+    <ul id="test"></ul>
 {#        {{ form_row(sortieform.image) }}#}
-    <button>Ajouter</button>
+    <button>Créer la sortie</button>
         {{ form_end(sortieForm) }}
+    </div>
 
+    <script>
+function recupLieux(){
+    let ville = document.getElementById('sortie_form_ville').value;
+    let nouvelElement = document.createElement('li');
+    nouvelElement.innerText = ville;
+    document.getElementById("test").appendChild(nouvelElement)
+    {#$.ajax({#}
+    {#    url :"{{render(controller("App:Csv:recupererLieux")) }}",#}
+    {#    method :"GET",#}
+    {#}).done((donnees) =>{#}
+    {#    $("#latitude").text("Latitude :"+donnees.iss_position.latitude);#}
+    {#    latitude = donnees.iss_position.latitude;#}
+    {#    $("#longitude").text("Longitude :"+donnees.iss_position.longitude);#}
+    {#    longitude =donnees.iss_position.longitude;#}
+    {#})#}
+
+}
+
+    </script>
 {% endblock %}
 
-{% block title %}
 
-{% endblock %}
 

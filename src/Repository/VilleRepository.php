@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Ville;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @extends ServiceEntityRepository<Ville>
@@ -63,4 +65,17 @@ class VilleRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findWithLocations(int $idVille) : Paginator{
+        $queryBuilder = $this->createQueryBuilder('v')
+            ->leftJoin('v.lieux','lieux')
+            ->andWhere('v.id = :idVille')
+            ->setParameter('idVille',$idVille);
+        $queryBuilder
+            ->addSelect('langages','amis')
+            ->orderBy('d.username','ASC');
+        $query = $queryBuilder->getQuery();
+
+        return new Paginator($query);
+    }
 }

@@ -42,9 +42,8 @@ class ParticipantController extends AbstractController{
             try{
                 $entityManager->persist($id);
                 $entityManager->flush();
-                $this->redirectToRoute('participant_accueilcnte');
                 $this->addFlash('success','Votre profil a bien été modifié');
-                return $this->redirectToRoute('participant_accueilcnte');
+                return $this->redirectToRoute('sortie_liste');
             }catch (\Exception $exception){
                 $this->addFlash('danger','La modification n\'a pas été effectué'.$exception->getMessage());
                 return $this->redirectToRoute('participant_modifierprofil',['id'=>$id->getId()]);
