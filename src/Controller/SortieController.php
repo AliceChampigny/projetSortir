@@ -8,6 +8,7 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\SortieFormType;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,25 +21,27 @@ class SortieController extends AbstractController
 {
     #[Route('/', name: '_liste')]
     public function ListeSorties(
-      SortieRepository $sortieRepository
+        SortieRepository $sortieRepository
     ): Response
     {
         $sorties = $sortieRepository->findAll();
 
+
         return $this->render('main/accueil.html.twig',
-            compact( 'sorties')
+            compact('sorties')
         );
     }
 
+//----------------------------------------------------------------------------------------------------------------------
     #[Route('/ajouter/{organisateur}',
         name: '_ajouter')]
-
     public function ajouterunesortie(
-        Request $request,
+        Request                $request,
         EntityManagerInterface $entityManager,
-        Participant $organisateur,
+        Participant            $organisateur,
 
-    ): Response {
+    ): Response
+    {
 
         $sortie = new Sortie();
         $sortieForm = $this->createForm(SortieFormType::class, $sortie);
@@ -61,23 +64,23 @@ class SortieController extends AbstractController
                 $sortie->setCampus($organisateur->getCampus());
 
 
-            $entityManager->persist($ville);
-            $entityManager->persist($etat);
+                $entityManager->persist($ville);
+                $entityManager->persist($etat);
 
-            $sortie->setEtat($etat);
-
-
-            $entityManager->persist($sortie);
-            $entityManager->flush();
+                $sortie->setEtat($etat);
 
 
-                $this->addFlash('success', "Votre sortie a été ajoutée" );
-            return $this->redirectToRoute('participant_accueilcnte');
+                $entityManager->persist($sortie);
+                $entityManager->flush();
 
-            } catch (\Exception $exception){
-                $this->addFlash('danger', "Votre sortie n'a pas été ajoutée". $exception->getMessage() );
-                return $this->redirectToRoute('ajouter',[
-                    'organisateur'=>$organisateur->getId()
+
+                $this->addFlash('success', "Votre sortie a été ajoutée");
+                return $this->redirectToRoute('sortie_liste');
+
+            } catch (\Exception $exception) {
+                $this->addFlash('danger', "Votre sortie n'a pas été ajoutée" . $exception->getMessage());
+                return $this->redirectToRoute('sortie_ajouter', [
+                    'organisateur' => $organisateur->getId()
                 ]);
             }
 
@@ -87,4 +90,31 @@ class SortieController extends AbstractController
             compact('sortieForm'));
 
     }
+
+//----------------------------------------------------------------------------------------------------------------------
+
+    #[Route('/inscription/{sortie}',
+        name: '_inscription')]
+    public function inscriptionsorties(
+
+        EntityManagerInterface $entityManager,
+        Sortie                  $sortie,
+    ): Response
+    {
+if ($sortie){
+    try{
+        $participant= $this->getUser();
+        $sortie->addParticipant($participant);
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+        $this->addFlash("success", "Votre inscription a bien été enregistrée");
+    } catch (\Exception $exception){
+        $this->addFlash("danger", "Impossible de vous inscrire");
+    }
+}
+        return $this->redirectToRoute('main_accueil');
+        }
+
+
+
 }

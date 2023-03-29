@@ -37,7 +37,10 @@
              <td>
                  <a href="{{path('sortie_liste', {'sortie' : sortie.id}) }}">Afficher</a>
                  <a href="{{path('sortie_liste', {'sortie' : sortie.id}) }}">Se désister</a>
-                 <a href="{{path('sortie_liste', {'sortie' : sortie.id}) }}">S'inscrire</a>
+                 {% if sortie.etat.libelle == "Ouverte" and date() < date(sortie.dateLimiteInscription) and sortie.participants | length < sortie.nbInscriptionsMax %}
+                     <a href="{{path('sortie_inscription', {'sortie' : sortie.id}) }}">S'inscrire
+                     </a>
+                 {% endif %}
              </td>
          </tr>
      {% endfor %}
