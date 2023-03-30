@@ -1,20 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<h1>Ajoutez votre évènement</h1>
 
-    <div>{{ form_start(sortieForm) }}
-        {{ form_row(sortieForm.nom) }}
-        {{ form_row(sortieForm.dateHeureDebut) }}
-        {{ form_row(sortieForm.duree) }}
-        {{ form_row(sortieForm.dateLimiteInscription) }}
-        {{ form_row(sortieForm.nbInscriptionsMax) }}
-        {{ form_row(sortieForm.infosSortie) }}
-        {{ form_row(sortieForm.lieu) }}
+    <section class="feed-form">
+        <form method="post" action="#" class="feed-form">
+    {{ form_start(sortieForm) }}
+    {{ form_row(sortieForm.nom) }}
+    {{ form_row(sortieForm.dateHeureDebut) }}
+    {{ form_row(sortieForm.duree) }}
+    {{ form_row(sortieForm.dateLimiteInscription) }}
+    {{ form_row(sortieForm.nbInscriptionsMax) }}
+    {{ form_row(sortieForm.infosSortie) }}
+    {{ form_row(sortieForm.lieu) }}
+        </form>
 
-
-{#        {{ form_row(sortieform.image) }}#}
-    <button>Ajouter</button>
-        {{ form_end(sortieForm) }}
+    {#        {{ form_row(sortieform.image) }} #}
+            <form method="post" action="#" class="feed-form">
+    </section>
+    <button class="button_submit">Ajouter</button>
+    {{ form_end(sortieForm) }}
 
 {% endblock %}
 

@@ -152,4 +152,33 @@ class SortieController extends AbstractController
         }
         return $this->redirectToRoute('main_accueil');
     }
+    //---------------------------------------------------------------------------------//
+//    #[Route('/cloture/{sortie}',
+//    requirements: 'cloture')]
+//
+//    public function cloturerSortie(
+//        EntityManagerInterface $entityManager,
+//        Sortie                 $sortie,
+//    ): Response
+//    {
+//
+//        $sortie = $entityManager->getRepository(Sortie::class)->find($Id);
+//        $nbParticipants = $sortie->getNbParticipants();
+//        $nbMaxInscriptions = $sortie->getNbMaxInscriptions();
+//        $dateLimiteInscription = $sortie->getDateLimiteInscription();
+//
+//        if ($nbParticipants >= $nbMaxInscriptions) {
+//            $sortie->setEtat(Sortie::Cloturee);
+//            $entityManager->flush();
+//        }
+//
+//        $aujourdhui = new \DateTime();
+//        if ($aujourdhui > $dateLimiteInscription) {
+//           $sortie->setEtat(Sortie::Cloturee);
+//           $entityManager->flush();
+//        }
+//
+//        return $this->redirectToRoute('main_accueil');
+//    }
+
 }

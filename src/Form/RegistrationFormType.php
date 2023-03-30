@@ -22,14 +22,53 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom',TextType::class,['label'=>'Nom '])
-            ->add('prenom',TextType::class,['label'=>'Prénom '])
-            ->add('pseudo',TextType::class,['label'=>'Pseudo '])
-            ->add('email',TextType::class,['label'=>'E-mail '])
-            ->add('telephone',TextType::class,['label'=>'Téléphone '])
+            ->add('nom', TextType::class, array(
+                'required' => true,
+                'label'  => ' ',
+                'attr' => array(
+                    'class' => 'feed-form2',
+                    'placeholder' => 'Nom'
+                )
+            ))
+            ->add('prenom', TextType::class, array(
+                'required' => true,
+                'label'  => ' ',
+                'attr' => array(
+                    'class' => 'feed-form2',
+                    'placeholder' => 'Prénom'
+                )
+            ))
+            ->add('pseudo', TextType::class, array(
+                'required' => true,
+                'label'  => ' ',
+                'attr' => array(
+                    'class' => 'feed-form2',
+                    'placeholder' => 'Pseudo'
+                )
+            ))
+            ->add('email', TextType::class, array(
+                'required' => true,
+                'label'  => ' ',
+                'attr' => array(
+                    'class' => 'feed-form2',
+                    'placeholder' => 'E-mail'
+                )
+            ))
+            ->add('telephone', TextType::class, array(
+                'required' => true,
+                'label'  => ' ',
+                'attr' => array(
+                    'class' => 'feed-form2',
+                    'placeholder' => 'Telephone'
+                )
+            ))
             ->add('campus', EntityType::class,
                 [
-                    'label'=>'Campus ',
+                    'label'=>' ',
+                    'attr' => array(
+                        'class'=>'feed-form2',
+                        'placeholder'=>'Campus'
+                    ),
                     'class' => Campus::class,
                     'choice_label' => 'nom',
                 ]
@@ -52,12 +91,11 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'invalid_message' => 'Les mots de passe doivent correspondre.',
-                'options' => ['attr' => ['class' => 'password-field']],
+                'options' => ['attr' => ['class' => 'feed-form']],
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe '],
-                'second_options' => ['label' => 'Confirmation du mot de passe '],
-            ])
-        ;
+                'first_options'  => ['label' => ' ', 'attr'=> array('placeholder' => 'Mot de passe', 'class'=>'feed-form2')],
+                'second_options' => ['label' => ' ', 'attr'=> array('placeholder' => 'Confirmation du mot de passe', 'class'=>'feed-form2')]
+]);
     }
 //----------------------------------------------------------------------------------------------------------------------
     public function configureOptions(OptionsResolver $resolver): void
