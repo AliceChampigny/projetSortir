@@ -38,13 +38,20 @@
              </td>
              <td><a href="{{ path('participant_afficherprofil',{'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
              <td>
-                 <a href="{{path('sortie_liste', {'sortie' : sortie.id}) }}">Afficher</a>
-                 <a href="{{path('sortie_liste', {'sortie' : sortie.id}) }}">Se désister</a>
+                 <a href="{{path('sortie_affichersortie', {'id' : sortie.id}) }}">Afficher</a>
+
+
                  {% if sortie.etat.libelle == "Ouverte" and date() < date(sortie.dateLimiteInscription) and sortie.participants | length < sortie.nbInscriptionsMax %}
-                     <a href="{{path('sortie_inscription', {'sortie' : sortie.id}) }}">S'inscrire
+                         {% if sortie.participants.contains(app.user) %}
+                     <a href="{{path('sortie_desistement', {'sortie' : sortie.id}) }}">Se désister</a>
+                         {% else %}
+                             <a href="{{path('sortie_inscription', {'sortie' : sortie.id}) }}">S'inscrire
+                         {% endif %}
                      </a>
                  {% endif %}
              </td>
+         </tr>
+         </tr>
          </tr>
      {% endfor %}
 
