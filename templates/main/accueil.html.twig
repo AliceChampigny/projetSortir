@@ -29,7 +29,7 @@
              <td> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </td>
              <td>{{ sortie.etat.libelle }}</td>
              <td>
-                 {% if not sortie.participants.contains(app.user) %}
+                 {% if sortie.participants.contains(app.user) %}
                      X
                  {% endif %}
              </td>
@@ -37,9 +37,13 @@
              <td>
                  <a href="{{path('sortie_affichersortie', {'id' : sortie.id}) }}">Afficher</a>
 
-                 <a href="{{path('sortie_desistement', {'sortie' : sortie.id}) }}">Se désister</a>
+
                  {% if sortie.etat.libelle == "Ouverte" and date() < date(sortie.dateLimiteInscription) and sortie.participants | length < sortie.nbInscriptionsMax %}
-                     <a href="{{path('sortie_inscription', {'sortie' : sortie.id}) }}">S'inscrire
+                         {% if sortie.participants.contains(app.user) %}
+                     <a href="{{path('sortie_desistement', {'sortie' : sortie.id}) }}">Se désister</a>
+                         {% else %}
+                             <a href="{{path('sortie_inscription', {'sortie' : sortie.id}) }}">S'inscrire
+                         {% endif %}
                      </a>
                  {% endif %}
              </td>

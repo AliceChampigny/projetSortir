@@ -6,8 +6,6 @@ body{
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
     margin: 10px 10px 10px 10px;
-
-
 }
 
 header nav{
@@ -21,7 +19,6 @@ header {
     border-bottom: solid 0.1em;
     border-bottom-color: black;
     padding: 30px 30px 30px 30px;
-
 }
 
 .logo{
@@ -30,7 +27,6 @@ header {
     justify-content: space-between;
     width : 100px;
     height : 100px;
-
 }
 
 .menu{
@@ -47,18 +43,13 @@ main {
     justify-content: flex-start;
 }
 
-
-
 div.body{
     display: flex;
     flex-direction: column;
     flex-grow: 2;
     align-items: flex-start;
     margin: 30px 30px 30px 30px;
-
 }
-
-
 
 .footer {
     display: flex;
@@ -70,12 +61,13 @@ div.body{
     border-top: solid 0.1em;
     border-top-color: black;
     padding: 30px 30px 0px 30px;
-
 }
 
 h2{
     font-family: 'Roboto', sans-serif;
-
+}
+ul{
+    list-style: none;
 }
 
 h1{
@@ -179,6 +171,7 @@ main{
     column-count: 2;
     flex: 1;
 }
+
 /***********************************************Liste Participants*****************************************************/
 
 #liste_participants{
@@ -191,6 +184,7 @@ th{
 }
 td{
     font-weight: normal;
+
 }
 /***********************Formulaire Inscription************************************************************************************/
 .button_submit2 {
@@ -334,4 +328,5 @@ td{
         transform: scale(1.8);
         opacity: 0;
     }
+
 }

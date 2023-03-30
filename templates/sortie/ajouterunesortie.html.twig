@@ -1,29 +1,50 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Créer une sortie{% endblock %}
 {% block body %}
-<h1>Ajoutez votre évènement</h1>
 
-    <section class="feed-form">
-        <form method="post" action="#" class="feed-form">
-    {{ form_start(sortieForm) }}
-    {{ form_row(sortieForm.nom) }}
-    {{ form_row(sortieForm.dateHeureDebut) }}
-    {{ form_row(sortieForm.duree) }}
-    {{ form_row(sortieForm.dateLimiteInscription) }}
-    {{ form_row(sortieForm.nbInscriptionsMax) }}
-    {{ form_row(sortieForm.infosSortie) }}
-    {{ form_row(sortieForm.lieu) }}
-        </form>
 
-    {#        {{ form_row(sortieform.image) }} #}
-            <form method="post" action="#" class="feed-form">
-    </section>
-    <button class="button_submit">Ajouter</button>
-    {{ form_end(sortieForm) }}
+    <div>
+        {{ form_start(sortieForm) }}
+        {{ form_row(sortieForm.nom) }}
+        {{ form_row(sortieForm.dateHeureDebut) }}
+        {{ form_row(sortieForm.duree) }}
+        {{ form_row(sortieForm.dateLimiteInscription) }}
+        {{ form_row(sortieForm.nbInscriptionsMax) }}
+        {{ form_row(sortieForm.infosSortie) }}
+        {{ form_row(sortieForm.ville) }}
+        {{ form_row(sortieForm.lieu) }}
+
+{#        {{ form_row(sortieform.image) }}#}
+        <button>Créer une sortie</button>
+        {{ form_end(sortieForm) }}
+    </div>
+    <a href="{{ path('sortie_liste') }}"><button>Retour</button></a>
+    <script>
+    let $ville = $('#sortie_form_ville');
+    let $token=$('#sortie_form__token');
+    let $dateDebut=$('#sortie_form_dateHeureDebut');
+    let $dateLimiteInscription=$('#sortie_form_dateLimiteInscription');
+    $ville.change(function(){
+        let $form = $(this).closest('form');
+        let data = {};
+        data[$ville.attr('name')] = $ville.val();
+        // data[$token.attr('name')]=$token.val();
+        data[$dateDebut.attr('name')]=$dateDebut.val();
+        data[$dateLimiteInscription.attr('name')]=$dateLimiteInscription.val();
+        console.log(data);
+        $.ajax({
+            url : $form.attr('action'),
+            type: $form.attr('method'),
+            data : data,
+            complete: function(html){
+                $('#sortie_form_lieu').replaceWith($(html.responseText).find('#sortie_form_lieu'));
+            }
+        });
+    });
+    </script>
 
 {% endblock %}
 
-{% block title %}
-
-{% endblock %}
+{#{'attr':{'onclick':'recupLieux()'}}#}
+{#{'attr':{'disabled':'true'}}#}
 
