@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/sortie',name:'sortie')]
+#[Route('/sortie', name: 'sortie')]
 class SortieController extends AbstractController
 {
     #[Route('/', name: '_liste')]
@@ -98,23 +98,37 @@ class SortieController extends AbstractController
     public function inscriptionsorties(
 
         EntityManagerInterface $entityManager,
-        Sortie                  $sortie,
+        Sortie                 $sortie,
     ): Response
     {
-if ($sortie){
-    try{
-        $participant= $this->getUser();
-        $sortie->addParticipant($participant);
-        $entityManager->persist($sortie);
-        $entityManager->flush();
-        $this->addFlash("success", "Votre inscription a bien été enregistrée");
-    } catch (\Exception $exception){
-        $this->addFlash("danger", "Impossible de vous inscrire");
-    }
-}
-        return $this->redirectToRoute('main_accueil');
+        if ($sortie) {
+            try {
+                $participant = $this->getUser();
+                $sortie->addParticipant($participant);
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+                $this->addFlash("success", "Votre inscription a bien été enregistrée");
+            } catch (\Exception $exception) {
+                $this->addFlash("danger", "Impossible de vous inscrire");
+            }
         }
+        return $this->redirectToRoute('main_accueil');
+    }
 
+//------------------------------------------------------------------------------------------//
 
+    #[Route('/sortie/{id}', name: '_affichersortie',
+        requirements: ['id' => '\d+'])]
+    public function afficherSortie(
+        sortie           $id,
+        SortieRepository $sortieRepository
+    ): Response
+    {
+        $sortie = $sortieRepository->findOneby(['id' => $id]);
+
+        return $this->render('sortie/affichersortie.html.twig',
+            compact('sortie')
+        );
+    }
 
 }
