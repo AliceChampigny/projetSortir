@@ -130,5 +130,26 @@ class SortieController extends AbstractController
             compact('sortie')
         );
     }
+//----------------------------------------------------------------------------------//
+    #[Route('/desistement/{sortie}',
+        name: '_desistement')]
+    public function desistementSorties(
 
+        EntityManagerInterface $entityManager,
+        Sortie                 $sortie,
+    ): Response
+    {
+        if ($sortie) {
+            try {
+                $participant = $this->getUser();
+                $sortie->removeParticipant($participant);
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+                $this->addFlash("success", "Votre désistement a bien été pris en compte");
+            } catch (\Exception $exception) {
+                $this->addFlash("danger", "Impossible de vous désister");
+            }
+        }
+        return $this->redirectToRoute('main_accueil');
+    }
 }
