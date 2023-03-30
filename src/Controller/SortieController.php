@@ -97,10 +97,10 @@ class SortieController extends AbstractController{
                 $this->addFlash("danger", "Impossible de vous inscrire");
             }
         }
-        return $this->redirectToRoute('main_accueil');
+        return $this->redirectToRoute('sortie_liste');
     }
 
-//------------------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------------------------------------------
 
     #[Route('/sortie/{id}', name: '_affichersortie',
         requirements: ['id' => '\d+'])]
@@ -115,7 +115,7 @@ class SortieController extends AbstractController{
             compact('sortie')
         );
     }
-//----------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------------------------------------------
     #[Route('/desistement/{sortie}',
         name: '_desistement')]
     public function desistementSorties(
@@ -135,6 +135,6 @@ class SortieController extends AbstractController{
                 $this->addFlash("danger", "Impossible de vous désister");
             }
         }
-        return $this->redirectToRoute('main_accueil');
+        return $this->redirectToRoute('sortie_liste');
     }
 }

@@ -4,11 +4,11 @@
 <h1>Profil de {{ participant.pseudo}}</h1>
 <div class="container">
     <ul>
-        <li>{{ participant.prenom}}</li>
-        <li>{{ participant.nom }}</li>
-        <li>{{ participant.telephone }}</li>
-        <li>{{ participant.email }}</li>
-        <li>{{ participant.campus.nom }}</li>
+        <li>Prénom :{{ participant.prenom}}</li>
+        <li>Nom : {{ participant.nom }}</li>
+        <li>Téléphone: {{ participant.telephone }}</li>
+        <li>E-mail : {{ participant.email }}</li>
+        <li>Campus : {{ participant.campus.nom }}</li>
     </ul>
 
     <a href="{{ path('sortie_liste') }}"><button>Retour</button></a>

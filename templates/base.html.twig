@@ -18,15 +18,16 @@
     <body>
         <header>
             <nav>
-                <div class="logo">
-                    <img src="{{ asset('img/logoSortie.png') }}">
-                </div>
+                <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
+                    <div class="logo">
+                        <img src="{{ asset('img/logoSortie.png') }}" alt="logo">
+                    </div>
+                </a>
                 {% if app.user %}
                     <div class="mb-3">
-                        Bienvenu {{ app.user.pseudo }} !
+                        Bienvenue {{ app.user.pseudo }} !
                     </div>
                 {% endif %}
-                </div>
                 {% block menu %}
                     <div >
                         <ul class="menu">
@@ -39,14 +40,9 @@
 
                         {% if app.user %}
                             <li><a href="{{ path('participant_modifierprofil',{'id' :app.user.id}) }}">MON PROFIL</a></li>
+                            <li><a href="{{ path('sortie_ajouter',{'organisateur':app.user.id}) }}">CREER UNE SORTIE</a></li>
                             <li><a href="{{ path('app_logout') }}">SE DECONNECTER</a></li>
                         {% endif %}
-
-                            {% if  app.user %}
-
-                                <li><a href="{{ path('sortie_ajouter',{'organisateur':app.user.id}) }}">CREER UNE SORTIE</a></li>
-
-                            {% endif %}
 
                         </ul>
                     </div>
