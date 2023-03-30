@@ -1,21 +1,23 @@
 {% extends 'base.html.twig' %}
+{% block title %}Détails de la sortie{% endblock %}
+
 
 {% block body %}
-    <p>Nom de la sortie : {{ sortie.nom }}</p>
-    <p>Date et heure du début : {{ sortie.DateHeureDebut | date ("d/m/Y H:m") }}</p>
-    <p>Date limite d'inscription : {{ sortie.DateLimiteInscription | date ("d/m/Y H:m") }}</p>
-    <p>Nombre limite d'inscription : {{ sortie.NbInscriptionsMax }}</p>
-    <p>Durée de la sortie : {{ sortie.duree }}</p>
-    <p>Description : {{ sortie.InfosSortie }}</p>
-    <p>Campus : {{ sortie.campus.nom }}</p>
-    <p>Lieu : {{ sortie.lieu.nom }}</p>
-    <p>Rue : {{ sortie.lieu.Rue }}</p>
-    <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
-    <p>Latitude : {{ sortie.lieu.latitude }}</p>
-    <p>Longitude : {{ sortie.lieu.longitude }}</p>
+    <ul>
+        <li>Nom de la sortie : {{ sortie.nom }}</li>
+        <li>Date et heure du début : {{ sortie.DateHeureDebut | date ("d/m/Y H:m") }}</li>
+        <li>Date limite d'inscription : {{ sortie.DateLimiteInscription | date ("d/m/Y H:m") }}</li>
+        <li>Nombre limite d'inscription : {{ sortie.NbInscriptionsMax }}</li>
+        <li>Durée de la sortie : {{ sortie.duree }}</li>
+        <li>Description : {{ sortie.InfosSortie }}</li>
+        <li>Campus : {{ sortie.campus.nom }}</li>
+        <li>Lieu : {{ sortie.lieu.nom }}</li>
+        <li>Rue : {{ sortie.lieu.Rue }}</li>
+        <li>Code postal : {{ sortie.lieu.ville.codePostal }}</li>
+        <li>Latitude : {{ sortie.lieu.latitude }}</li>
+        <li>Longitude : {{ sortie.lieu.longitude }}</li>
+    </ul>
+
 {% endblock %}
 
-{% block title %}
-
-{% endblock %}
 
