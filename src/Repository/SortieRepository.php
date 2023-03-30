@@ -43,6 +43,7 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
+
     public function filtreListeSorties(Filter $filter, Participant $userConnecte, Etat $sortiesPassees)
     {
         $queryBuilder = $this->createQueryBuilder('s');
@@ -111,6 +112,7 @@ class SortieRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
+
 
 //    public function findOneBySomeField($value): ?Sortie
 //    {

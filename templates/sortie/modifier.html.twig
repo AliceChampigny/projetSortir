@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block title %}Créer une sortie{% endblock %}
+{% block title %}Modifier la sortie{% endblock %}
 {% block body %}
+{#pour éviter la modification par user non organisateur    #}
+    {% if id.organisateur == app.user %}
 
-
-    <div>
         {{ form_start(sortieForm) }}
         {{ form_row(sortieForm.nom) }}
         {{ form_row(sortieForm.dateHeureDebut) }}
@@ -13,13 +13,10 @@
         {{ form_row(sortieForm.infosSortie) }}
         {{ form_row(sortieForm.ville) }}
         {{ form_row(sortieForm.lieu) }}
-
-{#        {{ form_row(sortieform.image) }}#}
-        <button>Créer une sortie</button>
+        <button>Modifier</button>
         {{ form_end(sortieForm) }}
-    </div>
-    <a href="{{ path('sortie_liste') }}"><button>Retour</button></a>
 
+    {% endif %}
     <script>
         let $ville = $('#sortie_form_ville');
         // let $token=$('#sortie_form__token');
@@ -52,9 +49,7 @@
             });
         });
     </script>
-
 {% endblock %}
 
-{#{'attr':{'onclick':'recupLieux()'}}#}
-{#{'attr':{'disabled':'true'}}#}
+
 

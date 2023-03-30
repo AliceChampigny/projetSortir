@@ -13,6 +13,7 @@ use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -165,33 +166,35 @@ class SortieController extends AbstractController{
         }
         return $this->redirectToRoute('sortie_liste');
     }
-    //---------------------------------------------------------------------------------//
-//    #[Route('/cloture/{sortie}',
-//    requirements: 'cloture')]
-//
-//    public function cloturerSortie(
-//        EntityManagerInterface $entityManager,
-//        Sortie                 $sortie,
-//    ): Response
-//    {
-//
-//        $sortie = $entityManager->getRepository(Sortie::class)->find($Id);
-//        $nbParticipants = $sortie->getNbParticipants();
-//        $nbMaxInscriptions = $sortie->getNbMaxInscriptions();
-//        $dateLimiteInscription = $sortie->getDateLimiteInscription();
-//
-//        if ($nbParticipants >= $nbMaxInscriptions) {
-//            $sortie->setEtat(Sortie::Cloturee);
-//            $entityManager->flush();
-//        }
-//
-//        $aujourdhui = new \DateTime();
-//        if ($aujourdhui > $dateLimiteInscription) {
-//           $sortie->setEtat(Sortie::Cloturee);
-//           $entityManager->flush();
-//        }
-//
-//        return $this->redirectToRoute('main_accueil');
-//    }
+
+//----------------------------------------------------------------------------------------------------------------------
+    #[Route(
+        '/modifier/{id}',
+        name: '_modifiersortie')]
+    public function modifierSortie(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        Sortie $id,
+        VilleRepository $villeRepository
+    ) : Response{
+
+        $sortieForm = $this->createForm(SortieFormType::class,$id);
+        $ville = $villeRepository->findOneBy(['id'=>$id->getLieu()->getVille()->getId()]);
+        $sortieForm->handleRequest($request);
+        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            try {
+                $entityManager->persist($id);
+                $entityManager->flush();
+                $this->addFlash('success', "Votre sortie a bien été modifiée" );
+                return $this->redirectToRoute('sortie_liste');
+            } catch (\Exception $exception){
+                $this->addFlash('danger', "Les modifications n'ont pas été effectuées". $exception->getMessage() );
+                return $this->redirectToRoute('sortie_modifiersortie',[
+                    'id'=>$id->getId()
+                ]);
+            }
+        }
+        return $this->render('sortie/modifier.html.twig',compact('sortieForm','id','ville'));
+    }
 
 }

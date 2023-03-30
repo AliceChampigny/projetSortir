@@ -72,11 +72,13 @@ class SortieFormType extends AbstractType
                 'class'=>Ville::class,
                 'choice_label'=>'nom',
                 'placeholder'=>'Selectionnez la ville'])
-            ->add('lieu', ChoiceType::class,[
-                    'placeholder'=>'Lieu [choisissez d\'abord une région]'
 
-   
-                    ]
+            ->add('lieu', EntityType::class,[
+                'class'=>Lieu::class,
+                'placeholder'=>'Lieu [choisissez d\'abord une région]',
+                'choices'=>[]
+                ]
+
             );
 
         $formModifier = function (
