@@ -6,6 +6,9 @@
 
 
      <h2>Filtrer les sorties</h2>
+
+         {{ form(form) }}
+
      <table>
      <thead>
      <tr>
@@ -29,7 +32,7 @@
              <td> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </td>
              <td>{{ sortie.etat.libelle }}</td>
              <td>
-                 {% if not sortie.participants.contains(app.user) %}
+                 {% if sortie.participants.contains(app.user) %}
                      X
                  {% endif %}
              </td>
@@ -51,6 +54,6 @@
      {% endif %}
 
      {% if not app.user %}
-         <h1>Bienvenue !!</h1>
+         <h1>Bienvenue sur les sorties enitiennes.com !!</h1>
      {% endif %}
  {% endblock %}
