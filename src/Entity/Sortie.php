@@ -19,55 +19,67 @@ class Sortie
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
-    #[Assert\Assert\NotNull(
-        message: 'Le nom ne peut pas être nul'
+    #[Assert\NotNull(null,
+        message: 'Le nom ne peut pas être null'
     )]
-    #[Assert\Assert\NotBlank(
-        message: 'Le nom ne peut pas être nul'
+    #[Assert\NotBlank(null,
+        message: 'Le nom ne peut pas être vide'
     )]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\Assert\NotNull(
-        message: "Le date et l'heure de début ne peuvent pas être nulles"
+    #[Assert\NotNull(null,
+        message: "Le date et l'heure de début ne peuvent pas être null"
     )]
-    #[Assert\Assert\NotBlank(
-        message: "Le date et l'heure de début ne peuvent pas être nulles"
+    #[Assert\NotBlank(null,
+        message: "Le date et l'heure de début ne peuvent pas être vides"
+    )]
+    #[Assert\GreaterThanOrEqual('+ 1 days',
+    message: 'La date de début de l\'activité doit être supérieure à aujourd\'hui'
+    )]
+    #[Assert\GreaterThanOrEqual(
+        propertyPath: 'dateLimiteInscription',
+        message: 'La date de début de l\'activité ne doit pas être antérieure à la date limite d\'inscription'
     )]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column]
-    #[Assert\Assert\NotNull(
-        message: 'La durée ne peut pas être nulle'
+    #[Assert\NotNull(null,
+        message: 'La durée ne peut pas être null'
     )]
-    #[Assert\Assert\NotBlank(
-        message: 'Le durée ne peut pas être nulle'
+    #[Assert\Positive(null,
+        message: 'La durée ne peut pas être inférieure ou égale à zéro')]
+    #[Assert\NotBlank(null,
+        message: 'Le durée ne peut pas être vide'
     )]
     private ?int $duree = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\Assert\NotNull(
+    #[Assert\NotNull(null,
         message: "La date limite d'inscription ne peut pas être nulle"
     )]
-    #[Assert\Assert\NotBlank(
+    #[Assert\NotBlank(
         message: "La date limite d'inscription ne peut pas être nulle"
     )]
+    #[Assert\GreaterThan('today')]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
-    #[Assert\Assert\NotNull(
+    #[Assert\NotNull(null,
         message: "Le nombre maximum de participants ne peut pas être nul"
     )]
-    #[Assert\Assert\NotBlank(
+    #[Assert\NotBlank(null,
         message: "Le nombre maximum de participants ne peut pas être nul"
     )]
+    #[Assert\Positive(null,
+        message: 'Le nombre d\'inscrit maximum ne peut pas être inférieure ou égale à zéro')]
     private ?int $nbInscriptionsMax = null;
 
     #[ORM\Column(length: 500)]
-    #[Assert\Assert\NotNull(
+    #[Assert\NotNull(null,
         message: "La description de l'évènement ne peut pas être nulle"
     )]
-    #[Assert\Assert\NotBlank(
+    #[Assert\NotBlank(null,
         message: "La description de l'évènement ne peut pas être nulle"
     )]
     private ?string $infosSortie = null;
