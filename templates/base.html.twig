@@ -31,7 +31,6 @@
                     <div >
                         <ul class="menu">
 
-
                             {% if not app.user %}
                             <li><a href="{{ path('main_accueil') }}">ACCUEIL</a></li>
                             <li><a href="{{ path('app_login') }}">SE CONNECTER</a></li>
@@ -45,7 +44,7 @@
 
                             {% if  app.user %}
 
-                                <li><a href="{{ path('sortie_ajouter',{'organisateur':app.user.id}) }}">Ajouter une sortie</a></li>
+                                <li><a href="{{ path('sortie_ajouter',{'organisateur':app.user.id}) }}">CREER UNE SORTIE</a></li>
 
                             {% endif %}
 
