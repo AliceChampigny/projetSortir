@@ -52,9 +52,11 @@
 
         {% endif %}
     </div>
-
+    {% if sortie.organisateur == app.user and sortie.etat.id == 1 %}
+        <a href="{{ path('sortie_modifiersortie',{'id' : app.user.id}) }}"><button>Modifier la sortie</button></a>
+    {% endif %}
     <a href="{{ path('sortie_liste') }}"><button>Retour</button></a>
-
+    
 {% endblock %}
 
 
