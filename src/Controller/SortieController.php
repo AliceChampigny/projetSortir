@@ -3,17 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
-use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Form\FilterType;
 use App\Form\SortieFormType;
+use App\modeles\Filter;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,16 +26,42 @@ class SortieController extends AbstractController{
 
     #[Route('/', name: '_liste')]
     public function ListeSorties(
-        SortieRepository $sortieRepository
+        SortieRepository $sortieRepository,
+        Request $request,
+        FormFactoryInterface $formFactory,
+        EtatRepository $etatRepository
+
     ): Response
     {
-        $sorties = $sortieRepository->findAll();
+        $filter = new Filter();
+        $form = $formFactory ->create(FilterType::class, $filter);
+        $form->handleRequest($request);
+        $userConnecte = $this->getUser();
+        $id = 5;
+        $sortiesPassees = $etatRepository->find($id);
 
 
-        return $this->render('main/accueil.html.twig',
-            compact('sorties')
+        return $this->render('main/accueil.html.twig', [
+            'form' => $form->createView(),
+            'sorties' => $sortieRepository -> filtreListeSorties($filter, $userConnecte, $sortiesPassees),
+
+            ]
         );
     }
+
+//if ($sortie){
+//try{
+//$participant= $this->getUser();
+//$sortie->addParticipant($participant);
+//$entityManager->persist($sortie);
+//$entityManager->flush();
+//$this->addFlash("success", "Votre inscription a bien été enregistrée");
+//} catch (\Exception $exception){
+//    $this->addFlash("danger", "Impossible de vous inscrire");
+//}
+//}
+//        return $this->redirectToRoute('main_accueil');
+//        }
 
 //----------------------------------------------------------------------------------------------------------------------
     #[Route('/ajouter/{organisateur}',

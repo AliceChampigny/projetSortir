@@ -6,6 +6,9 @@
 
 
      <h2>Filtrer les sorties</h2>
+
+         {{ form(form) }}
+
      <table>
      <thead>
      <tr>
@@ -58,6 +61,6 @@
      {% endif %}
 
      {% if not app.user %}
-         <h1>Bienvenue !!</h1>
+         <h1>Bienvenue sur les sorties enitiennes.com !!</h1>
      {% endif %}
  {% endblock %}
