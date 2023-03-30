@@ -13,7 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -30,22 +32,53 @@ class SortieFormType extends AbstractType
     ): void{
 
         $builder
-            ->add('nom')
-            ->add('dateHeureDebut', DateTimeType::class,['html5' => true, 'widget' => 'single_text','required'=>false])
-            ->add('duree')
-            ->add('dateLimiteInscription', DateTimeType::class,['html5' => true, 'widget' => 'single_text','required'=>false])
-            ->add('nbInscriptionsMax')
-            ->add('infosSortie',TextareaType::class)
-            ->add('ville',EntityType::class,[
+
+            ->add('nom', TextType::class, array(
+                'required' => true,
+                'label'  => ' ',
+                'attr' => array(
+                    'class' => 'feed-form',
+                    'placeholder' => "Nom de l'évènement"
+                )
+            ))
+            ->add('dateHeureDebut', null, ['html5' => true, 'widget' => 'single_text'])
+            ->add('duree', TextType::class, array(
+                'required' => true,
+                'label'  => ' ',
+                'attr' => array(
+                    'class' => 'feed-form',
+                    'placeholder' => "Durée de l'évènement (en minutes)"
+                )
+            ))
+            ->add('dateLimiteInscription', null, ['html5' => true, 'widget' => 'single_text'])
+            ->add('nbInscriptionsMax', TextType::class, array(
+                'required' => true,
+                'label'  => ' ',
+                'attr' => array(
+                    'class' => 'feed-form',
+                    'placeholder' => 'Nombre de participants max'
+                )
+            ))
+            ->add('infosSortie', TextType::class, array(
+                'required' => true,
+                'label'  => ' ',
+                'attr' => array(
+                    'class' => 'feed-form',
+                    'placeholder' => "Description de l'évènement"
+                )
+            ))
+             ->add('ville',EntityType::class,[
                 'mapped'=>false,
                 'class'=>Ville::class,
                 'choice_label'=>'nom',
                 'placeholder'=>'Selectionnez la ville'])
+
             ->add('lieu', EntityType::class,[
                 'class'=>Lieu::class,
                 'placeholder'=>'Lieu [choisissez d\'abord une région]',
                 'choices'=>[]
                 ]
+
             );
 
         $formModifier = function (

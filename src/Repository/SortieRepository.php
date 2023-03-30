@@ -2,7 +2,11 @@
 
 namespace App\Repository;
 
+
+use App\Entity\Etat;
+use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\modeles\Filter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,20 +43,76 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @return Sortie[] Returns an array of Sortie objects
-     */
-    public function findByExampleField($value): array
+
+    public function filtreListeSorties(Filter $filter, Participant $userConnecte, Etat $sortiesPassees)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $queryBuilder = $this->createQueryBuilder('s');
+        if ($filter -> getCampus() !== null){
+            $queryBuilder
+                -> where("s.campus = :campus")
+                -> setParameter("campus", $filter -> getCampus());
+
+        }
+        if($filter->getKeyWord() !== null){
+            $queryBuilder
+                ->andWhere("s.nom LIKE :keyWord")
+                -> setParameter("keyWord", '%'.$filter->getKeyWord().'%');
+        }
+
+        if($filter->getDateDebut() !== null){
+            $queryBuilder
+                ->andWhere("s.dateHeureDebut > :dateDebut")
+                -> setParameter("dateDebut", $filter->getDateDebut());
+        }
+
+        if($filter->getDateFin() !== null){
+            $queryBuilder
+                ->andWhere("s.dateHeureDebut < :dateFin")
+                -> setParameter("dateFin", $filter->getDateFin());
+        }
+
+        if($filter->getOrganisateurSorties()){
+            $queryBuilder
+                ->andWhere("s.organisateur = :organisateurSorties")
+                -> setParameter("organisateurSorties", $userConnecte);
+        }
+
+        if($filter->getInscritSorties()){
+            $queryBuilder
+                ->andWhere(":inscritsSortie MEMBER OF s.participants ")
+                -> setParameter("inscritsSortie", $userConnecte);
+        }
+
+        if($filter->getNonInscritSorties()){
+            $queryBuilder
+                -> andWhere(":inscritsSortie MEMBER OF s.participants")
+                -> setParameter("inscritsSortie", $userConnecte);
+        }
+
+        if($filter->getSortiesPassees()){
+            $queryBuilder
+                -> andWhere("s.etat = :sortiesPassees")
+               -> setParameter("sortiesPassees", $sortiesPassees);
+        }
+
+        return $queryBuilder -> getQuery()->getResult();
     }
+
+//    /**
+//     * @return Sortie[] Returns an array of Sortie objects
+//     */
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('s')
+//            ->andWhere('s.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('s.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
+
 
 //    public function findOneBySomeField($value): ?Sortie
 //    {
