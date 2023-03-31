@@ -8,7 +8,9 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\modeles\Filter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
+use function Sodium\add;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -47,6 +49,7 @@ class SortieRepository extends ServiceEntityRepository
     public function filtreListeSorties(Filter $filter, Participant $userConnecte, Etat $sortiesPassees)
     {
         $queryBuilder = $this->createQueryBuilder('s');
+
         if ($filter -> getCampus() !== null){
             $queryBuilder
                 -> where("s.campus = :campus")
@@ -77,15 +80,16 @@ class SortieRepository extends ServiceEntityRepository
                 -> setParameter("organisateurSorties", $userConnecte);
         }
 
-        if($filter->getInscritSorties()){
+        if($filter->getInscritSorties() ){
             $queryBuilder
                 ->andWhere(":inscritsSortie MEMBER OF s.participants ")
                 -> setParameter("inscritsSortie", $userConnecte);
         }
 
+
         if($filter->getNonInscritSorties()){
             $queryBuilder
-                -> andWhere(":inscritsSortie MEMBER OF s.participants")
+                ->andWhere(":inscritsSortie NOT MEMBER OF s.participants ")
                 -> setParameter("inscritsSortie", $userConnecte);
         }
 
@@ -98,29 +102,5 @@ class SortieRepository extends ServiceEntityRepository
         return $queryBuilder -> getQuery()->getResult();
     }
 
-//    /**
-//     * @return Sortie[] Returns an array of Sortie objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-
-//    public function findOneBySomeField($value): ?Sortie
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

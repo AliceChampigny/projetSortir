@@ -27,27 +27,35 @@ class FilterType extends AbstractType
             ->add('dateDebut', DateTimeType::class, [
                 'date_label' => 'dateDebut',
                 'required' => false,
+                'widget' => 'single_text',
+                'html5' => true,
                 ])
             ->add('dateFin', DateTimeType::class, [
                 'date_label' => 'dateFin',
                 'required' => false,
+                'widget' => 'single_text',
+                'html5' => true,
             ])
             ->add('organisateurSorties', CheckboxType::class, [
                 'label'    => "Sorties dont je suis l'organisateur/trice",
                 'required' => false,
+                'data' => true,
             ])
             ->add('inscritSorties', CheckboxType::class, [
                 'label'    => "Sorties auxquelles je suis inscrit/e ",
                 'required' => false,
+                'data' => true,
             ])
             ->add('nonInscritSorties', CheckboxType::class, [
                 'label'    => "Sorties auxquelles je ne suis pas inscrit/e ",
                 'required' => false,
+                'data' => true,
 
             ])
             ->add('sortiesPassees', CheckboxType::class, [
                 'label'    => "Sorties passées ",
                 'required' => false,
+
             ])
             ->add("Rechercher", SubmitType::class)
         ;
