@@ -49,6 +49,7 @@
                          {% if sortie.participants.contains(app.user) %}
                              X
                          {% endif %}
+
                      </td>
                      <td><a href="{{ path('participant_afficherprofil',{'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
                      <td>
@@ -65,8 +66,7 @@
                          {% endif %}
                      </td>
                  </tr>
-                 </tr>
-                 </tr>
+                
              {% endfor %}
 
              </tbody>
@@ -77,5 +77,4 @@
      {% if not app.user %}
          <h1>Bienvenue sur les sorties enitiennes.com !!</h1>
      {% endif %}
-
  {% endblock %}
