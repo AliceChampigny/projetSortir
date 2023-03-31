@@ -85,7 +85,7 @@ class SortieRepository extends ServiceEntityRepository
 
         if($filter->getNonInscritSorties()){
             $queryBuilder
-                -> andWhere(":inscritsSortie MEMBER OF s.participants")
+                -> andWhere(":inscritsSortie NOT MEMBER OF s.participants")
                 -> setParameter("inscritsSortie", $userConnecte);
         }
 

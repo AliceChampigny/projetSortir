@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(
@@ -32,7 +33,9 @@ class ParticipantController extends AbstractController{
     public function modifierProfil(
         EntityManagerInterface $entityManager,
         Request $request,
-        Participant $id
+        Participant $id,
+        UserPasswordHasherInterface $userPasswordHasher
+
     ) : Response{
 
         $participantForm = $this->createForm(ParticipantType::class,$id);
@@ -40,6 +43,13 @@ class ParticipantController extends AbstractController{
 
         if($participantForm->isSubmitted() && $participantForm->isValid()){
             try{
+                $id->setPassword(
+                    $userPasswordHasher->hashPassword(
+                    $id,
+                    $participantForm->get('plainPassword')->getData()
+                    )
+                );
+
                 $entityManager->persist($id);
                 $entityManager->flush();
                 $this->redirectToRoute('sortie_liste');

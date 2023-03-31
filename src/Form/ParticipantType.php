@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
 use App\Entity\Participant;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -20,13 +22,15 @@ class ParticipantType extends AbstractType
             ->add('pseudo',TextType::class,['label'=>'Pseudo '])
             ->add('email',TextType::class,['label'=>'E-mail '])
             ->add('telephone',TextType::class,['label'=>'Téléphone '])
-            ->add('password',RepeatedType::class, [
+            ->add('plainPassword',RepeatedType::class, [
+                'mapped' => false,
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe doit être renseigné',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
                 'first_options'  => ['label' => 'Mot de passe '],
                 'second_options' => ['label' => 'Confirmation du mot de passe ']])
+            ->add('campus',EntityType::class,['class'=>Campus::class,'choice_label'=>'nom','disabled'=>true])
         ;
     }
 

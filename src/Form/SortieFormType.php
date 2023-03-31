@@ -76,7 +76,7 @@ class SortieFormType extends AbstractType
             ->add('lieu', EntityType::class,[
                 'class'=>Lieu::class,
                 'placeholder'=>'Lieu [choisissez d\'abord une région]',
-                'choices'=>[]
+                'choice_label'=>'nom'
                 ]
 
             );
@@ -86,7 +86,6 @@ class SortieFormType extends AbstractType
             Ville $ville = null){
 
             $lieux = ($ville === null)? [] : $ville->getLieux();
-            dump($lieux);
             $form
                 ->add('lieu',EntityType::class,[
                     'class'=>Lieu::class,
