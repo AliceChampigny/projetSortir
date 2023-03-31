@@ -17,17 +17,19 @@ class ParticipantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom',TextType::class,['label'=>'Nom '])
-            ->add('prenom',TextType::class,['label'=>'Prénom '])
-            ->add('pseudo',TextType::class,['label'=>'Pseudo '])
-            ->add('email',TextType::class,['label'=>'E-mail '])
-            ->add('telephone',TextType::class,['label'=>'Téléphone '])
+
+            ->add('nom',TextType::class,['label'=>' ', 'attr'=> array('class'=>'input2')])
+            ->add('prenom',TextType::class,['label'=>' ', 'attr'=> array('class'=>'input2')])
+            ->add('pseudo',TextType::class,['label'=>' ', 'attr'=> array('class'=>'input2')])
+            ->add('email',TextType::class,['label'=>' ', 'attr'=> array('class'=>'input2')])
+            ->add('telephone',TextType::class,['label'=>' ', 'attr'=> array('class'=>'input2')])
             ->add('plainPassword',RepeatedType::class, [
                 'mapped' => false,
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe doit être renseigné',
-                'options' => ['attr' => ['class' => 'password-field']],
+                'options' => ['attr' => ['class' => 'input2', 'placeholder'=>'Mot de passe']],
                 'required' => true,
+
                 'first_options'  => ['label' => 'Mot de passe '],
                 'second_options' => ['label' => 'Confirmation du mot de passe ']])
             ->add('campus',EntityType::class,['class'=>Campus::class,'choice_label'=>'nom','disabled'=>true])

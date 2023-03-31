@@ -3,15 +3,53 @@
 
 {% block body %}
     <div class="container">
-        <span>
-        <img src="" alt="photo">
-        </span>
-{{ form_start(participantForm) }}
-{{ form_widget(participantForm) }}
-    <button class="btn btn-md btn-primary">Modifier</button>
-{{ form_end(participantForm) }}
+{#        <span>#}
+{#        <img src="" alt="photo">#}
+{#        </span>#}
+{#{{ form_start(participantForm) }}#}
+{#        {{ form_widget(participantForm) }}#}
+{#    <button class="btn btn-md btn-primary">Modifier</button>#}
+{#{{ form_end(participantForm) }}#}
     </div>
-    <a href="{{ path('sortie_liste') }}"><button>Retour</button></a>
+
+
+<form method="post" class="form" action="#">
+
+    {{ form_start(participantForm) }}
+
+    <label>
+        {{ form_row(participantForm.nom) }}
+    </label>
+    <label>
+        {{ form_row(participantForm.prenom) }}
+    </label>
+    <label>
+        {{ form_row(participantForm.pseudo) }}
+    </label>
+    <label>
+        {{ form_row(participantForm.email) }}
+    </label>
+    <label>
+        {{ form_row(participantForm.telephone) }}
+    </label>
+    <label>
+        {{ form_row(participantForm.password) }}
+    </label>
+    <label>
+{#        {{ form_row(participantForm.plainPassword.second) }}#}
+    </label>
+
+
+    <div class="flex">
+        <a href="{{ path('sortie_liste') }}">
+            <button type="submit" class="submit">Modifiez</button>
+        </a>
+        {#        <a href="{{ path('/sortie_liste') }}">#}
+        <button class="submit">Retour</button>
+        </a>
+    </div>
+    {{ form_end(participantForm) }}
+
 {% endblock %}
 
 

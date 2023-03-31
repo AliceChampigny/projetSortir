@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Form\ParticipantType;
+use App\Form\RegistrationFormType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -73,7 +74,68 @@ public function afficherProfil(
 ) : Response{
 
         $participant = $participantRepository->findOneBy(['id'=>$id->getId()]);
-        dump($participant);
         return $this->render('participant/afficherprofil.html.twig',compact('participant'));
 }
+
+    #[Route(
+        '/admin',
+        name: '_admin')]
+    public function admin(
+
+    ) : Response{
+
+        return $this->render('participant/admin.html.twig');
+    }
+
+    #[Route(
+        '/admin/gestionutilisateur',
+        name: '_adminGestionUtilisateur')]
+    public function adminGestionUtilisateur(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+        {
+            $user = new Participant();
+            $user -> setActif(true);
+            $user -> setAdministrateur(false);
+            $form = $this->createForm(RegistrationFormType::class, $user);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                try{
+                    // encode the plain password
+                    $user->setPassword(
+                        $userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('plainPassword')->getData()
+                        )
+                    );
+
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                    // do anything else you need here, like send an email
+
+                    return $this->redirectToRoute('participant_adminGestionUtilisateur');
+                }catch (\Exception $exception){
+                    $this->addFlash('danger','L\'inscription n\'a pas été effectuée'.$exception->getMessage());
+                    return $this->redirectToRoute('participant_adminGestionUtilisateur');
+                }
+
+
+            }
+
+            return $this->render('participant/adminGestionUtilisateur.html.twig', [
+                'registrationForm' => $form->createView(),
+            ]);
+        }
+
+
+    #[Route(
+        '/admin/gestionsortie',
+        name: '_adminGestionSortie')]
+    public function adminGestionSortie(
+
+    ) : Response{
+
+
+        return $this->render('participant/adminGestionSortie.html.twig');
+    }
+
 }
