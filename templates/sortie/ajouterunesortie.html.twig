@@ -1,60 +1,81 @@
 {% extends 'base.html.twig' %}
 {% block title %}Créer une sortie{% endblock %}
 {% block body %}
-
-
-    <div>
-        {{ form_start(sortieForm) }}
+<form method="post" class="form" action="#">
+    {{ form_start(sortieForm) }}
+    <p class="title">Ajoutez-votre évènement!</p>
+    {#    <p class="message">Dépechez-vous de vous inscire ! </p> #}
+    <label>
         {{ form_row(sortieForm.nom) }}
+    </label>
+    <label>
         {{ form_row(sortieForm.dateHeureDebut) }}
+    </label>
+    <label>
         {{ form_row(sortieForm.duree) }}
+    </label>
+    <label>
         {{ form_row(sortieForm.dateLimiteInscription) }}
+    </label>
+    <label>
         {{ form_row(sortieForm.nbInscriptionsMax) }}
+    </label>
+    <label>
         {{ form_row(sortieForm.infosSortie) }}
+    </label>
+    <label>
         {{ form_row(sortieForm.ville) }}
+    </label>
+    <label>
         {{ form_row(sortieForm.lieu) }}
+    </label>
 
-{#        {{ form_row(sortieform.image) }}#}
-        <button>Créer une sortie</button>
-        {{ form_end(sortieForm) }}
+    <div class="flex">
+        <a href="{{ path('sortie_liste') }}">
+            <button type="submit" class="submit">Ajoutez</button>
+        </a>
+{#        <a href="{{ path('/sortie_liste') }}">#}
+            <button class="submit">Retour</button>
+        </a>
     </div>
-    <a href="{{ path('sortie_liste') }}"><button>Retour</button></a>
+    {{ form_end(sortieForm) }}
+    {#        {{ form_row(sortieform.image) }} #}
+
 
     <script>
         let $ville = $('#sortie_form_ville');
         // let $token=$('#sortie_form__token');
-        let $dateDebut=$('#sortie_form_dateHeureDebut');
-        let $dateLimiteInscription=$('#sortie_form_dateLimiteInscription');
-        let $nom=$('#sortie_form_nom');
-        let $duree=$('#sortie_form_duree');
-        let $nbMaxInscrit=$('#sortie_form_nbInscriptionsMax');
-        let $infosSortie=$('#sortie_form_infosSortie');
+        let $dateDebut = $('#sortie_form_dateHeureDebut');
+        let $dateLimiteInscription = $('#sortie_form_dateLimiteInscription');
+        let $nom = $('#sortie_form_nom');
+        let $duree = $('#sortie_form_duree');
+        let $nbMaxInscrit = $('#sortie_form_nbInscriptionsMax');
+        let $infosSortie = $('#sortie_form_infosSortie');
 
-        $ville.change(function(){
+        $ville.change(function () {
             let $form = $(this).closest('form');
             let data = {};
             data[$ville.attr('name')] = $ville.val();
             // data[$token.attr('name')]=$token.val();
-            data[$dateDebut.attr('name')]=$dateDebut.val();
-            data[$dateLimiteInscription.attr('name')]=$dateLimiteInscription.val();
-            data[$nom.attr('name')]=$nom.val();
-            data[$duree.attr('name')]=$duree.val();
-            data[$nbMaxInscrit.attr('name')]=$nbMaxInscrit.val();
-            data[$infosSortie.attr('name')]=$infosSortie.val();
+            data[$dateDebut.attr('name')] = $dateDebut.val();
+            data[$dateLimiteInscription.attr('name')] = $dateLimiteInscription.val();
+            data[$nom.attr('name')] = $nom.val();
+            data[$duree.attr('name')] = $duree.val();
+            data[$nbMaxInscrit.attr('name')] = $nbMaxInscrit.val();
+            data[$infosSortie.attr('name')] = $infosSortie.val();
 
             $.ajax({
-                url : $form.attr('action'),
+                url: $form.attr('action'),
                 type: $form.attr('method'),
-                data : data,
-                complete: function(html){
+                data: data,
+                complete: function (html) {
                     $('#sortie_form_lieu').replaceWith($(html.responseText).find('#sortie_form_lieu'));
                 }
             });
         });
     </script>
+    {% endblock %}
 
-{% endblock %}
-
-{#{'attr':{'onclick':'recupLieux()'}}#}
-{#{'attr':{'disabled':'true'}}#}
+    {# {'attr':{'onclick':'recupLieux()'}} #}
+    {# {'attr':{'disabled':'true'}} #}
 

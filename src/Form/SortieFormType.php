@@ -37,25 +37,31 @@ class SortieFormType extends AbstractType
                 'required' => true,
                 'label'  => ' ',
                 'attr' => array(
-                    'class' => 'feed-form',
+                    'class' => 'input2',
                     'placeholder' => "Nom de l'évènement"
                 )
             ))
-            ->add('dateHeureDebut', null, ['html5' => true, 'widget' => 'single_text'])
+            ->add('dateHeureDebut', null, ['attr'=>array(
+                'class'=>'input2',
+                'label'=>' '
+            ), 'html5' => true, 'widget' => 'single_text'])
             ->add('duree', TextType::class, array(
                 'required' => true,
                 'label'  => ' ',
                 'attr' => array(
-                    'class' => 'feed-form',
+                    'class' => 'input2',
                     'placeholder' => "Durée de l'évènement (en minutes)"
                 )
             ))
-            ->add('dateLimiteInscription', null, ['html5' => true, 'widget' => 'single_text'])
+            ->add('dateLimiteInscription', null, ['attr'=>array(
+                'class'=>'input2'
+            ) ,'html5' => true, 'widget' => 'single_text'])
+
             ->add('nbInscriptionsMax', TextType::class, array(
                 'required' => true,
                 'label'  => ' ',
                 'attr' => array(
-                    'class' => 'feed-form',
+                    'class' => 'input2',
                     'placeholder' => 'Nombre de participants max'
                 )
             ))
@@ -63,7 +69,7 @@ class SortieFormType extends AbstractType
                 'required' => true,
                 'label'  => ' ',
                 'attr' => array(
-                    'class' => 'feed-form',
+                    'class' => 'input2',
                     'placeholder' => "Description de l'évènement"
                 )
             ))
@@ -71,15 +77,20 @@ class SortieFormType extends AbstractType
                 'mapped'=>false,
                 'class'=>Ville::class,
                 'choice_label'=>'nom',
-                'placeholder'=>'Selectionnez la ville'])
+                'attr' => array(
+                    'placeholder'=>'Selectionnez la ville',
+                    'class'=>'input3'
+                )
+             ])
 
             ->add('lieu', EntityType::class,[
                 'class'=>Lieu::class,
-                'placeholder'=>'Lieu [choisissez d\'abord une région]',
-                'choices'=>[]
-                ]
-
-            );
+                'choices'=>[],
+                'attr'=>array(
+                    'class'=>'input3',
+                    'placeholder'=>'Lieu [choisissez d\'abord une région]'
+                )
+                ]);
 
         $formModifier = function (
             FormInterface $form,
@@ -94,6 +105,8 @@ class SortieFormType extends AbstractType
                     'choice_label'=>'nom',
                     'placeholder'=>'Lieu [choisissez d\'abord une ville]',
                     'label'=>'Lieu',
+                    'attr'=> array(
+                    'class'=>'input3')
 
                 ]);
         };
