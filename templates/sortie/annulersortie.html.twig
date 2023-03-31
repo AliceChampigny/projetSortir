@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block title %}Annuler la sortie{% endblock %}
+{% block body %}
+<h1>Annuler la sortie</h1>
+
+    {{ form_start(sortieForm) }}
+
+    {{ form_row(sortieForm.nom, {'attr': {'readonly': true}}) }}
+    {{ form_row(sortieForm.dateHeureDebut, {'attr': {'readonly': true}}) }}
+    {{ form_row(sortieForm.dateLimiteInscription, {'attr': {'readonly': true}}) }}
+    {{ form_row(sortieForm.nbInscriptionsMax, {'attr': {'readonly': true}}) }}
+    {{ form_row(sortieForm.duree, {'attr': {'readonly': true}}) }}
+    {{ form_row(sortieForm.infosSortie, {'attr': {'placeholder': 'Motif d\'annulation'}}) }}
+{#    {{ form_row(sortieForm.campus) }}#}
+    {{ form_row(sortieForm.ville,{'attr': {'readonly': true},'value': sortie.lieu.ville.id }) }}
+    {{ form_row(sortieForm.lieu, {'attr': {'readonly': true},'value': sortie.lieu.id }) }}
+<button>Annuler la sortie</button>
+    {{ form_end(sortieForm) }}
+{% endblock %}
+
+
+

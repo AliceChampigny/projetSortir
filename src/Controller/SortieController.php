@@ -156,32 +156,126 @@ class SortieController extends AbstractController{
 
 //----------------------------------------------------------------------------------------------------------------------
     #[Route(
-        '/modifier/{id}',
+        '/modifier/{sortie}',
         name: '_modifiersortie')]
     public function modifierSortie(
         EntityManagerInterface $entityManager,
-        Request $request,
-        Sortie $id,
-        VilleRepository $villeRepository
+        Request                $request,
+        Sortie                 $sortie,
+        VilleRepository        $villeRepository
+    ) : Response{
+        if($sortie->getOrganisateur() === $this->getUser()){
+            if($sortie->getEtat()->getId()===1 ){
+                $sortieForm = $this->createForm(SortieFormType::class,$sortie);
+                $ville = $villeRepository->findOneBy(['id'=>$sortie->getLieu()->getVille()->getId()]);
+                $sortieForm->handleRequest($request);
+
+                if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+
+                    try {
+                        $entityManager->persist($sortie);
+                        $entityManager->flush();
+                        $this->addFlash('success', "Votre sortie a bien été modifiée" );
+                        return $this->redirectToRoute('sortie_liste');
+                    } catch (\Exception $exception){
+                        $this->addFlash('danger', "Les modifications n'ont pas été effectuées". $exception->getMessage() );
+                        return $this->redirectToRoute('sortie_modifiersortie',[
+                            'sortie' =>$sortie->getId()
+                        ]);
+                    }
+                }
+                return $this->render('sortie/modifier.html.twig',compact('sortieForm', 'sortie','ville'));
+            }else{
+                $this->addFlash('danger', "La modification d'une sortie dont l'état est autre que 'Créée', 
+                                                                est impossible" );
+                return $this->redirectToRoute('sortie_liste');
+            }
+        }else{
+            $this->addFlash('danger', "La modification d'une sortie 
+                                                    dont vous n'êtes pas l'organisateur est impossible" );
+            return $this->redirectToRoute('sortie_liste');
+        }
+
+    }
+//----------------------------------------------------------------------------------------------------------------------
+    #[Route(
+        '/supprimer/{sortie}',
+        name: '_supprimersortie')]
+    public function supprimerSortie(
+        Sortie $sortie,
+        EntityManagerInterface $entityManager
+    ) : Response{
+        if($sortie->getOrganisateur() === $this->getUser()){
+            if($sortie->getEtat()->getId()===1 ){
+                try{
+
+                    $entityManager->remove($sortie);
+                    $entityManager->flush();
+                    $this->addFlash('success', "Votre sortie a bien été supprimée" );
+
+                }catch (\Exception $exception) {
+                    $this->addFlash('danger', "La suppression n'a pas été effectuée" . $exception->getMessage());
+                    return $this->redirectToRoute('sortie_modifiersortie', [
+                        'sortie' => $sortie->getId()
+                    ]);
+                }
+            }
+            else{
+                $this->addFlash('danger', "La suppression d'une sortie dont l'état est autre que 'Créée', 
+                                                                est impossible" );
+            }
+        }else{
+            $this->addFlash('danger', "La suppression d'une sortie 
+                                                    dont vous n'êtes pas l'organisateur est impossible" );
+        }
+        return $this->redirectToRoute('sortie_liste');
+    }
+//----------------------------------------------------------------------------------------------------------------------
+    #[Route(
+        '/annuler/{sortie}',
+        name: '_annulersortie')]
+    public function annulerSortie(
+        Sortie $sortie,
+        EntityManagerInterface $entityManager,
+        EtatRepository $etatRepository,
+        Request $request
     ) : Response{
 
-        $sortieForm = $this->createForm(SortieFormType::class,$id);
-        $ville = $villeRepository->findOneBy(['id'=>$id->getLieu()->getVille()->getId()]);
-        $sortieForm->handleRequest($request);
-        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-            try {
-                $entityManager->persist($id);
-                $entityManager->flush();
-                $this->addFlash('success', "Votre sortie a bien été modifiée" );
+        if($sortie->getOrganisateur() === $this->getUser()){
+            if($sortie->getEtat()->getId()=== 2 || $sortie->getEtat()->getId()=== 3  ){
+                $sortie->setInfosSortie( '');
+                $sortieForm = $this->createForm(SortieFormType::class,$sortie);
+                $sortieForm->handleRequest($request);
+
+                if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+
+                    try{
+                        $etat = $etatRepository->findOneBy(['id' => 6]);
+                        $sortie->setEtat($etat);
+                        $entityManager->persist($sortie);
+                        $entityManager->flush();
+                        $this->addFlash('success', "Votre sortie a bien été annulée");
+                        return $this->redirectToRoute('sortie_liste');
+
+                    }catch(\Exception $exception){
+                        $this->addFlash('danger', "Les modifications n'ont pas été effectuées". $exception->getMessage() );
+                        return $this->redirectToRoute('sortie_modifiersortie',[
+                            'sortie' =>$sortie->getId()
+                        ]);
+                    }
+                }
+                return $this->render('sortie/annulersortie.html.twig',compact('sortieForm','sortie'));
+                } else{
+                $this->addFlash('danger', 'L\'annulation d\'une sortie dont l\'état est autre que
+                                                        "Ouverte" ou "Cloturée" est impossible' );
                 return $this->redirectToRoute('sortie_liste');
-            } catch (\Exception $exception){
-                $this->addFlash('danger', "Les modifications n'ont pas été effectuées". $exception->getMessage() );
-                return $this->redirectToRoute('sortie_modifiersortie',[
-                    'id'=>$id->getId()
-                ]);
             }
         }
-        return $this->render('sortie/modifier.html.twig',compact('sortieForm','id','ville'));
+        else{
+            $this->addFlash('danger', 'L\'annulation d\'une sortie
+                                                    dont vous n\'êtes pas l\'organisateur est impossible' );
+            return $this->redirectToRoute('sortie_liste');
+        }
     }
-
+//----------------------------------------------------------------------------------------------------------------------
 }

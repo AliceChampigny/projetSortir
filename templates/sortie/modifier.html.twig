@@ -2,8 +2,8 @@
 {% block title %}Modifier la sortie{% endblock %}
 {% block body %}
 {#pour éviter la modification par user non organisateur    #}
-    {% if id.organisateur == app.user %}
-
+    {% if sortie.organisateur == app.user %}
+<h1>Modifier la sortie</h1>
         {{ form_start(sortieForm) }}
         {{ form_row(sortieForm.nom) }}
         {{ form_row(sortieForm.dateHeureDebut) }}
@@ -11,10 +11,15 @@
         {{ form_row(sortieForm.dateLimiteInscription) }}
         {{ form_row(sortieForm.nbInscriptionsMax) }}
         {{ form_row(sortieForm.infosSortie) }}
-        {{ form_row(sortieForm.ville) }}
-        {{ form_row(sortieForm.lieu) }}
+        {{ form_row(sortieForm.ville,{ 'value' : ville.id }) }}
+        {{ form_row(sortieForm.lieu,{'value' : sortie.lieu.id}) }}
         <button>Modifier</button>
         {{ form_end(sortieForm) }}
+
+        {% if sortie.etat.id == 1 %}
+            <a href="{{ path('sortie_supprimersortie',{'sortie':sortie.id}) }}"><button>Supprimer la sortie</button></a>
+        {% endif %}
+
 
     {% endif %}
     <script>

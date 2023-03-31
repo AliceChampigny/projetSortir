@@ -9,6 +9,7 @@
 
          {{ form(form) }}
 
+
          <table>
              <thead>
              <tr>
@@ -70,6 +71,7 @@
              {% endfor %}
 
              </tbody>
+
          </table>
          <a href="{{path('sortie_ajouter',{'organisateur' : app.user.id}) }}"><button>Créer une sortie</button></a>
      {% endif %}

@@ -34,7 +34,9 @@ class ParticipantController extends AbstractController{
     public function modifierProfil(
         EntityManagerInterface $entityManager,
         Request $request,
-        Participant $id
+        Participant $id,
+        UserPasswordHasherInterface $userPasswordHasher
+
     ) : Response{
 
         $participantForm = $this->createForm(ParticipantType::class,$id);
@@ -42,6 +44,13 @@ class ParticipantController extends AbstractController{
 
         if($participantForm->isSubmitted() && $participantForm->isValid()){
             try{
+                $id->setPassword(
+                    $userPasswordHasher->hashPassword(
+                    $id,
+                    $participantForm->get('plainPassword')->getData()
+                    )
+                );
+
                 $entityManager->persist($id);
                 $entityManager->flush();
                 $this->redirectToRoute('sortie_liste');
