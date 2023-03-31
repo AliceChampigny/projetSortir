@@ -5,57 +5,71 @@
      {% if app.user %}
 
 
-     <h2>Filtrer les sorties</h2>
+         <h2>Filtrer les sorties</h2>
 
          {{ form(form) }}
 
-     <table>
-     <thead>
-     <tr>
-         <th scope="col">Nom de sortie</th>
-         <th scope="col">Date de la sortie</th>
-         <th scope="col">Date de clotûre</th>
-         <th scope="col">Inscrits/places</th>
-         <th scope="col">Etat</th>
-         <th scope="col">Inscrit</th>
-         <th scope="col">Organisateur</th>
-         <th scope="col">Actions</th>
-     </tr>
-     </thead>
-    <tbody>
+         <table>
+             <thead>
+             <tr>
+                 <th scope="col">Nom de sortie</th>
+                 <th scope="col">Date de la sortie</th>
+                 <th scope="col">Date de clotûre</th>
+                 <th scope="col">Inscrits/places</th>
+                 <th scope="col">Etat</th>
+                 <th scope="col">Inscrit</th>
+                 <th scope="col">Organisateur</th>
+                 <th scope="col">Actions</th>
+             </tr>
+             </thead>
+             <tbody>
 
-     {% for sortie in sorties %}
-         <tr>
-             <td>{{ sortie.nom }}</td>
-             <td>{{ sortie.dateHeureDebut | date('m/d/Y H:i') }}</td>
-             <td>{{ sortie.dateLimiteInscription | date('m/d/Y H:i') }}</td>
-             <td> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </td>
-             <td>{{ sortie.etat.libelle }}</td>
-             <td>
-                 {% if sortie.participants.contains(app.user) %}
-                     X
-                 {% endif %}
-             </td>
-             <td><a href="{{ path('participant_afficherprofil',{'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
-             <td>
-                 <a href="{{path('sortie_affichersortie', {'id' : sortie.id}) }}">Afficher</a>
+             {% for sortie in sorties %}
 
 
-                 {% if sortie.etat.libelle == "Ouverte" and date() < date(sortie.dateLimiteInscription) and sortie.participants | length < sortie.nbInscriptionsMax %}
+
+{#                 <div class="wrapper">#}
+{#                     <ul>#}
+{#                         <li>#}
+{#                             <img src="https://assets.codepen.io/85648/Arooj-Aftab.webp" alt="Arooj Aftab album cover"/>#}
+{#                             <span>{{ sortie.nom }}</span>#}
+{#                             <span>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</span>#}
+{#                         </li>#}
+{#                     </ul>#}
+{#                 </div>#}
+
+
+                 <tr>
+                     <td>{{ sortie.nom }}</td>
+                     <td>{{ sortie.dateHeureDebut | date('m/d/Y H:i') }}</td>
+                     <td>{{ sortie.dateLimiteInscription | date('m/d/Y H:i') }}</td>
+                     <td> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </td>
+                     <td>{{ sortie.etat.libelle }}</td>
+                     <td>
                          {% if sortie.participants.contains(app.user) %}
-                     <a href="{{path('sortie_desistement', {'sortie' : sortie.id}) }}">Se désister</a>
-                         {% else %}
-                             <a href="{{path('sortie_inscription', {'sortie' : sortie.id}) }}">S'inscrire
+                             X
                          {% endif %}
-                     </a>
-                 {% endif %}
-             </td>
-         </tr>
-         </tr>
-         </tr>
-     {% endfor %}
+                     </td>
+                     <td><a href="{{ path('participant_afficherprofil',{'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                     <td>
+                         <a href="{{path('sortie_affichersortie', {'id' : sortie.id}) }}">Afficher</a>
 
-         </tbody>
+
+                         {% if sortie.etat.libelle == "Ouverte" and date() < date(sortie.dateLimiteInscription) and sortie.participants | length < sortie.nbInscriptionsMax %}
+                             {% if sortie.participants.contains(app.user) %}
+                                 <a href="{{path('sortie_desistement', {'sortie' : sortie.id}) }}">Se désister</a>
+                             {% else %}
+                                 <a href="{{path('sortie_inscription', {'sortie' : sortie.id}) }}">S'inscrire
+                             {% endif %}
+                             </a>
+                         {% endif %}
+                     </td>
+                 </tr>
+                 </tr>
+                 </tr>
+             {% endfor %}
+
+             </tbody>
          </table>
          <a href="{{path('sortie_ajouter',{'organisateur' : app.user.id}) }}"><button>Créer une sortie</button></a>
      {% endif %}
@@ -63,4 +77,5 @@
      {% if not app.user %}
          <h1>Bienvenue sur les sorties enitiennes.com !!</h1>
      {% endif %}
+
  {% endblock %}

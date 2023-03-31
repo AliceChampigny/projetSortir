@@ -26,7 +26,7 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'label'  => ' ',
                 'attr' => array(
-                    'class' => 'feed-form2',
+                    'class' => 'input',
                     'placeholder' => 'Nom'
                 )
             ))
@@ -34,7 +34,7 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'label'  => ' ',
                 'attr' => array(
-                    'class' => 'feed-form2',
+                    'class' => 'input',
                     'placeholder' => 'Prénom'
                 )
             ))
@@ -42,7 +42,7 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'label'  => ' ',
                 'attr' => array(
-                    'class' => 'feed-form2',
+                    'class' => 'input',
                     'placeholder' => 'Pseudo'
                 )
             ))
@@ -50,7 +50,7 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'label'  => ' ',
                 'attr' => array(
-                    'class' => 'feed-form2',
+                    'class' => 'input2',
                     'placeholder' => 'E-mail'
                 )
             ))
@@ -58,7 +58,7 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'label'  => ' ',
                 'attr' => array(
-                    'class' => 'feed-form2',
+                    'class' => 'input2',
                     'placeholder' => 'Telephone'
                 )
             ))
@@ -66,7 +66,7 @@ class RegistrationFormType extends AbstractType
                 [
                     'label'=>' ',
                     'attr' => array(
-                        'class'=>'feed-form2',
+                        'class'=>'input3',
                         'placeholder'=>'Campus'
                     ),
                     'class' => Campus::class,
@@ -93,8 +93,8 @@ class RegistrationFormType extends AbstractType
                 'invalid_message' => 'Les mots de passe doivent correspondre.',
                 'options' => ['attr' => ['class' => 'feed-form']],
                 'required' => true,
-                'first_options'  => ['label' => ' ', 'attr'=> array('placeholder' => 'Mot de passe', 'class'=>'feed-form2')],
-                'second_options' => ['label' => ' ', 'attr'=> array('placeholder' => 'Confirmation du mot de passe', 'class'=>'feed-form2')]
+                'first_options'  => ['label' => ' ', 'attr'=> array('placeholder' => 'Mot de passe', 'class'=>'input2')],
+                'second_options' => ['label' => ' ', 'attr'=> array('placeholder' => 'Confirmation du mot de passe', 'class'=>'input2')]
 ]);
     }
 //----------------------------------------------------------------------------------------------------------------------
