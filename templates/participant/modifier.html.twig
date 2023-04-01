@@ -33,7 +33,7 @@
         {{ form_row(participantForm.telephone) }}
     </label>
     <label>
-        {{ form_row(participantForm.password) }}
+        {{ form_row(participantForm.plainPassword) }}
     </label>
     <label>
 {#        {{ form_row(participantForm.plainPassword.second) }}#}
@@ -49,7 +49,7 @@
         </a>
     </div>
     {{ form_end(participantForm) }}
-
+</form>
 {% endblock %}
 
 
