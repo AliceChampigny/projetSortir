@@ -12,50 +12,19 @@
         {{ form_row(sortieForm.nbInscriptionsMax) }}
         {{ form_row(sortieForm.infosSortie) }}
         {{ form_row(sortieForm.ville,{ 'value' : ville.id }) }}
-        {{ form_row(sortieForm.lieu,{'value' : sortie.lieu.id}) }}
+        {{ form_row(sortieForm.lieu) }}
         <button>Modifier</button>
         {{ form_end(sortieForm) }}
 
         {% if sortie.etat.id == 1 %}
-            <a href="{{ path('sortie_supprimersortie',{'sortie':sortie.id}) }}"><button>Supprimer la sortie</button></a>
+            <button onclick="supprimer({{ sortie.id }})">Supprimer la sortie</button>
+            <a href="{{ path('sortie_publiersortie',{'sortie': sortie.id}) }}"><button>Publier la sortie</button></a>
+
         {% endif %}
-
-
     {% endif %}
-    <script>
-        let $ville = $('#sortie_form_ville');
-        // let $token=$('#sortie_form__token');
-        let $dateDebut=$('#sortie_form_dateHeureDebut');
-        let $dateLimiteInscription=$('#sortie_form_dateLimiteInscription');
-        let $nom=$('#sortie_form_nom');
-        let $duree=$('#sortie_form_duree');
-        let $nbMaxInscrit=$('#sortie_form_nbInscriptionsMax');
-        let $infosSortie=$('#sortie_form_infosSortie');
 
-        $ville.change(function(){
-            let $form = $(this).closest('form');
-            let data = {};
-            data[$ville.attr('name')] = $ville.val();
-            // data[$token.attr('name')]=$token.val();
-            data[$dateDebut.attr('name')]=$dateDebut.val();
-            data[$dateLimiteInscription.attr('name')]=$dateLimiteInscription.val();
-            data[$nom.attr('name')]=$nom.val();
-            data[$duree.attr('name')]=$duree.val();
-            data[$nbMaxInscrit.attr('name')]=$nbMaxInscrit.val();
-            data[$infosSortie.attr('name')]=$infosSortie.val();
-
-            $.ajax({
-                url : $form.attr('action'),
-                type: $form.attr('method'),
-                data : data,
-                complete: function(html){
-                    $('#sortie_form_lieu').replaceWith($(html.responseText).find('#sortie_form_lieu'));
-                }
-            });
-        });
-    </script>
-
-
+<script src="{{ asset('script/ajax.js') }}"></script>
+<script src="{{ asset('script/supprimer.js') }}"></script>
 {% endblock %}
 
 

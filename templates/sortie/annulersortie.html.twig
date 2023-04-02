@@ -13,7 +13,7 @@
     {{ form_row(sortieForm.infosSortie, {'attr': {'placeholder': 'Motif d\'annulation'}}) }}
 {#    {{ form_row(sortieForm.campus) }}#}
     {{ form_row(sortieForm.ville,{'attr': {'readonly': true},'value': sortie.lieu.ville.id }) }}
-    {{ form_row(sortieForm.lieu, {'attr': {'readonly': true},'value': sortie.lieu.id }) }}
+    {{ form_row(sortieForm.lieu, {'attr': {'readonly': true,'disabled' : false},'value': sortie.lieu.id }) }}
 <button>Annuler la sortie</button>
     {{ form_end(sortieForm) }}
 {% endblock %}
