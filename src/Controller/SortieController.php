@@ -11,11 +11,16 @@ use App\modeles\Filter;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -102,7 +107,7 @@ class SortieController extends AbstractController{
         Sortie                 $sortie,
     ): Response
     {
-        if ($sortie) {
+        if ($sortie && $sortie->getParticipants()->count() < $sortie->getNbInscriptionsMax()) {
             try {
                 $participant = $this->getUser();
                 $sortie->addParticipant($participant);
@@ -112,6 +117,9 @@ class SortieController extends AbstractController{
             } catch (\Exception $exception) {
                 $this->addFlash("danger", "Impossible de vous inscrire");
             }
+        }
+        else{
+            $this->addFlash("danger", "Votre inscription est impossible : soit la sortie n'existe pas, soit il n'y a plus de place disponible");
         }
         return $this->redirectToRoute('sortie_liste');
     }
@@ -164,6 +172,7 @@ class SortieController extends AbstractController{
         Sortie                 $sortie,
         VilleRepository        $villeRepository
     ) : Response{
+
         if($sortie->getOrganisateur() === $this->getUser()){
             if($sortie->getEtat()->getId()===1 ){
                 $sortieForm = $this->createForm(SortieFormType::class,$sortie);
@@ -205,6 +214,7 @@ class SortieController extends AbstractController{
         Sortie $sortie,
         EntityManagerInterface $entityManager
     ) : Response{
+
         if($sortie->getOrganisateur() === $this->getUser()){
             if($sortie->getEtat()->getId()===1 ){
                 try{
@@ -212,10 +222,11 @@ class SortieController extends AbstractController{
                     $entityManager->remove($sortie);
                     $entityManager->flush();
                     $this->addFlash('success', "Votre sortie a bien été supprimée" );
+                    return $this->redirectToRoute('sortie_liste');
 
                 }catch (\Exception $exception) {
                     $this->addFlash('danger', "La suppression n'a pas été effectuée" . $exception->getMessage());
-                    return $this->redirectToRoute('sortie_modifiersortie', [
+                    return $this->redirectToRoute('sortie_supprimersortie', [
                         'sortie' => $sortie->getId()
                     ]);
                 }
@@ -223,12 +234,14 @@ class SortieController extends AbstractController{
             else{
                 $this->addFlash('danger', "La suppression d'une sortie dont l'état est autre que 'Créée', 
                                                                 est impossible" );
+                return $this->redirectToRoute('sortie_liste');
             }
         }else{
             $this->addFlash('danger', "La suppression d'une sortie 
                                                     dont vous n'êtes pas l'organisateur est impossible" );
+            return $this->redirectToRoute('sortie_liste');
         }
-        return $this->redirectToRoute('sortie_liste');
+
     }
 //----------------------------------------------------------------------------------------------------------------------
     #[Route(
@@ -238,7 +251,8 @@ class SortieController extends AbstractController{
         Sortie $sortie,
         EntityManagerInterface $entityManager,
         EtatRepository $etatRepository,
-        Request $request
+        Request $request,
+        MailerInterface $mailer
     ) : Response{
 
         if($sortie->getOrganisateur() === $this->getUser()){
@@ -255,13 +269,30 @@ class SortieController extends AbstractController{
                         $entityManager->persist($sortie);
                         $entityManager->flush();
                         $this->addFlash('success', "Votre sortie a bien été annulée");
+                        $mailParticipants = new ArrayCollection();
+                        foreach ($sortie->getParticipants() as $participant) {
+                            $mailParticipants->add(new Address($participant->getEmail()));
+                        }
+                        $email = (new TemplatedEmail())
+                            ->from(new Address('admin@campus-eni.fr', 'Administrateur de "SortiesEnitiennes.com"'))
+                            ->to(...$mailParticipants)
+                            ->subject('Annulation de la sortie '.$sortie->getNom())
+                            ->text('Bonjour !
+                            
+                            L\'organisateur de la sortie '.$sortie->getNom().' vient juste de l\'annuler. Le motif d\'annulation est disponible sur notre au site au niveau du détails de la sortie.
+                            Nous nous excusons pour la gêne occasionnée.
+                             
+                            Au revoir et à bientôt sur les SortiesEnitiennes.com !');
+                        $mailer->send($email);
+
                         return $this->redirectToRoute('sortie_liste');
 
                     }catch(\Exception $exception){
-                        $this->addFlash('danger', "Les modifications n'ont pas été effectuées". $exception->getMessage() );
-                        return $this->redirectToRoute('sortie_modifiersortie',[
+                        $this->addFlash('danger', "L\'annulation n'a pas été effectuée". $exception->getMessage() );
+                        return $this->redirectToRoute('sortie_annulersortie',[
                             'sortie' =>$sortie->getId()
                         ]);
+                    } catch (TransportExceptionInterface $e) {
                     }
                 }
                 return $this->render('sortie/annulersortie.html.twig',compact('sortieForm','sortie'));
@@ -278,4 +309,42 @@ class SortieController extends AbstractController{
         }
     }
 //----------------------------------------------------------------------------------------------------------------------
+    #[Route(
+        '/publier/{sortie}',
+        name: '_publiersortie')]
+    public function publierSortie(
+        Sortie $sortie,
+        EntityManagerInterface $entityManager,
+        EtatRepository $etatRepository
+    ):Response{
+
+        if($sortie->getOrganisateur() === $this->getUser()){
+            if($sortie->getEtat()->getId()===1 ){
+
+                try{
+                    $etat = $etatRepository->findOneBy(['id' => 2]);
+                    $sortie->setEtat($etat);
+                    $entityManager->persist($sortie);
+                    $entityManager->flush();
+                    $this->addFlash('success', "Votre sortie a bien été publiée");
+                    $this->redirectToRoute('sortie_liste');
+                }catch (\Exception $exception){
+                    $this->addFlash('danger', "La publication n'a pu être effectuée". $exception->getMessage() );
+                    return $this->redirectToRoute('sortie_publiersortie',[
+                        'sortie' =>$sortie->getId()
+                    ]);
+                }
+            }
+            else{
+                $this->addFlash('danger', 'La publication d\'une sortie dont l\'état est autre que
+                                                        "Créée" est impossible' );
+                return $this->redirectToRoute('sortie_liste');
+            }
+        }
+        else{
+            $this->addFlash('danger', 'La publication d\'une sortie
+                                                    dont vous n\'êtes pas l\'organisateur est impossible' );
+        }
+        return $this->redirectToRoute('sortie_liste');
+    }
 }

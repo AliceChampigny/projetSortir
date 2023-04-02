@@ -77,8 +77,8 @@ class SortieFormType extends AbstractType
                 'mapped'=>false,
                 'class'=>Ville::class,
                 'choice_label'=>'nom',
+                'placeholder'=>'Selectionnez la ville',
                 'attr' => array(
-                    'placeholder'=>'Selectionnez la ville',
                     'class'=>'input3'
                 )
              ])
@@ -87,9 +87,10 @@ class SortieFormType extends AbstractType
                 'class'=>Lieu::class,
 
                'choice_label'=>'nom',
+                'placeholder'=>'Lieu [choisissez d\'abord une ville]',
                 'attr'=>array(
                     'class'=>'input3',
-                    'placeholder'=>'Lieu [choisissez d\'abord une région]'
+
                 )
                 ]);
 
@@ -103,7 +104,7 @@ class SortieFormType extends AbstractType
                     'class'=>Lieu::class,
                     'choices'=>$lieux,
                     'choice_label'=>'nom',
-                    'placeholder'=>'Lieu [choisissez d\'abord une ville]',
+                    'placeholder'=>'Sélectionnez votre lieu',
                     'label'=>'Lieu',
                     'attr'=> array(
                     'class'=>'input3')
