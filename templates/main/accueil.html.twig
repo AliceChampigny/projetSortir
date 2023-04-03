@@ -57,7 +57,7 @@
                          <a href="{{path('sortie_affichersortie', {'id' : sortie.id}) }}">Afficher</a>
 
 
-                         {% if sortie.etat.libelle == "Ouverte" and date() < date(sortie.dateLimiteInscription) and sortie.participants | length < sortie.nbInscriptionsMax %}
+                         {% if sortie.etat.id == 2 and date() < date(sortie.dateLimiteInscription) and sortie.participants | length < sortie.nbInscriptionsMax %}
                              {% if sortie.participants.contains(app.user) %}
                                  <a href="{{path('sortie_desistement', {'sortie' : sortie.id}) }}">Se désister</a>
                              {% else %}
