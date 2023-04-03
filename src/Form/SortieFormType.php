@@ -85,9 +85,8 @@ class SortieFormType extends AbstractType
 
             ->add('lieu', EntityType::class,[
                 'class'=>Lieu::class,
-
-               'choice_label'=>'nom',
                 'disabled'=>true,
+               'choice_label'=>'nom',
                 'placeholder'=>'Lieu [choisissez d\'abord une ville]',
                 'attr'=>array(
                     'class'=>'input3',
