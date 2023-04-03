@@ -76,6 +76,7 @@ public function afficherProfil(
         $participant = $participantRepository->findOneBy(['id'=>$id->getId()]);
         return $this->render('participant/afficherprofil.html.twig',compact('participant'));
 }
+//----------------------------------------------------------------------------------------------------------------------
 
     #[Route(
         '/admin',
@@ -86,6 +87,8 @@ public function afficherProfil(
 
         return $this->render('participant/admin.html.twig');
     }
+//----------------------------------------------------------------------------------------------------------------------
+
 
     #[Route(
         '/admin/gestionutilisateur',
@@ -111,8 +114,8 @@ public function afficherProfil(
                     $entityManager->persist($user);
                     $entityManager->flush();
                     // do anything else you need here, like send an email
-
-                    return $this->redirectToRoute('participant_adminGestionUtilisateur');
+                    $this->addFlash('danger','L\'inscription a bien été enregistrée');
+                    return $this->redirectToRoute('participant_admin');
                 }catch (\Exception $exception){
                     $this->addFlash('danger','L\'inscription n\'a pas été effectuée'.$exception->getMessage());
                     return $this->redirectToRoute('participant_adminGestionUtilisateur');
@@ -126,7 +129,7 @@ public function afficherProfil(
             ]);
         }
 
-
+//----------------------------------------------------------------------------------------------------------------------
     #[Route(
         '/admin/gestionsortie',
         name: '_adminGestionSortie')]
