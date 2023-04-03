@@ -42,14 +42,13 @@
 
     <div class="flex">
         <a href="{{ path('sortie_liste') }}">
-            <button type="submit" class="submit">Modifiez</button>
+            <button type="submit" class="submit">Modifier</button>
         </a>
-        {#        <a href="{{ path('/sortie_liste') }}">#}
-        <button class="submit">Retour</button>
-        </a>
+
     </div>
     {{ form_end(participantForm) }}
 </form>
+    <a href="{{ path('sortie_liste') }}"><button class="submit">Retour</button></a>
 {% endblock %}
 
 

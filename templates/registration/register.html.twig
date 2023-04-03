@@ -64,19 +64,14 @@
             {{ form_row(registrationForm.plainPassword.second) }}
         </label>
         <div class="flex">
-            <a href="{{ path('sortie_liste') }}">
-        <button type="submit" class="submit">Submit</button>
-            </a>
-            <a href="{{ path('main_accueil') }}">
-        <button class="submit">Retour</button>
-            </a>
+        <button type="submit" class="submit">S'inscrire</button>
         </div>
-
         <p class="signin">Vous avez déjà un compte ? <a href="{{ path('app_login') }}">Connectez-vous</a> </p>
         {{ form_end(registrationForm) }}
     </form>
-
-
+    <a href="{{ path('main_accueil') }}">
+        <button class="submit">Retour</button>
+    </a>
 
 {% endblock %}
 
