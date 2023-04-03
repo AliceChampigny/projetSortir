@@ -62,7 +62,7 @@ class ParticipantController extends AbstractController{
             }
 
         }
-        return $this->render('participant/modifier.html.twig',compact('participantForm'));
+        return $this->render('participant/modifier.html.twig',compact('participantForm', ));
     }
 //----------------------------------------------------------------------------------------------------------------------
 #[Route(

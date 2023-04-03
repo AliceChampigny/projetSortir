@@ -1,0 +1,10 @@
+vich_uploader:
+    db_driver: orm
+    metadata :
+        type : attribute
+
+    mappings:
+        profil_images:
+            uri_prefix: /img/profil
+            upload_destination: '%kernel.project_dir%/public/img/profil'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
