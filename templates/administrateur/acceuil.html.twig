@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-    <button><a href="{{ path('admin_gestionutilisateur') }}">GERER LES UTILISATEURS</a></button>
-    <button><a href="{{ path('admin_gestionSorties') }}">GERER LES SORTIES</a></button>
+    <a href="{{ path('admin_gestionutilisateur') }}">
+        <button class="submit">GERER LES UTILISATEURS</button></a>
+    <a href="{{ path('admin_gestionSorties') }}">
+        <button class="submit">GERER LES SORTIES</button></a>
 {% endblock %}
-

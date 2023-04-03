@@ -2,36 +2,52 @@
 
 {% block body %}
 
-
     <h2>Gestion des utilisateurs</h2>
+<main>
 
-        <h3>Inscrire un utilisateur</h3>
-        <form method="post" action="#" class="feed-form2">
-
+        <form method="post" action="#" class="form">
             {{ form_start(registrationForm) }}
-
+            <h1 class="title">Inscrire un utilisateur</h1>
+            <div class="flex">
+                <label>
             {{ form_row(registrationForm.nom) }}
+                </label>
+                <label>
             {{ form_row(registrationForm.prenom) }}
+                </label>
+                <label>
             {{ form_row(registrationForm.pseudo) }}
+                </label>
+            </div>
+            <label>
 
             {{ form_row(registrationForm.email) }}
+            </label>
+            <label>
             {{ form_row(registrationForm.telephone) }}
+            </label>
+            <label>
             {{ form_row(registrationForm.campus) }}
+            </label>
+            <label>
 
             {{ form_row(registrationForm.plainPassword.first) }}
+            </label>
+            <label>
             {{ form_row(registrationForm.plainPassword.second) }}
+            </label>
 
-
-            <div>
-                <button type="submit" class="button_submit2">Valider l'inscription</button>
+            <div class="flex">
+                <button type="submit" class="submit">Valider l'inscription</button>
                 {{ form_end(registrationForm) }}
                 <a href="{{ path('admin_accueil') }}">
-                    <button class="button_submit2">Retour</button>
+                    <button class="submit">Retour</button>
                 </a>
             </div>
 
         </form>
 
+</main>
 
              <table>
                  <thead>
