@@ -7,6 +7,7 @@ use App\Entity\Participant;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -67,10 +68,11 @@ class RegistrationFormType extends AbstractType
                     'label'=>' ',
                     'attr' => array(
                         'class'=>'input3',
-                        'placeholder'=>'Campus'
+
                     ),
                     'class' => Campus::class,
                     'choice_label' => 'nom',
+                    'expanded' => 'true',
                 ]
             )
             ->add('plainPassword', RepeatedType::class, [
