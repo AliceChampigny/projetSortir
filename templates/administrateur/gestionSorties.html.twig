@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <h2>Gestion des sorties</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Nom de sortie</th>
+            <th scope="col">Date de la sortie</th>
+            <th scope="col">Date de clotûre</th>
+            <th scope="col">Inscrits/places</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Inscrit</th>
+            <th scope="col">Organisateur</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for sortie in sorties %}
+
+            <tr>
+                <td>{{ sortie.nom }}</td>
+                <td>{{ sortie.dateHeureDebut | date('m/d/Y H:i') }}</td>
+                <td>{{ sortie.dateLimiteInscription | date('m/d/Y H:i') }}</td>
+                <td> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </td>
+                <td>{{ sortie.etat.libelle }}</td>
+                <td>
+                    {% if sortie.participants.contains(app.user) %}
+                        X
+                    {% endif %}
+                </td>
+                <td><a href="{{ path('participant_afficherprofil',{'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                <td>
+                    {% if sortie.etat.id == 1 %}
+                     <a href="{{path('admin_suppressionSorties', {'sortie' : sortie.id}) }}">Supprimer</a>
+                    {%  endif %}
+                </td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+{% endblock %}
+
+

@@ -44,7 +44,7 @@
                             <li><a href="{{ path('sortie_ajouter',{'organisateur':app.user.id}) }}">CREER UNE SORTIE</a></li>
                             <li><a href="{{ path('app_logout') }}">SE DECONNECTER</a></li>
                             {% if app.user.administrateur %}
-                                <li><a href="{{ path('participant_admin') }}">ADMINISTRATEUR</a></li>
+                                <li><a href="{{ path('admin_accueil') }}">ADMINISTRATEUR</a></li>
                             {% endif %}
 
                         {% endif %}
