@@ -1,31 +1,56 @@
 {% extends 'base.html.twig' %}
 {% block title %}Modifier la sortie{% endblock %}
 {% block body %}
-{#pour éviter la modification par user non organisateur    #}
+{# pour éviter la modification par user non organisateur    #}
     {% if sortie.organisateur == app.user %}
-<h1>Modifier la sortie</h1>
+<form method="post" class="form" action="#">
+    <h1 class="title">Modifier la sortie</h1>
+    <form>
         {{ form_start(sortieForm) }}
-        {{ form_row(sortieForm.nom) }}
-        {{ form_row(sortieForm.dateHeureDebut) }}
-        {{ form_row(sortieForm.duree) }}
-        {{ form_row(sortieForm.dateLimiteInscription) }}
-        {{ form_row(sortieForm.nbInscriptionsMax) }}
-        {{ form_row(sortieForm.infosSortie) }}
-        {{ form_row(sortieForm.ville,{ 'value' : ville.id }) }}
-        {{ form_row(sortieForm.lieu) }}
-        <button>Modifier</button>
-        {{ form_end(sortieForm) }}
 
+        <label>
+            {{ form_row(sortieForm.nom) }}
+        </label>
+        <label>
+            {{ form_row(sortieForm.dateHeureDebut) }}
+        </label>
+        <label>
+            {{ form_row(sortieForm.duree) }}
+        </label>
+        <label>
+            {{ form_row(sortieForm.dateLimiteInscription) }}
+        </label>
+        <label>
+            {{ form_row(sortieForm.nbInscriptionsMax) }}
+        </label>
+        <label>
+            {{ form_row(sortieForm.infosSortie) }}
+        </label>
+        <label>
+            {{ form_row(sortieForm.ville,{ 'value' : ville.id }) }}
+        </label>
+        <label>
+            {{ form_row(sortieForm.lieu) }}
+        </label>
+{#        <button class="submit">Modifier</button>#}
+{#        {{ form_end(sortieForm) }}#}
+
+<div class="flex">
+    <button class="submit" type="submit">Modifier</button>
         {% if sortie.etat.id == 1 %}
-            <button onclick="supprimer({{ sortie.id }})">Supprimer la sortie</button>
-            <a href="{{ path('sortie_publiersortie',{'sortie': sortie.id}) }}"><button>Publier la sortie</button></a>
-
+            <button class="submit" supprimer({{ sortie.id }})">Supprimer la sortie</button>
+            <a href="{{ path('sortie_publiersortie',{'sortie': sortie.id}) }}">
+                <button class="submit">Publier la sortie</button>
+            </a>
+            {{ form_end(sortieForm) }}
         {% endif %}
-    {% endif %}
+        {% endif %}
 
-<script src="{{ asset('script/ajax.js') }}"></script>
-<script src="{{ asset('script/supprimer.js') }}"></script>
-{% endblock %}
+        <script src="{{ asset('script/ajax.js') }}"></script>
+        <script src="{{ asset('script/supprimer.js') }}"></script>
+</div>
+    </form>
+        {% endblock %}
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Campus;
 use App\Entity\Participant;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +20,9 @@ class RegistrationController extends AbstractController
         $user = new Participant();
         $user -> setActif(true);
         $user -> setAdministrateur(false);
+
         $form = $this->createForm(RegistrationFormType::class, $user);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -31,7 +34,6 @@ class RegistrationController extends AbstractController
                         $form->get('plainPassword')->getData()
                     )
                 );
-
                 $entityManager->persist($user);
                 $entityManager->flush();
                 // do anything else you need here, like send an email
@@ -45,6 +47,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+
         ]);
     }
 }
