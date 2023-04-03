@@ -87,6 +87,7 @@ class SortieFormType extends AbstractType
                 'class'=>Lieu::class,
 
                'choice_label'=>'nom',
+                'disabled'=>true,
                 'placeholder'=>'Lieu [choisissez d\'abord une ville]',
                 'attr'=>array(
                     'class'=>'input3',
