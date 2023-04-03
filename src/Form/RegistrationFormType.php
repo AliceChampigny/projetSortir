@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use function Sodium\add;
 
 class RegistrationFormType extends AbstractType
@@ -25,7 +26,7 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('nom', TextType::class, array(
                 'required' => true,
-                'label'  => ' ',
+                'label' => ' ',
                 'attr' => array(
                     'class' => 'input',
                     'placeholder' => 'Nom'
@@ -33,7 +34,7 @@ class RegistrationFormType extends AbstractType
             ))
             ->add('prenom', TextType::class, array(
                 'required' => true,
-                'label'  => ' ',
+                'label' => ' ',
                 'attr' => array(
                     'class' => 'input',
                     'placeholder' => 'Prénom'
@@ -41,7 +42,7 @@ class RegistrationFormType extends AbstractType
             ))
             ->add('pseudo', TextType::class, array(
                 'required' => true,
-                'label'  => ' ',
+                'label' => ' ',
                 'attr' => array(
                     'class' => 'input',
                     'placeholder' => 'Pseudo'
@@ -49,15 +50,15 @@ class RegistrationFormType extends AbstractType
             ))
             ->add('email', TextType::class, array(
                 'required' => true,
-                'label'  => ' ',
+                'label' => ' ',
                 'attr' => array(
-                    'class' => 'input2',
+                    'class' => 'input',
                     'placeholder' => 'E-mail'
                 )
             ))
             ->add('telephone', TextType::class, array(
                 'required' => true,
-                'label'  => ' ',
+                'label' => ' ',
                 'attr' => array(
                     'class' => 'input2',
                     'placeholder' => 'Telephone'
@@ -65,9 +66,9 @@ class RegistrationFormType extends AbstractType
             ))
             ->add('campus', EntityType::class,
                 [
-                    'label'=>' ',
+                    'label' => ' ',
                     'attr' => array(
-                        'class'=>'input3',
+                        'class' => 'input3',
 
                     ),
                     'class' => Campus::class,
@@ -75,30 +76,39 @@ class RegistrationFormType extends AbstractType
 
                 ]
             )
+            ->add('imageFile', VichImageType::class,
+                [
+                'label' => 'Photo de profil',
+                'attr' => array(
+                'class' => 'input3')
+                ])
+
+
             ->add('plainPassword', RepeatedType::class, [
-                'type'=>PasswordType::class,
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez entrer votre mot de passe',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-                'invalid_message' => 'Les mots de passe doivent correspondre.',
-                'options' => ['attr' => ['class' => 'feed-form']],
-                'required' => true,
-                'first_options'  => ['label' => ' ', 'attr'=> array('placeholder' => 'Mot de passe', 'class'=>'input2')],
-                'second_options' => ['label' => ' ', 'attr'=> array('placeholder' => 'Confirmation du mot de passe', 'class'=>'input2')]
-]);
+        'type' => PasswordType::class,
+        // instead of being set onto the object directly,
+        // this is read and encoded in the controller
+        'mapped' => false,
+        'attr' => ['autocomplete' => 'new-password'],
+        'constraints' => [
+            new NotBlank([
+                'message' => 'Veuillez entrer votre mot de passe',
+            ]),
+            new Length([
+                'min' => 6,
+                'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                // max length allowed by Symfony for security reasons
+                'max' => 4096,
+            ]),
+        ],
+        'invalid_message' => 'Les mots de passe doivent correspondre.',
+        'options' => ['attr' => ['class' => 'feed-form']],
+        'required' => true,
+        'first_options' => ['label' => ' ', 'attr' => array('placeholder' => 'Mot de passe', 'class' => 'input2')],
+        'second_options' => ['label' => ' ', 'attr' => array('placeholder' => 'Confirmation du mot de passe', 'class' => 'input2')]
+    ]);
     }
+
 //----------------------------------------------------------------------------------------------------------------------
     public function configureOptions(OptionsResolver $resolver): void
     {
