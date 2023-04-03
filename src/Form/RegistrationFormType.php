@@ -72,7 +72,7 @@ class RegistrationFormType extends AbstractType
                     ),
                     'class' => Campus::class,
                     'choice_label' => 'nom',
-                    'expanded' => 'true',
+
                 ]
             )
             ->add('plainPassword', RepeatedType::class, [
