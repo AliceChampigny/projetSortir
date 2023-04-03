@@ -40,6 +40,7 @@ security:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/participant, roles: ROLE_USER }
          - { path: ^/sortie, roles: ROLE_USER }
+         - { path: ^/lieu, roles: ROLE_USER }
 
 when@test:
     security:

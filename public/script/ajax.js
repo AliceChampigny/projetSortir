@@ -18,7 +18,7 @@ $ville.change(function(){
     data[$duree.attr('name')]=$duree.val();
     data[$nbMaxInscrit.attr('name')]=$nbMaxInscrit.val();
     data[$infosSortie.attr('name')]=$infosSortie.val();
-
+    console.log($form.attr('action'));
     $.ajax({
         url : $form.attr('action'),
         type: $form.attr('method'),
