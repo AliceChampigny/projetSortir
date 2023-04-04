@@ -5,17 +5,17 @@ namespace App\Entity;
 use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[Vich\Uploadable]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -47,11 +47,14 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull (null,'Le nom ne peut pas être null')]
     private ?string $nom = null;
 
-    #[Vich\UploadableField(mapping: 'profil_images', fileNameProperty: 'imageName')]
+    #[Vich\UploadableField(mapping: 'photo', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 30)]
     #[Assert\NotBlank (null,'Le prénom ne peut pas être vide')]
@@ -212,6 +215,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->imageName;
     }
+
 
     public function getPrenom(): ?string
     {

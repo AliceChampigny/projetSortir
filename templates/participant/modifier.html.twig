@@ -32,16 +32,19 @@
     <label>
         {{ form_row(participantForm.telephone) }}
     </label>
+    <label id="image">
+        {{ form_row(participantForm.imageFile) }}
+    </label>
+
     <label>
         {{ form_row(participantForm.plainPassword) }}
     </label>
-    <label>
-{#        {{ form_row(participantForm.plainPassword.second) }}#}
-    </label>
-    
-    <div>
-        <img src="{{ vich_uploader_asset(profil_images, 'imagefile') }}">
-    </div>
+
+{#    <label>#}
+{#       {{ form_row(participantForm.plainPassword.second) }}#}
+{#    </label>#}
+
+
 
 
     <div class="flex">
