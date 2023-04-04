@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>Gestion des Campus</h2>
+
+    {{ form(formFilterCampus) }}
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Campus</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for campus in campuss %}
+            <tr>
+                <td>{{ campus.nom }}</td>
+                <td>
+                    <a href="{{path('admin_modifierCampus', {'campus' : campus.id}) }}">Modifier</a>
+                    <a href="{{path('admin_suppressionCampus', {'campus' : campus.id}) }}">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+       <tr>
+           <form method="post" action="#" class="form">
+            {{ form_start(campusForm) }}
+           <td> <div class="flex">
+                <label>
+                    {{ form_row(campusForm.nom) }}
+                </label>
+            </div>
+           </td>
+               <td>
+            <div class="flex">
+                <button type="submit" class="submit">Ajouter</button>
+                {{ form_end(campusForm) }}
+            </div>
+               </td>
+            </form>
+       </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
