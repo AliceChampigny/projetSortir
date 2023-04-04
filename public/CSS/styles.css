@@ -642,6 +642,55 @@ td {
     white-space: nowrap;
     width: 1px;
 }
+
+
+/*------------------------AFFICHER MODAL FORM---------------------------*/
+.modal{
+    background-color: rgba(0,0,0,0.75);
+    position : fixed;
+    top : 0;
+    bottom : 0;
+    left : 0;
+    right : 0;
+    z-index: 1000;
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s;
+}
+
+.modal.show{
+    visibility: visible;
+    opacity: 1;
+}
+.modal-content{
+    background-color: white;
+    max-width: 90vw;
+    margin : auto;
+    flex : 1;
+    position : relative;
+}
+.modal-close{
+    position : absolute;
+    top : 5px;
+    right : 10px;
+    cursor : pointer;
+}
+.modal-header{
+    padding: 15px;
+    border-bottom : 1px solid gray;
+}
+.modal-body{
+    padding : 15px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+.modal-footer{
+    padding: 15px;
+    border-bottom : 1px solid gray;
+    text-align : right;
+}
+
 /*------------------------AFFICHER SORTIE---------------------------*/
 
 .card {

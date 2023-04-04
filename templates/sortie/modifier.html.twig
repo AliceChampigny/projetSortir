@@ -5,7 +5,6 @@
     {% if sortie.organisateur == app.user %}
 <form method="post" class="form" action="#">
     <h1 class="title">Modifier la sortie</h1>
-    <form>
         {{ form_start(sortieForm) }}
 
         <label>
@@ -38,18 +37,20 @@
 <div class="flex">
     <button class="submit" type="submit">Modifier</button>
         {% if sortie.etat.id == 1 %}
-            <button class="submit" supprimer({{ sortie.id }})">Supprimer la sortie</button>
-            <a href="{{ path('sortie_publiersortie',{'sortie': sortie.id}) }}">
-                <button class="submit">Publier la sortie</button>
-            </a>
             {{ form_end(sortieForm) }}
         {% endif %}
-        {% endif %}
+    {% endif %}
 
-        <script src="{{ asset('script/ajax.js') }}"></script>
-        <script src="{{ asset('script/supprimer.js') }}"></script>
+
 </div>
     </form>
+    <a href="{{ path('sortie_publiersortie',{'sortie': sortie.id}) }}">
+        <button class="submit">Publier la sortie</button>
+    </a>
+    <button class="submit" onclick="supprimer({{ sortie.id }})" >Supprimer la sortie</button>
+
+    <script src="{{ asset('script/ajax.js') }}"></script>
+    <script src="{{ asset('script/supprimer.js') }}"></script>
         {% endblock %}
 
 
