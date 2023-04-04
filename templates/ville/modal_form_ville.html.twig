@@ -3,8 +3,8 @@
 {% block body %}
     <div id="create_ville">
         {{ form_start(villeForm,{'attr':{'id': 'ville_form'},'action': path('ville_ajoutville') }) }}
-        {{ form_row(villeForm.nom) }}
-        {{ form_row(villeForm.codePostal) }}
+        {{ form_row(villeForm.nom,{'attr':{'hidden':true}}) }}
+        {{ form_row(villeForm.codePostal,{'attr':{'hidden':true}}) }}
         <button>Ajouter cette ville</button>
         {{ form_end(villeForm) }}
     </div>
