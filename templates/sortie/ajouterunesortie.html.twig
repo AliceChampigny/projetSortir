@@ -23,26 +23,25 @@
     <label>
         {{ form_row(sortieForm.infosSortie) }}
     </label>
-    <label>
-        {{ form_row(sortieForm.ville) }}
-    </label>
-    <label>
-        {{ form_row(sortieForm.lieu) }}
-    </label>
 
+    <label>
+        {{ form_row(sortieForm.ville) }}<span> <button role="button" data-target="#myModal2" data-toggle="modal" id="ajout_ville" tabindex="-1" >Ajout Ville</button></span>
+    </label>
+    <label>
+        {{ form_row(sortieForm.lieu) }}<span><button role="button" data-target="#myModal" data-toggle="modal" id="ajout_lieu" tabindex="-1" >Ajout Lieu</button></span>
+    </label>
     <div class="flex">
-        <a href="{{ path('sortie_liste') }}">
-            <button type="submit" class="submit">Ajoutez</button>
-        </a>
-{#        <a href="{{ path('/sortie_liste') }}"></a>#}
-            <button class="submit">Retour</button>
-
+            <button type="submit" class="submit">Ajouter</button>
     </div>
     {{ form_end(sortieForm) }}
     {#        {{ form_row(sortieform.image) }} #}
 </form>
 
-    <button role="button" data-target="#myModal" data-toggle="modal" id="ajout_lieu" tabindex="-1"  >Ajout Lieu</button>
+
+
+
+    <a href="{{ path('sortie_liste') }}"> <button class="submit">Retour</button></a>
+
 
     <div class="modal" id="myModal" role="dialog" aria-hidden="true">
             <!-- Modal content-->
@@ -50,17 +49,47 @@
                 <div class="modal-close" data-dismiss ="dialog"> X </div>
                 <div class ="modal-header">Ajouter un lieu</div>
                 <div class="modal-body" id="modal-body">
+                    <p id="label"></p>
+                    <p id="city"></p>
+                    <p id="question"></p>
                     {{render(controller('App\\Controller\\LieuController::ajoutLieu')) }}
+
+                    <label for="rechercher">Saisissez l'adresse du lieu</label>
+                    <input type="text" id="rechercher" placeholder="Adresse du lieu">
+                    <button onclick="rechercherLieu()">Rechercher</button>
                 </div>
                 <div class="modal-footer">
                     <button role="button" class="btn btn-default" data-dismiss="dialog" id="fermer">Fermer</button>
                 </div>
             </div>
+    </div>
 
+    <div class="modal" id="myModal2" role="dialog" aria-hidden="true">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-close" data-dismiss ="dialog"> X </div>
+            <div class ="modal-header">Ajouter une ville</div>
+            <div class="modal-body" id="modal-body">
+
+                <label for="rechercherVille">Saisissez la ville</label>
+                <input type="text" role="combobox" id="rechercherVille" placeholder="Ville" onkeyup="rechercherVille()"
+                       aria-controls="listeVille" aria-expanded="false" aria-autocomplete="list">
+                <br>
+                <label for="listeVille">Sélectionnez la ville correspondante à votre recherche</label>
+                <select id="listeVille" role="listbox" >
+                </select>
+                {{render(controller('App\\Controller\\VilleController::ajoutVille')) }}
+{#                <button onclick="rechercherVille()">Rechercher</button>#}
+            </div>
+            <div class="modal-footer">
+                <button role="button" class="btn btn-default" data-dismiss="dialog" id="fermer">Fermer</button>
+            </div>
+        </div>
     </div>
     <script src="{{ asset('script/ajax.js') }}"></script>
     <script src ="{{ asset('script/affichage_modal_lieu.js') }}"></script>
     <script src ="{{ asset('script/ajout_lieu.js') }}"></script>
+    <script src ="{{ asset('script/rechercher_lieu_api.js') }}"></script>
 
     {% endblock %}
 
