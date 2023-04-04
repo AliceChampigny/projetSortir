@@ -49,8 +49,6 @@ class ParticipantController extends AbstractController{
 
         if($participantForm->isSubmitted() && $participantForm->isValid()){
             $imageFile = $participantForm->get('imageFile')->getData();
-dd($id);
-
 
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);

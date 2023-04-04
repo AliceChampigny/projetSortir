@@ -13,7 +13,7 @@
 {#    </div>#}
 
 
-<form method="post" class="form" action="#">
+<form method="post" class="form" action="#" enctype="multipart/form-data">
 
     {{ form_start(participantForm) }}
 
@@ -32,9 +32,9 @@
     <label>
         {{ form_row(participantForm.telephone) }}
     </label>
-    <label id="image">
+    <div id="image" style="max-width: 500px">
         {{ form_row(participantForm.imageFile) }}
-    </label>
+    </div>
 
     <label>
         {{ form_row(participantForm.plainPassword) }}
@@ -51,11 +51,10 @@
         <a href="{{ path('sortie_liste') }}">
             <button type="submit" class="submit">Modifier</button>
         </a>
-
+        <a href="{{ path('sortie_liste') }}"><button type="button" class="submit">Retour</button></a>
     </div>
     {{ form_end(participantForm) }}
 </form>
-    <a href="{{ path('sortie_liste') }}"><button class="submit">Retour</button></a>
 {% endblock %}
 
 

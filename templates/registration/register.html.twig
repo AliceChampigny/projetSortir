@@ -43,20 +43,16 @@
             <a href="{{ path('sortie_liste') }}">
                 <button type="submit" class="submit">Submit</button>
             </a>
+            {{ form_end(registrationForm) }}
+
+
             <a href="{{ path('main_accueil') }}">
-                <button class="submit">Retour</button>
+                <button type="button" class="submit">Retour</button>
             </a>
         </div>
-        
-        <button type="submit" class="submit">S'inscrire</button>
-        </div>
-        <p class="signin">Vous avez déjà un compte ? <a href="{{ path('app_login') }}">Connectez-vous</a> </p>
-
-        {{ form_end(registrationForm) }}
+        <p class="signin">Vous avez déjà un compte ? <a href="{{ path('app_login') }}">Connectez-vous</a></p>
     </form>
-    <a href="{{ path('main_accueil') }}">
-        <button class="submit">Retour</button>
-    </a>
+
 
 {% endblock %}
 
