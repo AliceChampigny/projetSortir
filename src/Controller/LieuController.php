@@ -16,14 +16,12 @@ class LieuController extends AbstractController
 {
     #[Route(
         '/ajout',
-        name: '_ajout')]
+        name: '_ajoutlieu')]
     public function ajoutLieu(
         Request $request,
         EntityManagerInterface $entityManager
     ): Response{
         $lieu = new Lieu();
-        $lieu->setLongitude(10);
-        $lieu->setLatitude(10);
         $lieuForm = $this->createForm(LieuType::class,$lieu);
         $lieuForm->handleRequest($request);
 

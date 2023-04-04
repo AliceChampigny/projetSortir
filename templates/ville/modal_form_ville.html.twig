@@ -1,0 +1,11 @@
+
+
+{% block body %}
+    <div id="create_ville">
+        {{ form_start(villeForm,{'attr':{'id': 'ville_form'},'action': path('ville_ajoutville') }) }}
+        {{ form_row(villeForm.nom) }}
+        {{ form_row(villeForm.codePostal) }}
+        <button>Ajouter cette ville</button>
+        {{ form_end(villeForm) }}
+    </div>
+{% endblock %}
