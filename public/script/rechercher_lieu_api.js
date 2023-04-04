@@ -33,13 +33,13 @@ function rechercherVille(){
                 let $element = $(document.createElement('option'));
                 $element.attr('class','option');
                 $element.attr('role','option');
-                $element.val(donnees[i].nom+"-"+donnees[i].codesPostaux[j]);
-                $element.text(donnees[i].nom+"-"+donnees[i].codesPostaux[j]);
+                $element.val(donnees[i].nom+"/"+donnees[i].codesPostaux[j]);
+                $element.text(donnees[i].nom+"/"+donnees[i].codesPostaux[j]);
                 $listeVille.append($element);
             }
 
         }
-        let $select =$('#listeVille').val().split("-")
+        let $select =$('#listeVille').val().split("/")
         console.log($select);
         $('#ville_nom').val($select[0])
         $('#ville_codePostal').val($select[1]);
