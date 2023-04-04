@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ParticipantType extends AbstractType
 {
@@ -23,6 +25,21 @@ class ParticipantType extends AbstractType
             ->add('pseudo',TextType::class,['label'=>' ', 'attr'=> array('class'=>'input2')])
             ->add('email',TextType::class,['label'=>' ', 'attr'=> array('class'=>'input2')])
             ->add('telephone',TextType::class,['label'=>' ', 'attr'=> array('class'=>'input2')])
+            ->add('imageFile',VichImageType::class,[
+                'label'=> ' ',
+                'attr'=> ['class'=>'input3',
+                ],
+                'mapped'=>false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png']
+                    ]),
+
+                ]
+            ])
             ->add('plainPassword',RepeatedType::class, [
                 'mapped' => false,
                 'type' => PasswordType::class,

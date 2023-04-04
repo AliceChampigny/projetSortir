@@ -8,11 +8,13 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -52,10 +54,25 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'label' => ' ',
                 'attr' => array(
-                    'class' => 'input',
+                    'class' => 'input2',
                     'placeholder' => 'E-mail'
                 )
             ))
+            ->add('imageFile',VichImageType::class,[
+                'label'=> ' ',
+                'attr'=> ['class'=>'input3',
+                    ],
+                'mapped'=>false,
+                'constraints' => [
+                new File([
+                    'maxSize' => '1024k',
+                    'mimeTypes' => [
+                        'image/jpeg',
+                        'image/png']
+                ]),
+
+                ]
+            ])
             ->add('telephone', TextType::class, array(
                 'required' => true,
                 'label' => ' ',
@@ -76,12 +93,7 @@ class RegistrationFormType extends AbstractType
 
                 ]
             )
-            ->add('imageFile', VichImageType::class,
-                [
-                'label' => 'Photo de profil',
-                'attr' => array(
-                'class' => 'input3')
-                ])
+
 
 
             ->add('plainPassword', RepeatedType::class, [

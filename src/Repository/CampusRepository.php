@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Campus;
+use App\modeles\FilterCampus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +40,16 @@ class CampusRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Campus[] Returns an array of Campus objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function filterListeCampus(FilterCampus $filterCampus)
+    {
+        $queryBuilder = $this->createQueryBuilder('c');
 
-//    public function findOneBySomeField($value): ?Campus
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if($filterCampus->getKeyWord() !== null){
+            $queryBuilder
+                ->andWhere("c.nom LIKE :keyWord")
+                -> setParameter("keyWord", '%'.$filterCampus->getKeyWord().'%');
+        }
+
+        return $queryBuilder -> getQuery()->getResult();
+    }
 }

@@ -30,18 +30,14 @@
     <label>
         {{ form_row(sortieForm.lieu) }}<span><button role="button" data-target="#myModal" data-toggle="modal" id="ajout_lieu" tabindex="-1" >Ajout Lieu</button></span>
     </label>
+    
     <div class="flex">
             <button type="submit" class="submit">Ajouter</button>
+        <a href="{{ path('sortie_liste') }}"><button type="button" class="submit">Retour</button></a>
     </div>
     {{ form_end(sortieForm) }}
     {#        {{ form_row(sortieform.image) }} #}
 </form>
-
-
-
-
-    <a href="{{ path('sortie_liste') }}"> <button class="submit">Retour</button></a>
-
 
     <div class="modal" id="myModal" role="dialog" aria-hidden="true">
             <!-- Modal content-->

@@ -38,18 +38,19 @@ class SortieController extends AbstractController{
     {
         try {
             $filter = new Filter();
-            $form = $formFactory->create(FilterType::class, $filter);
-            $form->handleRequest($request);
+            $formFilterSortie = $formFactory->create(FilterType::class, $filter);
+            $formFilterSortie->handleRequest($request);
             $userConnecte = $this->getUser();
             $id = 5;
             $sortiesPassees = $etatRepository->find($id);
+            $sorties = $sortieRepository -> filtreListeSorties($filter, $userConnecte, $sortiesPassees);
 //         return $this->redirectToRoute('sortie_liste');
         } catch (\Exception $exception) {
             $this->addFlash('danger', "Impossible d'afficher les sorties damandées" . $exception->getMessage());
         }
             return $this->render('main/accueil.html.twig', [
-            'form' => $form->createView(),
-            'sorties' => $sortieRepository -> filtreListeSorties($filter, $userConnecte, $sortiesPassees),
+            'formFilterSortie' => $formFilterSortie->createView(),
+            'sorties' => $sorties,
 
             ]
         );
