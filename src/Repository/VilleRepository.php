@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Ville;
+use App\modeles\FilterVille;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +40,16 @@ class VilleRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Ville[] Returns an array of Ville objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('v.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function filterListeVille(FilterVille $filterVille)
+    {
+        $queryBuilder = $this->createQueryBuilder('v');
 
-//    public function findOneBySomeField($value): ?Ville
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if($filterVille->getKeyWord() !== null){
+            $queryBuilder
+                ->andWhere("v.nom LIKE :keyWord")
+                -> setParameter("keyWord", '%'.$filterVille->getKeyWord().'%');
+        }
+
+        return $queryBuilder -> getQuery()->getResult();
+    }
 }
