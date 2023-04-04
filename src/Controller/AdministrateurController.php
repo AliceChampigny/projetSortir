@@ -13,6 +13,7 @@ use App\Form\FilterType;
 use App\Form\FilterVilleType;
 use App\Form\RegistrationFormType;
 use App\Form\SortieFormType;
+use App\Form\VilleType;
 use App\modeles\Filter;
 use App\modeles\FilterCampus;
 use App\modeles\FilterVille;
@@ -390,24 +391,24 @@ class AdministrateurController extends AbstractController
             $this->addFlash('danger', "Impossible d'afficher les villes damandées" . $exception->getMessage());
         }
 
-//        $ville = new Ville();
-//        $formVille = $this->createForm(VilleType::class, $ville);
-//        $formVille->handleRequest($requestAjout);
-//
-//        if ($formVille->isSubmitted() && $formVille->isValid()) {
-//            try{
-//                $entityManager->persist($ville);
-//                $entityManager->flush();
-//                $this->addFlash('danger','La ville a bien été enregistrée');
-//                return $this->redirectToRoute('admin_gestionVille');
-//            }catch (\Exception $exception){
-//                $this->addFlash('danger','La nouvel ville n\'a pas pu être ajouté'.$exception->getMessage());
-//                return $this->redirectToRoute('admin_gestionVille');
-//            }
-//        }
+        $ville = new Ville();
+        $formVille = $this->createForm(VilleType::class, $ville);
+        $formVille->handleRequest($requestAjout);
+
+        if ($formVille->isSubmitted() && $formVille->isValid()) {
+            try{
+                $entityManager->persist($ville);
+                $entityManager->flush();
+                $this->addFlash('danger','La ville a bien été enregistrée');
+                return $this->redirectToRoute('admin_gestionVille');
+            }catch (\Exception $exception){
+                $this->addFlash('danger','La nouvel ville n\'a pas pu être ajouté'.$exception->getMessage());
+                return $this->redirectToRoute('admin_gestionVille');
+            }
+        }
         return $this->render('administrateur/gestionville.html.twig', [
                 'formFilterVille' => $formFilterVille->createView(),
-//                'villeForm' => $formVille->createView(),
+                'villeForm' => $formVille->createView(),
                 'villes' => $villes
             ]
         );
@@ -434,38 +435,38 @@ class AdministrateurController extends AbstractController
             ]);
         }
     }
+//----------------------------------------------------------------------------------------------------------------------
+    #[Route(
+        '/modifierville/{ville}',
+        name: '_modifierVille')]
+    public function modifierVille(
+        EntityManagerInterface $entityManager,
+        Request                $request,
+        Ville                 $ville,
 
-//    #[Route(
-//        '/modifierville/{ville}',
-//        name: '_modifierVille')]
-//    public function modifierVille(
-//        EntityManagerInterface $entityManager,
-//        Request                $request,
-//        Ville                 $ville,
-//
-//    ) : Response{
-//
-//
-//        $formVille = $this->createForm(VilleType::class, $ville);
-//        $formVille->handleRequest($request);
-//
-//        if ($formVille->isSubmitted() && $formVille->isValid()) {
-//            try{
-//                $entityManager->persist($ville);
-//                $entityManager->flush();
-//                $this->addFlash('danger','Le ville a bien été enregistrée');
-//                return $this->redirectToRoute('admin_gestionVille');
-//            }catch (\Exception $exception){
-//                $this->addFlash('danger','La nouvelle ville n\'a pas pu être ajoutée'.$exception->getMessage());
-//                return $this->redirectToRoute('admin_modifierVille');
-//            }
-//        }
-//        return $this->render('administrateur/modifierville.html.twig', [
-//                'ville' => $ville->getId(),
-//                'villeForm' => $formVille->createView(),
-//            ]
-//        );
-//
-//    }
+    ) : Response{
+
+
+        $formVille = $this->createForm(VilleType::class, $ville);
+        $formVille->handleRequest($request);
+
+        if ($formVille->isSubmitted() && $formVille->isValid()) {
+            try{
+                $entityManager->persist($ville);
+                $entityManager->flush();
+                $this->addFlash('danger','Le ville a bien été enregistrée');
+                return $this->redirectToRoute('admin_gestionVille');
+            }catch (\Exception $exception){
+                $this->addFlash('danger','La nouvelle ville n\'a pas pu être ajoutée'.$exception->getMessage());
+                return $this->redirectToRoute('admin_modifierVille');
+            }
+        }
+        return $this->render('administrateur/modifierville.html.twig', [
+                'ville' => $ville->getId(),
+                'villeForm' => $formVille->createView(),
+            ]
+        );
+
+    }
 
 }

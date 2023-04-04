@@ -20,28 +20,28 @@
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
                 <td>
-{#                    <a href="{{path('admin_modifierVille', {'ville' : ville.id}) }}">Modifier</a>#}
+                    <a href="{{path('admin_modifierVille', {'ville' : ville.id}) }}">Modifier</a>
                     <a href="{{path('admin_suppressionVille', {'ville' : ville.id}) }}">Supprimer</a>
                 </td>
             </tr>
         {% endfor %}
-{#        <tr>#}
-{#            <form method="post" action="#" class="form">#}
-{#                {{ form_start(villeForm) }}#}
-{#                <td> <div class="flex">#}
-{#                        <label>#}
-{#                            {{ form_row(villeForm.nom) }}#}
-{#                        </label>#}
-{#                    </div>#}
-{#                </td>#}
-{#                <td>#}
-{#                    <div class="flex">#}
-{#                        <button type="submit" class="submit">Ajouter</button>#}
-{#                        {{ form_end(villeForm) }}#}
-{#                    </div>#}
-{#                </td>#}
-{#            </form>#}
-{#        </tr>#}
+        <tr>
+            <form method="post" action="#" class="form">
+                {{ form_start(villeForm) }}
+                <td> <div class="flex">
+                        <label>
+                            {{ form_row(villeForm.nom) }}
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    <div class="flex">
+                        <button type="submit" class="submit">Ajouter</button>
+                        {{ form_end(villeForm) }}
+                    </div>
+                </td>
+            </form>
+        </tr>
         </tbody>
     </table>
 {% endblock %}
