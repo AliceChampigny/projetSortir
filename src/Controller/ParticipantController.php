@@ -19,16 +19,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
     '/participant',
     name:'participant' )]
 class ParticipantController extends AbstractController{
-//    #[Route(
-//        '',
-//        name: '_accueilcnte')]
-//    public function accueilcnte(
-//
-//    ): Response{
-//        return $this->redirectToRoute('main_accueil');
-//
-//    }
-//----------------------------------------------------------------------------------------------------------------------
+
     #[Route(
         '/profil/modifier/{id}',
         name:'_modifierprofil'
@@ -88,17 +79,19 @@ class ParticipantController extends AbstractController{
         return $this->render('participant/modifier.html.twig',compact('participantForm', ));
     }
 //----------------------------------------------------------------------------------------------------------------------
-#[Route(
-    '/profil/{id}',
-    name: '_afficherprofil')]
-public function afficherProfil(
-    Participant $id,
-    ParticipantRepository $participantRepository
-) : Response{
+    #[Route(
+        '/profil/{id}',
+        name: '_afficherprofil'
+    )]
+    public function afficherProfil(
+        Participant $id,
+        ParticipantRepository $participantRepository
 
-        $participant = $participantRepository->findOneBy(['id'=>$id->getId()]);
-        return $this->render('participant/afficherprofil.html.twig',compact('participant'));
-}
+    ) : Response{
+
+            $participant = $participantRepository->findOneBy(['id'=>$id->getId()]);
+            return $this->render('participant/afficherprofil.html.twig',compact('participant'));
+    }
 //----------------------------------------------------------------------------------------------------------------------
 
     #[Route(
@@ -153,15 +146,5 @@ public function afficherProfil(
         }
 
 //----------------------------------------------------------------------------------------------------------------------
-    #[Route(
-        '/admin/gestionsortie',
-        name: '_adminGestionSortie')]
-    public function adminGestionSortie(
-
-    ) : Response{
-
-
-        return $this->render('participant/adminGestionSortie.html.twig');
-    }
 
 }

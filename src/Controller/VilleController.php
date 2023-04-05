@@ -30,6 +30,7 @@ class VilleController extends AbstractController{
 
                 $entityManager->persist($ville);
                 $entityManager->flush();
+                return $this->redirectToRoute('admin_gestionVille');
 
             }catch (\Exception $exception){
                 $this->addFlash('danger','L\'ajout de la ville n\'a pas été effectuée'.$exception->getMessage());

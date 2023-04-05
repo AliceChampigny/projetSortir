@@ -40,11 +40,17 @@ function rechercherVille(){
 
         }
         let $select =$('#listeVille').val().split("/")
-        console.log($select);
         $('#ville_nom').val($select[0])
         $('#ville_codePostal').val($select[1]);
     })
 }
+
+$('#listeVille').change(function (){
+    let $select =$('#listeVille').val().split("/")
+    $('#ville_nom').val($select[0])
+    $('#ville_codePostal').val($select[1]);
+
+})
 
 
 

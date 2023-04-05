@@ -39,9 +39,23 @@
                 <td><a href="{{ path('participant_afficherprofil',{'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
                 <td>
                     {% if sortie.etat.id == 1 %}
-                     <a href="{{path('admin_suppressionSorties', {'sortie' : sortie.id}) }}">Supprimer</a>
+                        <a href="#" role="button" data-target="#myModal3" data-toggle="modal" tabindex="-1" >Supprimer la sortie</a>
+                        <div class="modal" id="myModal3" role="dialog" aria-hidden="true">
+                            <div class="modal-content">
+                                <div class="modal-close" data-dismiss ="dialog"> X </div>
+                                <div class ="title" id="title_modal">Suppression ?</div>
+                                <div class="modal-body" id="modal-body">
+                                    <p id="question_suppression">Voulez-vous vraiment supprimer cette sortie ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{{ path('sortie_supprimersortie',{'sortie':sortie.id}) }}"><button class="submit">Valider</button></a>
+                                    <button role="button" class="submit" data-dismiss="dialog" id="fermer">Fermer</button>
+                                </div>
+                            </div>
+                        </div>
+{#                     <a href="{{path('admin_suppressionSorties', {'sortie' : sortie.id}) }}">Supprimer</a>#}
                     {% elseif sortie.etat.id == 2 or sortie.etat.id == 3 %}
-                        <a href="{{ path('admin_annulationSortie',{'sortie' : sortie.id}) }}">Annuler la sortie</a>
+                        <a href="{{ path('sortie_annulersortie',{'sortie' : sortie.id}) }}">Annuler la sortie</a>
                     {% endif %}
                 </td>
             </tr>
@@ -51,6 +65,8 @@
         </tbody>
 
     </table>
+
+    <script src="{{ asset('script/affichage_modal_lieu.js') }}"></script>
 {% endblock %}
 
 

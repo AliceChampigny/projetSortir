@@ -2,12 +2,17 @@
 
 {% block body %}
     <div id="create_lieu"></div>
-{{ form_start(lieuForm,{'attr':{'id': 'lieu_form'},'action': path('lieu_ajoutlieu') })}}
-{{ form_row(lieuForm.nom)}}
+    {{ form_start(lieuForm,{'attr':{'id': 'lieu_form'},'action': path('lieu_ajoutlieu') })}}
+    <label>
+        <button id="btnAj" hidden="hidden" class="submit">Ajouter ce lieu</button>
+{{ form_row(lieuForm.nom,{'attr':{'class':'input2'}})}}
+    </label>
 {{ form_row(lieuForm.rue)}}
 {{ form_row(lieuForm.longitude)}}
 {{ form_row(lieuForm.latitude)}}
-{{ form_row(lieuForm.ville)}}
-    <button id="btnAj" hidden="hidden">Ajouter ce lieu</button>
+<label>
+    {{ form_row(lieuForm.ville,{'attr':{'class':'input3'}})}}
+</label>
+
 {{ form_end(lieuForm)}}
 {% endblock %}

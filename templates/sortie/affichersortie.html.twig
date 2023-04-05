@@ -54,11 +54,11 @@
             and  sortie.participants | length < sortie.nbInscriptionsMax %}
             {% if sortie.participants.contains(app.user) %}
                 <a href="{{ path('sortie_desistement',{'sortie' : sortie.id}) }}">
-                    <button>Se désister</button>
+                    <button class="submit">Se désister</button>
                 </a>
             {% else %}
                 <a href="{{ path('sortie_inscription',{'sortie' : sortie.id}) }}">
-                    <button>S'inscrire</button>
+                    <button class="submit">S'inscrire</button>
                 </a>
             {% endif %}
 

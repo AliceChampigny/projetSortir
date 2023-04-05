@@ -35,7 +35,7 @@ function submitFormLieu(){
 
 
 $(document).ready(function(){
-    $("#ville_form").submit(function(event){
+    $(".ville_modal").submit(function(event){
         submitFormVille();
         return false;
     });
@@ -46,14 +46,13 @@ function submitFormVille(){
     let $nomVille=$('#ville_nom');
     let $cpVille=$('#ville_codePostal');
     let $tokenVille=$('#ville__token');
-    let $select =$('#listeVille').val().split("/");
-    $nomVille.val($select[0]);
-    $cpVille.val($select[1]);
+    // let $select =$('#listeVille').val().split("/");
+    // $nomVille.val($select[0]);
+    // $cpVille.val($select[1]);
     let dataVille ={};
 
-    console.log($select);
-    dataVille[$nomVille.attr('name')] = $select[0];
-    dataVille[$cpVille.attr('name')] = $select[1];
+    dataVille[$nomVille.attr('name')] = $nomVille.val();
+    dataVille[$cpVille.attr('name')] = $cpVille.val();
     dataVille[$tokenVille.attr('name')]=$tokenVille.val();
     $.ajax({
         url :  $formVille.attr('action'),
