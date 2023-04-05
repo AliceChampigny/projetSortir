@@ -5,15 +5,12 @@ namespace App\Controller;
 
 use App\Entity\Campus;
 use App\Entity\Participant;
-use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\CampusType;
-use App\Form\FileUploadType;
 use App\Form\FilterCampusType;
 use App\Form\FilterType;
 use App\Form\FilterVilleType;
 use App\Form\RegistrationFormType;
-use App\Form\SortieFormType;
 use App\Form\VilleType;
 use App\modeles\Filter;
 use App\modeles\FilterCampus;
@@ -23,15 +20,12 @@ use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
-use App\Services\FileUploader;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -62,6 +56,7 @@ class AdministrateurController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManagerInscriptionUtilisateur,
         ParticipantRepository $participantsRepository,
+        MailerInterface $mailer
 
     ): Response
     {
@@ -73,6 +68,22 @@ class AdministrateurController extends AbstractController
         $participants = $participantsRepository -> findAll();
         if ($formUtilisateur->isSubmitted() && $formUtilisateur->isValid()) {
             try{
+                $email = (new TemplatedEmail())
+                    ->from(new Address('admin@campus-eni.fr', 'Administrateur de "SortiesEnitiennes.com"'))
+                    ->to($user->getEmail())
+                    ->subject('Création d\'un compte pour'.$user->getNom().' '. $user->getPrenom())
+                    ->text('Bonjour !
+
+                            Vous bénéficiez maintenant d\'un compte utilisateur sur le site SortiesEnitiennes.com.
+                            Vous pouvez vous connecter grâce aux identifiants suivants :
+                            Pseudo : '. $user->getPseudo() .'
+                            Email : '. $user->getEmail() .'
+                            Mot de Passe : '. $formUtilisateur->get('plainPassword')->getData() .'
+                            Nous vous conseillons vivement de changer votre mot de passe lors de votre première connection.
+
+                            Au revoir et à bientôt sur les SortiesEnitiennes.com !');
+                $mailer->send($email);
+
                 $user->setPassword(
                     $userPasswordHasher->hashPassword(
                         $user,
@@ -101,10 +112,24 @@ class AdministrateurController extends AbstractController
 
         EntityManagerInterface $entityManager,
         Participant $participant,
+        MailerInterface $mailer
     ): Response
     {
         if ($participant->isActif()) {
             try {
+                $email = (new TemplatedEmail())
+                    ->from(new Address('admin@campus-eni.fr', 'Administrateur de "SortiesEnitiennes.com"'))
+                    ->to($participant->getEmail())
+                    ->subject('Désactivation de votre compte')
+                    ->text('Bonjour !
+                            
+                            Nous constatons que vous annulez de manière systématique les sorties que vous proposez.
+                            Cela a malheureusement des conséquenses désagréables pour nos utilisateurs.
+                            Votre compte a donc été désactivé.
+                            
+
+                            Au revoir et à bientôt sur les SortiesEnitiennes.com !');
+                $mailer->send($email);
                 $participant->setActif(false);
                 $entityManager->persist($participant);
                 $entityManager->flush();
