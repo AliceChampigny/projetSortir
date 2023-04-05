@@ -6,24 +6,24 @@
 
 <body>
          <div class="form2">
-             {{ form_start(form) }}
+             {{ form_start(formFilterSortie) }}
              <p class="title">Filtrer vos recherches</p>
 
                  <label class="flex">
-                     {{ form_widget(form.keyWord) }}
+                     {{ form_widget(formFilterSortie.keyWord) }}
 
-                     {{ form_widget(form.campus) }}
+                     {{ form_widget(formFilterSortie.campus) }}
                      <label>
-                         {{ form_widget(form.dateDebut) }}
-                         {{ form_widget(form.dateFin) }}
+                         {{ form_widget(formFilterSortie.dateDebut) }}
+                         {{ form_widget(formFilterSortie.dateFin) }}
                      </label>
                      <br>
                      <label class="flex">
-                         {{ form_widget(form.organisateurSorties) }}
-                         {{ form_widget(form.inscritSorties) }}
+                         {{ form_widget(formFilterSortie.organisateurSorties) }}
+                         {{ form_widget(formFilterSortie.inscritSorties) }}
 
-                         {{ form_widget(form.nonInscritSorties) }}
-                         {{ form_widget(form.sortiesPassees) }}
+                         {{ form_widget(formFilterSortie.nonInscritSorties) }}
+                         {{ form_widget(formFilterSortie.sortiesPassees) }}
                      </label>
                  </label>
              <br>
@@ -32,15 +32,15 @@
                  <button type="submit" class="submit">Rechercher</button>
              </div>
 
-             {{ form_end(form) }}
+             {{ form_end(formFilterSortie) }}
          </div>
 </body>
 
 
          <h2 class="title">Nos sorties</h2>
-
+         <div class="liste_sorties">
              {% for sortie in sorties %}
-                 <a href="{{ path('sortie_affichersortie', {'id' : sortie.id}) }}">
+                 <a href="{{ path('sortie_affichersortie', {'sortie' : sortie.id}) }}">
                  <div class="carousel-item">
                      <img
                              class="carousel-item__img"
@@ -51,12 +51,18 @@
 
                          <div class="controls">     </div>
                          <h5 class="carousel-item__details--title">{{ sortie.nom }}</h5>
+                         <h6 class="carousel-item__details--subtitle"><a href="{{ path('participant_afficherprofil',{'id':sortie.organisateur.id}) }}">Organisateur(rice) : {{ sortie.organisateur.pseudo }}</a></h6>
                          <h6 class="carousel-item__details--subtitle">Le {{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</h6>
+                         <h6 class="carousel-item__details--subtitle">Clotûre inscription le {{ sortie.dateLimiteInscription | date('d/m/Y H:i') }}</h6>
+                         <h6 class="carousel-item__details--subtitle">Inscrits/Places : {{ sortie.participants | length }} /{{ sortie.nbInscriptionsMax }}</h6>
+                         <h6 class="carousel-item__details--subtitle">Etat : {{ sortie.etat.libelle }}</h6>
+
 
                      </div>
                  </div></a>
 
              {% endfor %}
+         </div>
      {% endif %}
 
      {% if not app.user %}

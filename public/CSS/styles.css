@@ -821,7 +821,7 @@ td {
     top: 10%;
     right: -2px;
     height: 80%;
-    border-left: 2px solid rgba(0,0,0,0.025);*/
+    border-left: 2px solid rgba(0,0,0,0.025);
 }
 
 .card2 .additional .user-card .level,
@@ -1128,9 +1128,11 @@ h3, p {
     width: 300px;
     height: 300px;
     border-radius: 20px;
+    /*border:solid darkblue;*/
     background-color: #95bcd6;
     overflow: hidden;
-    margin-right: 10px;
+    margin-right: 25px;
+    margin-left :25px;
     margin-top: 70px;
     display: inline-block;
     cursor: pointer;
@@ -1181,7 +1183,10 @@ h3, p {
     right: 0;
     bottom: 0;
 }
-
+.liste_sorties{
+    max-height: 50vh;
+    overflow-y: scroll;
+}
 .carousel-item__details:hover {
     opacity: 1;
 }
@@ -1195,7 +1200,7 @@ h3, p {
 }
 
 .carousel-item__details .controls {
-    padding-top: 180px;
+    padding-top: 150px;
 }
 
 .carousel-item__details .carousel-item__details--title,
