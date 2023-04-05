@@ -1,75 +1,78 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Sorties Enitiennes!{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('CSS/styles.css') }}">
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Sorties Enitiennes!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('CSS/styles.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        <header>
-            <nav>
-                <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
-                    <div class="logo">
-                        <img src="{{ asset('img/logoSortie.png') }}" alt="logo">
-                    </div>
-                </a>
-                {% if app.user %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+<main>
+    <header>
+        <div class="overlay">
+            <h1>Par ici la sortie!</h1>
+            <h3>{% if app.user %}
                     <div class="mb-3">
                         Bienvenue {{ app.user.pseudo }} !
                     </div>
+                {% endif %}</h3>
+
+            {% block menu %}
+            <ul class="menu">
+                {% if not app.user %}
+                    <a href="{{ path('main_accueil') }}"><button id="button">ACCUEIL</button></a>
+                    <a href="{{ path('app_login') }}"><button id="button">SE CONNECTER</button></a>
+                    <a href="{{ path('app_register') }}"><button id="button">S'INSCRIRE</button></a>
                 {% endif %}
+                {% if app.user %}
+                    <a href="{{ path('participant_modifierprofil',{'id' :app.user.id}) }}"><button id="button">MON PROFIL</button></a>
+                    <a href="{{ path('sortie_ajouter',{'organisateur':app.user.id}) }}"><button id="button">CREER UNE SORTIE</button></a>
+                    <a href="{{ path('app_logout') }}"><button id="button">SE DECONNECTER</button></a>
+                    {% if app.user.administrateur %}
+                        <a href="{{ path('admin_accueil') }}"><button id="button">ADMINISTRATEUR</button></a>
+                    {% endif %}
+                {% endif %}
+            </ul>
 
-                {% block menu %}
-                    <div >
-                        <ul class="menu">
+        </div>
 
-                            {% if not app.user %}
-                            <li><a href="{{ path('main_accueil') }}">ACCUEIL</a></li>
-                            <li><a href="{{ path('app_login') }}">SE CONNECTER</a></li>
-                            <li><a href="{{ path('app_register') }}">S'INSCRIRE</a></li>
-                            {% endif %}
-
-                        {% if app.user %}
-                            <li><a href="{{ path('participant_modifierprofil',{'id' :app.user.id}) }}">MON PROFIL</a></li>
-                            <li><a href="{{ path('sortie_ajouter',{'organisateur':app.user.id}) }}">CREER UNE SORTIE</a></li>
-                            <li><a href="{{ path('app_logout') }}">SE DECONNECTER</a></li>
-                            {% if app.user.administrateur %}
-                                <li><a href="{{ path('admin_accueil') }}">ADMINISTRATEUR</a></li>
-                            {% endif %}
-
-                        {% endif %}
-
-
-                        </ul>
-                    </div>
-                {% endblock %}
-            </nav>
-        </header>
-        {% for label, messages in app.flashes(['success', 'danger']) %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }} text-center" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-        <main>
-            <div>
-                {% block body %}{% endblock %}
+        <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
+            <div class="logo">
+                <img src="{{ asset('img/logoSortie.png') }}" alt="logo">
             </div>
-        </main>
-        <footer class="footer">
-            <p>{{ 'now' | date("Y") }} ©Sorties Enitiennes</p>
-        </footer>
-    </body>
+        </a>
+
+    </header>
+    {% endblock %}
+</main>
+    <main>
+    <section class="section_form">
+
+{% for label, messages in app.flashes(['success', 'danger']) %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }} text-center" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+    </section>
+<div>
+    {% block body %}{% endblock %}
+</div>
+    </main>
+<footer class="footer">
+    <p>{{ 'now' | date("Y") }} ©Sorties Enitiennes</p>
+</footer>
+
+</body>
 </html>
 

@@ -4,24 +4,18 @@
 <form method="post" class="form" action="#">
     {{ form_start(sortieForm) }}
     <p class="title">Ajoutez-votre évènement!</p>
-    {#    <p class="message">Dépechez-vous de vous inscire ! </p> #}
     <label>
         {{ form_row(sortieForm.nom) }}
-    </label>
-    <label>
         {{ form_row(sortieForm.dateHeureDebut) }}
-    </label>
-    <label>
+        <br>
         {{ form_row(sortieForm.duree) }}
-    </label>
-    <label>
+
         {{ form_row(sortieForm.dateLimiteInscription) }}
-    </label>
-    <label>
+        <br>
         {{ form_row(sortieForm.nbInscriptionsMax) }}
-    </label>
-    <label>
+        <br>
         {{ form_row(sortieForm.infosSortie) }}
+
     </label>
 
     <label>
@@ -29,6 +23,7 @@
     </label>
     <label>
         {{ form_row(sortieForm.lieu) }}<span><button role="button" data-target="#myModal" data-toggle="modal" id="ajout_lieu" tabindex="-1" class="submit" >Ajout Lieu</button></span>
+
     </label>
     
     <div class="flex">

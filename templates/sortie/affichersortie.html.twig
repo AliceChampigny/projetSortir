@@ -7,6 +7,7 @@
         <div class="card">
             <div class="card-details">
                 <p class="title">{{ sortie.nom }}</p>
+                <br>
                 <p class="text-body">Date et heure de début : {{ sortie.DateHeureDebut | date ("d/m/Y H:m") }}</p>
                 <p class="text-body">Date limite d'inscription
                     : {{ sortie.DateLimiteInscription | date ("d/m/Y H:m") }}</p>
@@ -17,15 +18,49 @@
                 <p class="text-body">Lieu :{{ sortie.lieu.nom }}</p>
                 <p class="text-body">Latitude : {{ sortie.lieu.latitude }}</p>
                 <p class="text-body">Longitude : {{ sortie.lieu.longitude }}</p>
+                <br>
+                <br>
             </div>
             {#        <a href="{{path('sortie_inscription', {'sortie' : sortie.id}) }}"> #}
             {#        <button class="card-button">S'inscrire</button> #}
             {#        </a> #}
+            <div class="flex">
+                {% if sortie.organisateur == app.user and sortie.etat.id == constant('App\\Controller\\SortieController::CREEE') %}
+
+                    <a href="{{ path('sortie_modifiersortie',{'sortie' : sortie.id}) }}">
+                        <button class="submit">Modifier la sortie</button>
+                    </a>
+                {% endif %}
+
+                {% if sortie.etat.id == constant('App\\Controller\\SortieController::OUVERTE') and date() < date(sortie.dateLimiteInscription) 
+                                and sortie.participants | length < sortie.nbInscriptionsMax %}
+                    {% if sortie.participants.contains(app.user) %}
+                        <a href="{{ path('sortie_desistement', {'sortie' : sortie.id}) }}"><button class="submit">Se désister</button></a>
+                    {% else %}
+                        <a href="{{ path('sortie_inscription', {'sortie' : sortie.id}) }}"><button class="submit">S'inscrire</button>
+                    {% endif %}
+                    </a>
+                {% endif %}
+
+                {% if sortie.organisateur == app.user and (sortie.etat.id == constant('App\\Controller\\SortieController::OUVERTE') 
+                                                          or sortie.etat.id == constant('App\\Controller\\SortieController::CLOTUREE')) %}
+                    {#        ajouter pour uniquement organisateur #}
+                    <a href="{{ path('sortie_annulersortie',{'sortie' : sortie.id}) }}">
+                        <button class="submit">Annuler la sortie</button>
+                    </a>
+                {% endif %}
+
+                <a href="{{ path('sortie_liste') }}">
+                    <button class="submit">Retour</button>
+                </a>
+            </div>
         </div>
     </main>
 
 
+
     {% if sortie.etat.id != constant('App\\Controller\\SortieController::CREEE') %}
+        <br>
 
         <h3>Liste des participants</h3><br>
 <section class="overflow-x">
@@ -41,6 +76,8 @@
                     </a>
                 </figure>
             </div>
+            {% else %}
+            Absence de participants
         {% endfor %}
     </div>
 </section>
@@ -52,102 +89,9 @@
         {% if  sortie.etat.id == constant('App\\Controller\\SortieController::OUVERTE')
             and  date() < date(sortie.dateLimiteInscription)
             and  sortie.participants | length < sortie.nbInscriptionsMax %}
-            {% if sortie.participants.contains(app.user) %}
-                <a href="{{ path('sortie_desistement',{'sortie' : sortie.id}) }}">
-                    <button class="submit">Se désister</button>
-                </a>
-            {% else %}
-                <a href="{{ path('sortie_inscription',{'sortie' : sortie.id}) }}">
-                    <button class="submit">S'inscrire</button>
-                </a>
-            {% endif %}
 
         {% endif %}
-    </div>
-        <div class="flex">
-    {% if sortie.organisateur == app.user and sortie.etat.id == constant('App\\Controller\\SortieController::CREEE') %}
-
-        <a href="{{ path('sortie_modifiersortie',{'sortie' : sortie.id}) }}">
-            <button class="submit">Modifier la sortie</button>
-        </a>
-    {% endif %}
-
-    {% if sortie.organisateur == app.user and (sortie.etat.id == constant('App\\Controller\\SortieController::OUVERTE')
-                                                or sortie.etat.id == constant('App\\Controller\\SortieController::CLOTUREE')) %}
-        {#        ajouter pour uniquement organisateur #}
-        <a href="{{ path('sortie_annulersortie',{'sortie' : sortie.id}) }}">
-            <button class="submit">Annuler la sortie</button>
-        </a>
-    {% endif %}
-
-    <a href="{{ path('sortie_liste') }}">
-        <button class="submit">Retour</button>
-    </a>
-        </div>
     </main>
-
-
-    {#    {% if sortie.etat.id != 1 %} #}
-
-    {#        <div> #}
-    {#            <h3>Liste des participants</h3> #}
-    {#            <table id="liste_participants"> #}
-    {#                <thead> #}
-    {#                <tr> #}
-    {#                    <th>Pseudo</th> #}
-    {#                    <th>Nom complet</th> #}
-    {#                </tr> #}
-    {#                </thead> #}
-    {#                <tbody> #}
-
-    {#                {% for participant in sortie.participants %} #}
-    {#                    <tr> #}
-    {#                        <td> #}
-    {#                            <a href="{{ path('participant_afficherprofil', {'id': participant.id}) }}">{{ participant.pseudo }}</a> #}
-    {#                        </td> #}
-    {#                        <td> {{ participant.nom ~" "~participant.prenom }}</td> #}
-    {#                    </tr> #}
-    {#                {% endfor %} #}
-
-    {#                </tbody> #}
-    {#            </table> #}
-    {#        </div> #}
-    {#    {% endif %} #}
-
-    {#    <div id="buttons_insc_des"> #}
-    {#        {% if  sortie.etat.libelle == "Ouverte" #}
-    {#            and  date() < date(sortie.dateLimiteInscription) #}
-    {#            and  sortie.participants | length < sortie.nbInscriptionsMax %} #}
-    {#            {% if sortie.participants.contains(app.user) %} #}
-    {#                <a href="{{ path('sortie_desistement',{'sortie' : sortie.id}) }}"> #}
-    {#                    <button>Se désister</button> #}
-    {#                </a> #}
-    {#            {% else %} #}
-    {#                <a href="{{ path('sortie_inscription',{'sortie' : sortie.id}) }}"> #}
-    {#                    <button>S'inscrire</button> #}
-    {#                </a> #}
-    {#            {% endif %} #}
-
-    {#        {% endif %} #}
-    {#    </div> #}
-    {#    {% if sortie.organisateur == app.user and sortie.etat.id == 1 %} #}
-
-    {#        <a href="{{ path('sortie_modifiersortie',{'sortie' : sortie.id}) }}"> #}
-    {#            <button>Modifier la sortie</button> #}
-    {#        </a> #}
-    {#    {% endif %} #}
-
-    {#    {% if sortie.organisateur == app.user and (sortie.etat.id == 2 or sortie.etat.id == 3) %} #}
-    {#        #}{#        ajouter pour uniquement organisateur #}
-    {#        <a href="{{ path('sortie_annulersortie',{'sortie' : sortie.id}) }}"> #}
-    {#            <button>Annuler la sortie</button> #}
-    {#        </a> #}
-    {#    {% endif %} #}
-
-    {#    <a href="{{ path('sortie_liste') }}"> #}
-    {#        <button>Retour</button> #}
-    {#    </a> #}
-
 
 {% endblock %}
 

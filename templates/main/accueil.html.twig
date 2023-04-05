@@ -4,79 +4,65 @@
 
      {% if app.user %}
 
+<body>
+         <div class="form2">
+             {{ form_start(form) }}
+             <p class="title">Filtrer vos recherches</p>
 
-         <h2>Filtrer les sorties</h2>
+                 <label class="flex">
+                     {{ form_widget(form.keyWord) }}
 
-         {{ form(formFilterSortie) }}
+                     {{ form_widget(form.campus) }}
+                     <label>
+                         {{ form_widget(form.dateDebut) }}
+                         {{ form_widget(form.dateFin) }}
+                     </label>
+                     <br>
+                     <label class="flex">
+                         {{ form_widget(form.organisateurSorties) }}
+                         {{ form_widget(form.inscritSorties) }}
+
+                         {{ form_widget(form.nonInscritSorties) }}
+                         {{ form_widget(form.sortiesPassees) }}
+                     </label>
+                 </label>
+             <br>
+
+             <div class="flex">
+                 <button type="submit" class="submit">Rechercher</button>
+             </div>
+
+             {{ form_end(form) }}
+         </div>
+</body>
 
 
-         <table>
-             <thead>
-             <tr>
-                 <th scope="col">Nom de sortie</th>
-                 <th scope="col">Date de la sortie</th>
-                 <th scope="col">Date de clotûre</th>
-                 <th scope="col">Inscrits/places</th>
-                 <th scope="col">Etat</th>
-                 <th scope="col">Inscrit</th>
-                 <th scope="col">Organisateur</th>
-                 <th scope="col">Actions</th>
-             </tr>
-             </thead>
-             <tbody>
+         <h2 class="title">Nos sorties</h2>
 
              {% for sortie in sorties %}
+                 <a href="{{ path('sortie_affichersortie', {'id' : sortie.id}) }}">
+                 <div class="carousel-item">
+                     <img
+                             class="carousel-item__img"
+                             src="https://images.pexels.com/photos/708392/pexels-photo-708392.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                             alt="people"
+                     />
+                     <div class="carousel-item__details">
 
+                         <div class="controls">     </div>
+                         <h5 class="carousel-item__details--title">{{ sortie.nom }}</h5>
+                         <h6 class="carousel-item__details--subtitle">Le {{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</h6>
 
+                     </div>
+                 </div></a>
 
-{#                 <div class="wrapper">#}
-{#                     <ul>#}
-{#                         <li>#}
-{#                             <img src="https://assets.codepen.io/85648/Arooj-Aftab.webp" alt="Arooj Aftab album cover"/>#}
-{#                             <span>{{ sortie.nom }}</span>#}
-{#                             <span>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</span>#}
-{#                         </li>#}
-{#                     </ul>#}
-{#                 </div>#}
-
-
-                 <tr>
-                     <td>{{ sortie.nom }}</td>
-                     <td>{{ sortie.dateHeureDebut | date('m/d/Y H:i') }}</td>
-                     <td>{{ sortie.dateLimiteInscription | date('m/d/Y H:i') }}</td>
-                     <td> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </td>
-                     <td>{{ sortie.etat.libelle }}</td>
-                     <td>
-                         {% if sortie.participants.contains(app.user) %}
-                             X
-                         {% endif %}
-
-                     </td>
-                     <td><a href="{{ path('participant_afficherprofil',{'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
-                     <td>
-                         <a href="{{path('sortie_affichersortie', {'sortie' : sortie.id}) }}">Afficher</a>
-
-
-                         {% if sortie.etat.id == 2 and date() < date(sortie.dateLimiteInscription) and sortie.participants | length < sortie.nbInscriptionsMax %}
-                             {% if sortie.participants.contains(app.user) %}
-                                 <a href="{{path('sortie_desistement', {'sortie' : sortie.id}) }}">Se désister</a>
-                             {% else %}
-                                 <a href="{{path('sortie_inscription', {'sortie' : sortie.id}) }}">S'inscrire
-                             {% endif %}
-                             </a>
-                         {% endif %}
-                     </td>
-                 </tr>
-                
              {% endfor %}
-
-             </tbody>
-
-         </table>
-         <a href="{{path('sortie_ajouter',{'organisateur' : app.user.id}) }}"><button>Créer une sortie</button></a>
      {% endif %}
 
      {% if not app.user %}
          <h1>Bienvenue sur les sorties enitiennes.com !!</h1>
      {% endif %}
+     <div class="background"></div>
+     <div class="background-texture"></div>
+
  {% endblock %}
