@@ -17,12 +17,24 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route(
     '/participant',
-    name:'participant' )]
+    name:'participant'
+)]
 class ParticipantController extends AbstractController{
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param Participant $id
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param SluggerInterface $slugger
+     * @return Response : dirige vers le formulaire de modification, puis si validation du formulaire, renvoie vers la page d'accueil
+     * @throws FileException : si le téléchargement de l'image s'est mal passée
+     * @throws \Exception : si l'entrée des données en base a échoué
+     */
     #[Route(
         '/profil/modifier/{id}',
-        name:'_modifierprofil'
+        name:'_modifierprofil',
+        requirements: ['id' => '\d+']
     )]
     public function modifierProfil(
         EntityManagerInterface $entityManager,
@@ -34,16 +46,14 @@ class ParticipantController extends AbstractController{
     ) : Response{
 
         $participantForm = $this->createForm(ParticipantType::class, $id);
-
         $participantForm->handleRequest($request);
-
 
         if($participantForm->isSubmitted() && $participantForm->isValid()){
             $imageFile = $participantForm->get('imageFile')->getData();
 
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
+
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
                 try {
@@ -51,10 +61,9 @@ class ParticipantController extends AbstractController{
                         $this->getParameter('photo'),
                         $newFilename);
                 } catch (FileException $e) {
-
+                    $this->addFlash('danger','Erreur lors du téléchargement de l\'image');
                 }
                 $id->setImageName($newFilename);
-
             }
 
             try{
@@ -70,18 +79,24 @@ class ParticipantController extends AbstractController{
                 $this->redirectToRoute('sortie_liste');
                 $this->addFlash('success','Votre profil a bien été modifié');
                 return $this->redirectToRoute('sortie_liste');
+
             }catch (\Exception $exception){
-                $this->addFlash('danger','La modification n\'a pas été effectué'.$exception->getMessage());
+                $this->addFlash('danger','La modification n\'a pas été effectuée');
                 return $this->redirectToRoute('participant_modifierprofil',['id'=>$id->getId()]);
             }
-
         }
-        return $this->render('participant/modifier.html.twig',compact('participantForm', ));
+        return $this->render('participant/modifier.html.twig',compact('participantForm'));
     }
 //----------------------------------------------------------------------------------------------------------------------
+    /**
+     * @param Participant $id
+     * @param ParticipantRepository $participantRepository
+     * @return Response : envoie vers la page d'affichage du profil du participant
+     */
     #[Route(
         '/profil/{id}',
-        name: '_afficherprofil'
+        name: '_afficherprofil',
+        requirements: ['id' => '\d+']
     )]
     public function afficherProfil(
         Participant $id,
@@ -92,59 +107,6 @@ class ParticipantController extends AbstractController{
             $participant = $participantRepository->findOneBy(['id'=>$id->getId()]);
             return $this->render('participant/afficherprofil.html.twig',compact('participant'));
     }
-//----------------------------------------------------------------------------------------------------------------------
-
-    #[Route(
-        '/admin',
-        name: '_admin')]
-    public function admin(
-
-    ) : Response{
-
-        return $this->render('participant/admin.html.twig');
-    }
-//----------------------------------------------------------------------------------------------------------------------
-
-
-    #[Route(
-        '/admin/gestionutilisateur',
-        name: '_adminGestionUtilisateur')]
-    public function adminGestionUtilisateur(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
-        {
-            $user = new Participant();
-            $user -> setActif(true);
-            $user -> setAdministrateur(false);
-            $form = $this->createForm(RegistrationFormType::class, $user);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                try{
-                    // encode the plain password
-                    $user->setPassword(
-                        $userPasswordHasher->hashPassword(
-                            $user,
-                            $form->get('plainPassword')->getData()
-                        )
-                    );
-
-                    $entityManager->persist($user);
-                    $entityManager->flush();
-                    // do anything else you need here, like send an email
-                    $this->addFlash('danger','L\'inscription a bien été enregistrée');
-                    return $this->redirectToRoute('participant_admin');
-                }catch (\Exception $exception){
-                    $this->addFlash('danger','L\'inscription n\'a pas été effectuée'.$exception->getMessage());
-                    return $this->redirectToRoute('participant_adminGestionUtilisateur');
-                }
-
-
-            }
-
-            return $this->render('participant/adminGestionUtilisateur.html.twig', [
-                'registrationForm' => $form->createView(),
-            ]);
-        }
-
 //----------------------------------------------------------------------------------------------------------------------
 
 }
