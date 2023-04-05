@@ -13,12 +13,20 @@ use Symfony\Component\Routing\Annotation\Route;
     '/ville',
     name:'ville')]
 class VilleController extends AbstractController{
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response : envoie vers le formulaire d'ajout de ville
+     * @throws \Exception : si erreur lors de l'entrée en base de données
+     */
     #[Route(
         '/ajout',
-        name: '_ajoutville')]
+        name: '_ajoutville'
+    )]
     public function ajoutVille(
         Request $request,
         EntityManagerInterface $entityManager
+
     ): Response{
 
         $ville = new Ville();
