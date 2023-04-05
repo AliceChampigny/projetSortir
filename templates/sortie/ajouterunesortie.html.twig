@@ -4,29 +4,20 @@
 <form method="post" class="form" action="#">
     {{ form_start(sortieForm) }}
     <p class="title">Ajoutez-votre évènement!</p>
-    {#    <p class="message">Dépechez-vous de vous inscire ! </p> #}
     <label>
         {{ form_row(sortieForm.nom) }}
-    </label>
-    <label>
         {{ form_row(sortieForm.dateHeureDebut) }}
-    </label>
-    <label>
+        <br>
         {{ form_row(sortieForm.duree) }}
-    </label>
-    <label>
+
         {{ form_row(sortieForm.dateLimiteInscription) }}
-    </label>
-    <label>
+        <br>
         {{ form_row(sortieForm.nbInscriptionsMax) }}
-    </label>
-    <label>
+        <br>
         {{ form_row(sortieForm.infosSortie) }}
-    </label>
-    <label>
+
         {{ form_row(sortieForm.ville) }}
-    </label>
-    <label>
+
         {{ form_row(sortieForm.lieu) }}
     </label>
 
