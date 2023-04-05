@@ -15,10 +15,20 @@ class LieuType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('rue')
-//            ->add('latitude')
-//            ->add('longitude')
-            ->add('ville',EntityType::class,['class'=>Ville::class,'choice_label'=>'nom'])
+            ->add('rue',null,[
+                'label'=>' ',
+                'attr'=>['hidden'=>true]])
+            ->add('longitude',null,[
+                'label'=>' ',
+                'attr'=>['hidden'=>true]])
+            ->add('latitude',null,[
+                'label'=>' ',
+                'attr'=>['hidden'=>true]])
+            ->add('ville',EntityType::class,[
+                'class'=>Ville::class,
+                'choice_label'=>'code_postal',
+                'label'=>'Sélectionnez un code postal'
+            ])
         ;
     }
 

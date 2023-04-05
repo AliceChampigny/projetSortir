@@ -14,6 +14,7 @@ use App\Form\FilterType;
 use App\Form\FilterVilleType;
 use App\Form\RegistrationFormType;
 use App\Form\SortieFormType;
+use App\Form\VilleType;
 use App\modeles\Filter;
 use App\modeles\FilterCampus;
 use App\modeles\FilterVille;
@@ -178,89 +179,6 @@ class AdministrateurController extends AbstractController
                 ]
             );
     }
-//----------------------------------------------------------------------------------------------------------------------
-    #[Route(
-        '/suppressionsorties/{sortie}',
-        name: '_suppressionSorties')]
-    public function adminSuppressionSortie(
-        Sortie  $sortie,
-        EntityManagerInterface $entityManager,
-    ) : Response
-    {
-        if($sortie->getEtat()->getId()===1 ){
-            try{
-                $entityManager->remove($sortie);
-                $entityManager->flush();
-                $this->addFlash('success', "Votre sortie a bien été supprimée" );
-                return $this->redirectToRoute('admin_gestionSorties');
-            }catch (\Exception $exception) {
-                $this->addFlash('danger', "La suppression n'a pas été effectuée" . $exception->getMessage());
-                return $this->redirectToRoute('admin_gestionSorties', [
-                    'sortie' => $sortie->getId()
-                ]);
-            }
-        } else{
-            $this->addFlash('danger', "La suppression d'une sortie dont l'état est autre que 'Créée', est impossible" );
-            return $this->redirectToRoute('admin_gestionSorties');
-        }
-    }
-//----------------------------------------------------------------------------------------------------------------------
-
-#[Route(
-    '/annulationSortie/{sortie}',
-    name: '_annulationSortie')]
-    public function adminAnnulerSortie(
-    Sortie $sortie,
-    EntityManagerInterface $entityManager,
-    EtatRepository $etatRepository,
-    Request $request,
-    MailerInterface $mailer
-) : Response{
-
-        if($sortie->getEtat()->getId()=== 2 || $sortie->getEtat()->getId()=== 3  ){
-            $sortie->setInfosSortie( '');
-            $sortieForm = $this->createForm(SortieFormType::class,$sortie);
-            $sortieForm->handleRequest($request);
-
-            if($sortieForm->isSubmitted() && $sortieForm->isValid()){
-                try{
-                    $etat = $etatRepository->findOneBy(['id' => 6]);
-                    $sortie->setEtat($etat);
-                    $entityManager->persist($sortie);
-                    $entityManager->flush();
-                    $this->addFlash('success', "Votre sortie a bien été annulée");
-                    $mailParticipants = new ArrayCollection();
-                    foreach ($sortie->getParticipants() as $participant) {
-                        $mailParticipants->add(new Address($participant->getEmail()));
-                    }
-                    $email = (new TemplatedEmail())
-                        ->from(new Address('admin@campus-eni.fr', 'Administrateur de "SortiesEnitiennes.com"'))
-                        ->to(...$mailParticipants)
-                        ->subject('Annulation de la sortie '.$sortie->getNom())
-                        ->text('Bonjour !
-
-                            L\'administrateur du site SortiesEnniciennes.com vient juste d\'annuler la sortie '.$sortie->getNom().'. Le motif d\'annulation est disponible sur notre au site au niveau du détails de la sortie.
-                            Nous nous excusons pour la gêne occasionnée.
-
-                            Au revoir et à bientôt sur les SortiesEnitiennes.com !');
-                    $mailer->send($email);
-
-                    return $this->redirectToRoute('admin_gestionSorties');
-
-                }catch(\Exception $exception){
-                    $this->addFlash('danger', "L\'annulation n'a pas été effectuée". $exception->getMessage() );
-                    return $this->redirectToRoute('sortie_annulersortie',[
-                        'sortie' =>$sortie->getId()
-                    ]);
-                } catch (TransportExceptionInterface $e) {
-                }
-            }
-            return $this->render('sortie/annulersortie.html.twig',compact('sortieForm','sortie'));
-        } else{
-            $this->addFlash('danger', 'L\'annulation d\'une sortie dont l\'état est autre que "Ouverte" ou "Cloturée" est impossible' );
-            return $this->redirectToRoute('admin_gestionSorties');
-        }
-    }
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -332,7 +250,7 @@ class AdministrateurController extends AbstractController
                 ]);
             }
     }
-
+//----------------------------------------------------------------------------------------------------------------------
     #[Route(
         '/modifiercampus/{campus}',
         name: '_modifierCampus')]
@@ -367,7 +285,7 @@ class AdministrateurController extends AbstractController
     }
 
 
-    //----------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
 
     #[Route(
         '/gestionville',
@@ -393,24 +311,24 @@ class AdministrateurController extends AbstractController
             $this->addFlash('danger', "Impossible d'afficher les villes damandées" . $exception->getMessage());
         }
 
-//        $ville = new Ville();
-//        $formVille = $this->createForm(VilleType::class, $ville);
-//        $formVille->handleRequest($requestAjout);
-//
-//        if ($formVille->isSubmitted() && $formVille->isValid()) {
-//            try{
-//                $entityManager->persist($ville);
-//                $entityManager->flush();
-//                $this->addFlash('danger','La ville a bien été enregistrée');
-//                return $this->redirectToRoute('admin_gestionVille');
-//            }catch (\Exception $exception){
-//                $this->addFlash('danger','La nouvel ville n\'a pas pu être ajouté'.$exception->getMessage());
-//                return $this->redirectToRoute('admin_gestionVille');
-//            }
-//        }
+        $ville = new Ville();
+        $formVille = $this->createForm(VilleType::class, $ville);
+        $formVille->handleRequest($requestAjout);
+
+        if ($formVille->isSubmitted() && $formVille->isValid()) {
+            try{
+                $entityManager->persist($ville);
+                $entityManager->flush();
+                $this->addFlash('danger','La ville a bien été enregistrée');
+                return $this->redirectToRoute('admin_gestionVille');
+            }catch (\Exception $exception){
+                $this->addFlash('danger','La nouvel ville n\'a pas pu être ajouté'.$exception->getMessage());
+                return $this->redirectToRoute('admin_gestionVille');
+            }
+        }
         return $this->render('administrateur/gestionville.html.twig', [
                 'formFilterVille' => $formFilterVille->createView(),
-//                'villeForm' => $formVille->createView(),
+                'villeForm' => $formVille->createView(),
                 'villes' => $villes
             ]
         );
@@ -437,38 +355,37 @@ class AdministrateurController extends AbstractController
             ]);
         }
     }
+//----------------------------------------------------------------------------------------------------------------------
+    #[Route(
+        '/modifierville/{ville}',
+        name: '_modifierVille')]
+    public function modifierVille(
+        EntityManagerInterface $entityManager,
+        Request                $request,
+        Ville                 $ville,
 
-//    #[Route(
-//        '/modifierville/{ville}',
-//        name: '_modifierVille')]
-//    public function modifierVille(
-//        EntityManagerInterface $entityManager,
-//        Request                $request,
-//        Ville                 $ville,
-//
-//    ) : Response{
-//
-//
-//        $formVille = $this->createForm(VilleType::class, $ville);
-//        $formVille->handleRequest($request);
-//
-//        if ($formVille->isSubmitted() && $formVille->isValid()) {
-//            try{
-//                $entityManager->persist($ville);
-//                $entityManager->flush();
-//                $this->addFlash('danger','Le ville a bien été enregistrée');
-//                return $this->redirectToRoute('admin_gestionVille');
-//            }catch (\Exception $exception){
-//                $this->addFlash('danger','La nouvelle ville n\'a pas pu être ajoutée'.$exception->getMessage());
-//                return $this->redirectToRoute('admin_modifierVille');
-//            }
-//        }
-//        return $this->render('administrateur/modifierville.html.twig', [
-//                'ville' => $ville->getId(),
-//                'villeForm' => $formVille->createView(),
-//            ]
-//        );
-//
-//    }
+    ) : Response{
+
+        $formVille = $this->createForm(VilleType::class, $ville);
+        $formVille->handleRequest($request);
+
+        if ($formVille->isSubmitted() && $formVille->isValid()) {
+            try{
+                $entityManager->persist($ville);
+                $entityManager->flush();
+                $this->addFlash('danger','Le ville a bien été enregistrée');
+                return $this->redirectToRoute('admin_gestionVille');
+            }catch (\Exception $exception){
+                $this->addFlash('danger','La nouvelle ville n\'a pas pu être ajoutée'.$exception->getMessage());
+                return $this->redirectToRoute('admin_modifierVille');
+            }
+        }
+        return $this->render('administrateur/modifierville.html.twig', [
+                'ville' => $ville->getId(),
+                'villeForm' => $formVille->createView(),
+            ]
+        );
+
+    }
 
 }

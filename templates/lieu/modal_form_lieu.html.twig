@@ -1,9 +1,18 @@
-{% block title %}Ajout d'un lieu{% endblock %}
+{#{% block title %}Ajout d'un lieu{% endblock %}#}
 
 {% block body %}
     <div id="create_lieu"></div>
-{{ form_start(lieuForm,{'attr':{'id': 'lieu_form'},'action': path('lieu_ajout') })}}
-{{ form_widget(lieuForm)}}
-    <button id="btnAj">Ajouter un lieu</button>
+    {{ form_start(lieuForm,{'attr':{'id': 'lieu_form'},'action': path('lieu_ajoutlieu') })}}
+    <label>
+        <button id="btnAj" hidden="hidden" class="submit">Ajouter ce lieu</button>
+{{ form_row(lieuForm.nom,{'attr':{'class':'input2'}})}}
+    </label>
+{{ form_row(lieuForm.rue)}}
+{{ form_row(lieuForm.longitude)}}
+{{ form_row(lieuForm.latitude)}}
+<label>
+    {{ form_row(lieuForm.ville,{'attr':{'class':'input3'}})}}
+</label>
+
 {{ form_end(lieuForm)}}
 {% endblock %}
