@@ -26,6 +26,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportException;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -35,22 +37,36 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 #[Route(
     '/administrateur',
-    name: 'admin')]
-class AdministrateurController extends AbstractController
-{
+    name: 'admin'
+)]
+class AdministrateurController extends AbstractController{
+    /**
+     * @return Response : envoie vers la page d'accueil administrateur
+     */
     #[Route(
         '/',
-        name: '_accueil')]
+        name: '_accueil'
+    )]
     public function accueil(
-
     ) : Response{
 
         return $this->render('administrateur/acceuil.html.twig');
     }
 //----------------------------------------------------------------------------------------------------------------------
+    /**
+     * @param Request $requestInscriptionUtilisateur
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param EntityManagerInterface $entityManagerInscriptionUtilisateur
+     * @param ParticipantRepository $participantsRepository
+     * @param MailerInterface $mailer
+     * @return Response : renvoie vers l'affichage de la liste des utilisateurs et formulaire
+     * @throws \Exception : si erreur lors de l'accès à la base données
+     * @throws TransportException si erreur lors de l'envoie du mail
+     */
     #[Route(
         '/gestionutilisateur',
-        name: '_gestionutilisateur')]
+        name: '_gestionutilisateur'
+    )]
     public function gestionutilisateur(
         Request $requestInscriptionUtilisateur,
         UserPasswordHasherInterface $userPasswordHasher,
@@ -90,13 +106,17 @@ class AdministrateurController extends AbstractController
                         $formUtilisateur->get('plainPassword')->getData()
                     )
                 );
+
                 $entityManagerInscriptionUtilisateur->persist($user);
                 $entityManagerInscriptionUtilisateur->flush();
                 $this->addFlash('danger','L\'inscription a bien été enregistrée');
                 return $this->redirectToRoute('admin_accueil');
+
             }catch (\Exception $exception){
                 $this->addFlash('danger','L\'inscription n\'a pas été effectuée'.$exception->getMessage());
                 return $this->redirectToRoute('admin_gestionutilisateur');
+            } catch (TransportExceptionInterface $e) {
+                $this->addFlash('danger','L\'envoie du(des) mail(s) a échoué');
             }
         }
         return $this->render('administrateur/gestionutilisateur.html.twig', [
@@ -104,17 +124,25 @@ class AdministrateurController extends AbstractController
             'participants' => $participants,
         ]);
     }
-
 //----------------------------------------------------------------------------------------------------------------------
-    #[Route('/statut/{participant}',
-        name: '_statut')]
-    public function statutInactif(
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Participant $participant
+     * @param MailerInterface $mailer
+     * @return Response
+     * @throws \Exception : si erreur lors de l'accès à la base données
+     * @throws TransportException si erreur lors de l'envoie du mail
+     */
+    #[Route('/statut/{participant}',
+        name: '_statut'
+    )]
+    public function statutInactif(
         EntityManagerInterface $entityManager,
         Participant $participant,
         MailerInterface $mailer
-    ): Response
-    {
+
+    ): Response{
         if ($participant->isActif()) {
             try {
                 $email = (new TemplatedEmail())
@@ -138,8 +166,11 @@ class AdministrateurController extends AbstractController
             } catch (\Exception $exception) {
                 $this->addFlash("danger", "Impossible de désactiver le compte");
                 return $this->redirectToRoute('admin_gestionutilisateur');
+            } catch (TransportExceptionInterface $e) {
+                $this->addFlash('danger','L\'envoie du(des) mail(s) a échoué');
             }
-        } else {
+        }
+        else {
             try {
                 $participant->setActif(true);
                 $entityManager->persist($participant);
@@ -151,41 +182,62 @@ class AdministrateurController extends AbstractController
                 return $this->redirectToRoute('admin_gestionutilisateur');
             }
         }
+        return $this->render('administrateur/gestionutilisateur.html.twig');
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-    #[Route('/supprimer/{participant}',
-        name: '_supprimer')]
-    public function supprimerUtilisateur(
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Participant $participant
+     * @return Response
+     * @throws \Exception : si erreur lors de l'accès aux données
+     */
+    #[Route(
+        '/supprimer/{participant}',
+        name: '_supprimer'
+    )]
+    public function supprimerUtilisateur(
         EntityManagerInterface $entityManager,
-        Participant $participant,
-    ): Response
-    {
+        Participant $participant
+
+    ): Response{
+
             try {
                 $entityManager->remove($participant);
                 $entityManager->flush();
                 $this->addFlash("success", "Le compte a été supprimé");
                 return $this->redirectToRoute('admin_gestionSorties');
+
             } catch (\Exception $exception) {
                 $this->addFlash("danger", "Impossible de supprimer le compte");
                 return $this->redirectToRoute('admin_gestionSorties');
             }
-
     }
 
 //----------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * @param SortieRepository $sortieRepository
+     * @param Request $request
+     * @param FormFactoryInterface $formFactory
+     * @param EtatRepository $etatRepository
+     * @return Response : envoie vers l'affichage des sorties
+     * @throws \Exception : si erreur lors de l'accès aux données
+     */
     #[Route(
         '/gestionsorties',
-        name: '_gestionSorties')]
+        name: '_gestionSorties'
+    )]
     public function adminGestionSortie(
         SortieRepository $sortieRepository,
         Request $request,
         FormFactoryInterface $formFactory,
-        EtatRepository $etatRepository,
+        EtatRepository $etatRepository
+
     ) : Response
     {
-  try {
+        try {
             $filter = new Filter();
             $formFilterSortie = $formFactory->create(FilterType::class, $filter);
             $formFilterSortie->handleRequest($request);
@@ -193,76 +245,89 @@ class AdministrateurController extends AbstractController
             $id = 5;
             $sortiesPassees = $etatRepository->find($id);
             $sorties = $sortieRepository -> filtreListeSorties($filter, $userConnecte, $sortiesPassees);
-//         return $this->redirectToRoute('sortie_liste');
+
         } catch (\Exception $exception) {
-    $this->addFlash('danger', "Impossible d'afficher les sorties damandées" . $exception->getMessage());
-}
-            return $this->render('administrateur/gestionSorties.html.twig', [
-                    'formFilterSortie' => $formFilterSortie->createView(),
-                    'sorties' => $sorties,
-
-                ]
-            );
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-
-#[Route(
-        '/gestioncampus',
-        name: '_gestionCampus')]
-   public function gestionCampus(
-        Request $requestFilter,
-        Request $requestAjout,
-        CampusRepository $campusRepository,
-        FormFactoryInterface $formFactory,
-        EntityManagerInterface $entityManager,
-
-): Response
-{
-        $filterCampus = new FilterCampus();
-        $formFilterCampus = $formFactory->create(FilterCampusType::class, $filterCampus);
-        $formFilterCampus->handleRequest($requestFilter);
-
-    try {
-
-        $campuss = $campusRepository->filterListeCampus($filterCampus);
-
-    } catch (\Exception $exception) {
-        $this->addFlash('danger', "Impossible d'afficher les campus damandées" . $exception->getMessage());
-    }
-
-    $campus = new Campus();
-    $formCampus = $this->createForm(CampusType::class, $campus);
-    $formCampus->handleRequest($requestAjout);
-
-    if ($formCampus->isSubmitted() && $formCampus->isValid()) {
-        try{
-            $entityManager->persist($campus);
-            $entityManager->flush();
-            $this->addFlash('danger','Le campus a bien été enregistrée');
-            return $this->redirectToRoute('admin_gestionCampus');
-        }catch (\Exception $exception){
-            $this->addFlash('danger','Le nouveau campus n\'a pas pu être ajouté'.$exception->getMessage());
-            return $this->redirectToRoute('admin_gestionCampus');
+            $this->addFlash('danger', "Impossible d'afficher les sorties damandées");
         }
+        return $this->render('administrateur/gestionSorties.html.twig', [
+                'formFilterSortie' => $formFilterSortie->createView(),
+                'sorties' => $sorties,
+            ]);
     }
-    return $this->render('administrateur/gestioncampus.html.twig', [
-            'formFilterCampus' => $formFilterCampus->createView(),
-            'campusForm' => $formCampus->createView(),
-            'campuss' => $campuss
-        ]
-    );
-}
 //----------------------------------------------------------------------------------------------------------------------
 
+    /**
+     * @param Request $requestFilter
+     * @param Request $requestAjout
+     * @param CampusRepository $campusRepository
+     * @param FormFactoryInterface $formFactory
+     * @param EntityManagerInterface $entityManager
+     * @return Response : renvoie vers affichage des campus
+     * @throws \Exception : si erreur lors de l'accès aux données
+     */
+    #[Route(
+            '/gestioncampus',
+            name: '_gestionCampus'
+    )]
+       public function gestionCampus(
+            Request $requestFilter,
+            Request $requestAjout,
+            CampusRepository $campusRepository,
+            FormFactoryInterface $formFactory,
+            EntityManagerInterface $entityManager,
+
+    ): Response{
+            $filterCampus = new FilterCampus();
+            $formFilterCampus = $formFactory->create(FilterCampusType::class, $filterCampus);
+            $formFilterCampus->handleRequest($requestFilter);
+
+        try {
+
+            $campuss = $campusRepository->filterListeCampus($filterCampus);
+
+        } catch (\Exception $exception) {
+            $this->addFlash('danger', "Impossible d'afficher les campus damandées");
+        }
+
+        $campus = new Campus();
+        $formCampus = $this->createForm(CampusType::class, $campus);
+        $formCampus->handleRequest($requestAjout);
+
+        if ($formCampus->isSubmitted() && $formCampus->isValid()) {
+            try{
+                $entityManager->persist($campus);
+                $entityManager->flush();
+                $this->addFlash('danger','Le campus a bien été enregistrée');
+                return $this->redirectToRoute('admin_gestionCampus');
+            }catch (\Exception $exception){
+                $this->addFlash('danger','Le nouveau campus n\'a pas pu être ajouté'.$exception->getMessage());
+                return $this->redirectToRoute('admin_gestionCampus');
+            }
+        }
+        return $this->render('administrateur/gestioncampus.html.twig', [
+                'formFilterCampus' => $formFilterCampus->createView(),
+                'campusForm' => $formCampus->createView(),
+                'campuss' => $campuss
+            ]);
+    }
+//----------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * @param Campus $campus
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @throws \Exception : si erreur lors de l'accès aux données
+     */
     #[Route(
         '/suppressioncampus/{campus}',
-        name: '_suppressionCampus')]
+        name: '_suppressionCampus'
+    )]
     public function adminSuppressionCampus(
         Campus  $campus,
-        EntityManagerInterface $entityManager,
-    ) : Response
-    {
+        EntityManagerInterface $entityManager
+
+    ) : Response{
+
             try{
                 $entityManager->remove($campus);
                 $entityManager->flush();
@@ -276,9 +341,18 @@ class AdministrateurController extends AbstractController
             }
     }
 //----------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param Campus $campus
+     * @return Response
+     * @throws \Exception : si erreur lors de l'accès aux données
+     */
     #[Route(
         '/modifiercampus/{campus}',
-        name: '_modifierCampus')]
+        name: '_modifierCampus'
+    )]
     public function modifierSortie(
         EntityManagerInterface $entityManager,
         Request                $request,
@@ -306,15 +380,22 @@ class AdministrateurController extends AbstractController
                 'campusForm' => $formCampus->createView(),
             ]
         );
-
     }
-
-
 //----------------------------------------------------------------------------------------------------------------------
 
+    /**
+     * @param Request $requestFilter
+     * @param Request $requestAjout
+     * @param VilleRepository $villeRepository
+     * @param FormFactoryInterface $formFactory
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @throws \Exception : si erreur lors de l'accès aux données
+     */
     #[Route(
         '/gestionville',
-        name: '_gestionVille')]
+        name: '_gestionVille'
+    )]
     public function gestionVille(
         Request $requestFilter,
         Request $requestAjout,
@@ -322,8 +403,7 @@ class AdministrateurController extends AbstractController
         FormFactoryInterface $formFactory,
         EntityManagerInterface $entityManager,
 
-    ): Response
-    {
+    ): Response{
         $filterVille = new FilterVille();
         $formFilterVille = $formFactory->create(FilterVilleType::class, $filterVille);
         $formFilterVille->handleRequest($requestFilter);
@@ -360,14 +440,19 @@ class AdministrateurController extends AbstractController
     }
 //----------------------------------------------------------------------------------------------------------------------
 
+    /**
+     * @param Ville $ville
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @throws \Exception : si erreur lors de l'accès aux données
+     */
     #[Route(
         '/suppressionville/{ville}',
         name: '_suppressionVille')]
     public function adminSuppressionVille(
         Ville  $ville,
         EntityManagerInterface $entityManager,
-    ) : Response
-    {
+    ) : Response{
         try{
             $entityManager->remove($ville);
             $entityManager->flush();
@@ -381,9 +466,18 @@ class AdministrateurController extends AbstractController
         }
     }
 //----------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param Ville $ville
+     * @return Response
+     * @throws \Exception : si erreur lors de l'accès aux données
+     */
     #[Route(
         '/modifierville/{ville}',
-        name: '_modifierVille')]
+        name: '_modifierVille'
+    )]
     public function modifierVille(
         EntityManagerInterface $entityManager,
         Request                $request,
@@ -410,7 +504,5 @@ class AdministrateurController extends AbstractController
                 'villeForm' => $formVille->createView(),
             ]
         );
-
     }
-
 }
