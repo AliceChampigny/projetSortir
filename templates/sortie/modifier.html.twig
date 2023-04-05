@@ -35,22 +35,35 @@
 {#        {{ form_end(sortieForm) }}#}
 
 <div class="flex">
-    <button class="submit" type="submit">Modifier</button>
-        {% if sortie.etat.id == 1 %}
-            {{ form_end(sortieForm) }}
-        {% endif %}
-    {% endif %}
+    {{ form_end(sortieForm) }}
 
-
+        {% if sortie.etat.id == constant('App\\Controller\\SortieController::CREEE') %}
+            <button class="submit" type="submit">Modifier la sortie</button>
 </div>
     </form>
-    <a href="{{ path('sortie_publiersortie',{'sortie': sortie.id}) }}">
-        <button class="submit">Publier la sortie</button>
-    </a>
-    <button class="submit" onclick="supprimer({{ sortie.id }})" >Supprimer la sortie</button>
 
+    <a href="{{ path('sortie_publiersortie',{'sortie': sortie.id}) }}">
+        <button class="submit" role="button">Publier la sortie</button>
+    </a>
+    <button role="button" data-target="#myModal3" data-toggle="modal" tabindex="-1" class="submit" >Supprimer la sortie</button>
+
+    <div class="modal" id="myModal3" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-close" data-dismiss ="dialog"> X </div>
+            <div class ="title" id="title_modal">Suppression ?</div>
+            <div class="modal-body" id="modal-body">
+                <p id="question_suppression">Voulez-vous vraiment supprimer cette sortie ?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="{{ path('sortie_supprimersortie',{'sortie':sortie.id}) }}"><button class="submit">Valider</button></a>
+                <button role="button" class="submit" data-dismiss="dialog" id="fermer">Fermer</button>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+    {% endif %}
     <script src="{{ asset('script/ajax.js') }}"></script>
-    <script src="{{ asset('script/supprimer.js') }}"></script>
+    <script src="{{ asset('script/affichage_modal_lieu.js') }}"></script>
         {% endblock %}
 
 

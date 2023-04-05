@@ -25,14 +25,15 @@
             {#        <button class="card-button">S'inscrire</button> #}
             {#        </a> #}
             <div class="flex">
-                {% if sortie.organisateur == app.user and sortie.etat.id == 1 %}
+                {% if sortie.organisateur == app.user and sortie.etat.id == constant('App\\Controller\\SortieController::CREEE') %}
 
                     <a href="{{ path('sortie_modifiersortie',{'sortie' : sortie.id}) }}">
                         <button class="submit">Modifier la sortie</button>
                     </a>
                 {% endif %}
 
-                {% if sortie.etat.id == 2 and date() < date(sortie.dateLimiteInscription) and sortie.participants | length < sortie.nbInscriptionsMax %}
+                {% if sortie.etat.id == constant('App\\Controller\\SortieController::OUVERTE') and date() < date(sortie.dateLimiteInscription) 
+                                and sortie.participants | length < sortie.nbInscriptionsMax %}
                     {% if sortie.participants.contains(app.user) %}
                         <a href="{{ path('sortie_desistement', {'sortie' : sortie.id}) }}"><button class="submit">Se désister</button></a>
                     {% else %}
@@ -41,7 +42,8 @@
                     </a>
                 {% endif %}
 
-                {% if sortie.organisateur == app.user and (sortie.etat.id == 2 or sortie.etat.id == 3) %}
+                {% if sortie.organisateur == app.user and (sortie.etat.id == constant('App\\Controller\\SortieController::OUVERTE') 
+                                                          or sortie.etat.id == constant('App\\Controller\\SortieController::CLOTUREE')) %}
                     {#        ajouter pour uniquement organisateur #}
                     <a href="{{ path('sortie_annulersortie',{'sortie' : sortie.id}) }}">
                         <button class="submit">Annuler la sortie</button>
@@ -56,8 +58,10 @@
     </main>
 
 
-    {% if sortie.etat.id != 1 %}
+
+    {% if sortie.etat.id != constant('App\\Controller\\SortieController::CREEE') %}
         <br>
+
         <h3>Liste des participants</h3><br>
 <section class="overflow-x">
     <div class="horizontal-friends-list">
@@ -72,6 +76,8 @@
                     </a>
                 </figure>
             </div>
+            {% else %}
+            Absence de participants
         {% endfor %}
     </div>
 </section>
@@ -80,15 +86,12 @@
 
     <main>
     <div id="buttons_insc_des">
-        {% if  sortie.etat.libelle == "Ouverte"
+        {% if  sortie.etat.id == constant('App\\Controller\\SortieController::OUVERTE')
             and  date() < date(sortie.dateLimiteInscription)
             and  sortie.participants | length < sortie.nbInscriptionsMax %}
 
         {% endif %}
-
     </main>
-
-
 
 {% endblock %}
 

@@ -667,6 +667,7 @@ td {
     visibility: hidden;
     opacity: 0;
     transition: 0.2s;
+
 }
 
 .modal.show{
@@ -675,10 +676,11 @@ td {
 }
 .modal-content{
     background-color: white;
-    max-width: 90vw;
+    max-width: 25vw;
     margin : auto;
     flex : 1;
     position : relative;
+    border-radius: 1em;
 }
 .modal-close{
     position : absolute;
@@ -686,10 +688,10 @@ td {
     right : 10px;
     cursor : pointer;
 }
-.modal-header{
-    padding: 15px;
-    border-bottom : 1px solid gray;
-}
+/*.modal-header{*/
+/*    padding: 15px;*/
+/*    border-bottom : 1px solid gray;*/
+/*}*/
 .modal-body{
     padding : 15px;
     max-height: 80vh;
@@ -1203,4 +1205,31 @@ h3, p {
     margin: 5px 0;
 }
 
+
+/*----------------------------------------FORMULAIRE AJOUT VILLE ET LIEU----------------------------------------------*/
+
+#div_ville_admin{
+    display: flex;
+    flex-flow: column;
+    align-content: space-around;
+}
+#create_ville_admin{
+    max-width: 100vw;
+}
+#title_admin{
+    font-size: 1.2em;
+}
+#title_modal{
+    font-size: 1.5em;
+    margin : 0.5em 5em;
+}
+#modal_form{
+    margin : 0.5em 2em 1em;
+}
+#ajout_lieu{
+    font-size: 0.8em;
+}
+#ajout_ville{
+    font-size: 0.8em;
+}
 

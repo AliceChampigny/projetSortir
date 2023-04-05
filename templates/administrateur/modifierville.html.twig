@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier la ville{% endblock %}
+
+{% block body %}
+
+
+    <form method="post" class="form" action="#">
+        <h1 class="title">Modifier la ville</h1>
+        {{ form_start(villeForm,{'attr':{'hidden':true}}) }}
+
+        <label>
+            {{ form_row(villeForm.nom) }}
+        </label>
+        <label>
+            {{ form_row(villeForm.codePostal) }}
+        </label>
+
+        <div class="flex">
+            <button type="submit" class="submit">Modifier</button>
+            {{ form_end(villeForm) }}
+            <a href="{{ path('admin_gestionVille') }}">
+                <button type="button" class="submit">Retour</button>
+            </a>
+        </div>
+    </form>
+    <a href="{{ path('admin_gestionVille') }}">
+        <button type="button" class="submit">Retour</button>
+    </a>
+
+{% endblock %}
+

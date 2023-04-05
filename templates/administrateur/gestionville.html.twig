@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2 xmlns="http://www.w3.org/1999/html">Gestion des Ville</h2>
+
+    {{ form(formFilterVille) }}
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Code Postal</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ville in villes %}
+            <tr>
+                <td>{{ ville.nom }}</td>
+                <td>{{ ville.codePostal }}</td>
+                <td>
+                    <a href="{{path('admin_modifierVille', {'ville' : ville.id}) }}">Modifier</a>
+                    <a href="{{path('admin_suppressionVille', {'ville' : ville.id}) }}">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>
+                <div class="form" id="create_ville_admin" >
+                    <p class="title" id="title_admin">Ajouter une ville :</p>
+                    <div id="div_ville_admin">
+                        <label>
+                            <input type="text" role="combobox" id="rechercherVille" placeholder="Rechercher une ville" onkeyup="rechercherVille()"
+                                   aria-controls="listeVille" aria-expanded="false" aria-autocomplete="list" class="input2">
+                        </label>
+
+                        <label>
+                            <select id="listeVille" role="listbox" class="input3">
+                                <option value="">Sélectionnez la ville correspondante à votre recherche</option>
+                            </select>
+                            <br>
+                            <br>
+                        </label>
+                        <div class="flex"> <button type="submit" class="submit">Ajouter cette ville</button></div>
+                    </div>
+                </div>
+            </td>
+                {{ form_start(villeForm,{'attr':{'id': 'ville_form'},'action': path('ville_ajoutville') }) }}
+
+                <td> <div class="flex">
+
+                        <label>
+                            {{ form_row(villeForm.nom,{'attr':{'hidden':true}}) }}
+                            {{ form_row(villeForm.codePostal,{'attr':{'hidden':true}}) }}
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    <div class="flex">
+{#                        <button type="submit" class="submit">Ajouter</button>#}
+                        {{ form_end(villeForm) }}
+                    </div>
+                </td>
+
+        </tr>
+        </tbody>
+    </table>
+    <script src="{{ asset('script/rechercher_lieu_api.js') }}"></script>
+{#    <script src="{{ asset('script/ajout_lieu.js') }}"></script>#}
+{% endblock %}
+
+

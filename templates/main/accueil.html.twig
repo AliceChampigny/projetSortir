@@ -38,6 +38,7 @@
 
 
          <h2 class="title">Nos sorties</h2>
+
              {% for sortie in sorties %}
                  <a href="{{ path('sortie_affichersortie', {'id' : sortie.id}) }}">
                  <div class="carousel-item">
@@ -63,6 +64,5 @@
      {% endif %}
      <div class="background"></div>
      <div class="background-texture"></div>
-
 
  {% endblock %}

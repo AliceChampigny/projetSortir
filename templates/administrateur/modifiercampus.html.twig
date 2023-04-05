@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le campus{% endblock %}
+
+{% block body %}
+
+
+<form method="post" class="form" action="#">
+    <h1 class="title">Modifier le campus</h1>
+    {{ form_start(campusForm) }}
+
+    <label>
+        {{ form_row(campusForm.nom) }}
+    </label>
+
+    <div class="flex">
+        <button type="submit" class="submit">Modifier</button>
+        {{ form_end(campusForm) }}
+        <a href="{{ path('admin_gestionCampus') }}">
+            <button type="button" class="submit">Retour</button>
+        </a>
+    </div>
+</form>
+
+
+{% endblock %}
