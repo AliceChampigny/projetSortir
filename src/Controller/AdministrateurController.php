@@ -8,6 +8,7 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\CampusType;
+use App\Form\FileUploadType;
 use App\Form\FilterCampusType;
 use App\Form\FilterType;
 use App\Form\FilterVilleType;
@@ -22,6 +23,7 @@ use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
+use App\Services\FileUploader;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -91,6 +93,7 @@ class AdministrateurController extends AbstractController
             'participants' => $participants,
         ]);
     }
+
 //----------------------------------------------------------------------------------------------------------------------
     #[Route('/statut/{participant}',
         name: '_statut')]

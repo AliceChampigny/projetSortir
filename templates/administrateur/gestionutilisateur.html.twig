@@ -3,6 +3,7 @@
 {% block body %}
 
     <h2>Gestion des utilisateurs</h2>
+    {{render(controller('App\\Controller\\UploadController::excelCommunesAction')) }}
 <main>
 
         <form method="post" action="#" class="form">
@@ -36,7 +37,6 @@
             <label>
             {{ form_row(registrationForm.plainPassword.second) }}
             </label>
-
             <div class="flex">
                 <button type="submit" class="submit">Valider l'inscription</button>
                 {{ form_end(registrationForm) }}
@@ -90,9 +90,11 @@
                                      <a href="{{path('admin_statut', {'participant' : participant.id}) }}">Activer le compte</a>
                              {% endif %}
                          <a href="{{path('admin_supprimer', {'participant' : participant.id}) }}">Supprimer le compte</a>
+
                          </td>
                      </tr>
                  {% endfor %}
+                 <a href="{{path('app_test_upload')}}">Importer un fichier</a>
                  </tbody>
              </table>
 {% endblock %}
