@@ -36,14 +36,12 @@
 
 <div class="flex">
     {{ form_end(sortieForm) }}
-        {% if sortie.etat.id == 1 %}
-            <button class="submit" type="submit">Modifier</button>
-        {% endif %}
-    {% endif %}
 
-
+        {% if sortie.etat.id == constant('App\\Controller\\SortieController::CREEE') %}
+            <button class="submit" type="submit">Modifier la sortie</button>
 </div>
     </form>
+
     <a href="{{ path('sortie_publiersortie',{'sortie': sortie.id}) }}">
         <button class="submit" role="button">Publier la sortie</button>
     </a>
@@ -62,6 +60,8 @@
             </div>
         </div>
     </div>
+        {% endif %}
+    {% endif %}
     <script src="{{ asset('script/ajax.js') }}"></script>
     <script src="{{ asset('script/affichage_modal_lieu.js') }}"></script>
         {% endblock %}

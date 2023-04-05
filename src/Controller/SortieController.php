@@ -121,7 +121,7 @@ class SortieController extends AbstractController{
                 return $this->redirectToRoute('sortie_liste');
 
             } catch (\Exception $exception){
-                $this->addFlash('danger', "Votre sortie n'a pas été ajoutée". $exception->getMessage() );
+                $this->addFlash('danger', "Votre sortie n'a pas été ajoutée");
                 return $this->redirectToRoute('sortie_ajouter',[
                     'organisateur'=>$organisateur->getId()
                 ]);
@@ -256,7 +256,7 @@ class SortieController extends AbstractController{
                         $this->addFlash('success', "Votre sortie a bien été modifiée" );
                         return $this->redirectToRoute('sortie_liste');
                     } catch (\Exception $exception){
-                        $this->addFlash('danger', "Les modifications n'ont pas été effectuées". $exception->getMessage() );
+                        $this->addFlash('danger', "Les modifications n'ont pas été effectuées");
                         return $this->redirectToRoute('sortie_modifiersortie',[
                             'sortie' =>$sortie->getId()
                         ]);
@@ -302,7 +302,7 @@ class SortieController extends AbstractController{
                     return $this->redirectToRoute('sortie_liste');
 
                 }catch (\Exception $exception) {
-                    $this->addFlash('danger', "La suppression n'a pas été effectuée" . $exception->getMessage());
+                    $this->addFlash('danger', "La suppression n'a pas été effectuée");
                     return $this->redirectToRoute('sortie_supprimersortie', [
                         'sortie' => $sortie->getId()
                     ]);
@@ -353,7 +353,7 @@ class SortieController extends AbstractController{
 
                     try{
 
-                        $etat = $etatRepository->findOneBy(['id' => 6]);
+                        $etat = $etatRepository->findOneBy(['id' => self::ANNULEE]);
                         $sortie->setEtat($etat);
                         $entityManager->persist($sortie);
                         $entityManager->flush();
@@ -378,7 +378,7 @@ class SortieController extends AbstractController{
                         return $this->redirectToRoute('sortie_liste');
 
                     }catch(\Exception $exception){
-                        $this->addFlash('danger', "L\'annulation n'a pas été effectuée". $exception->getMessage() );
+                        $this->addFlash('danger', "L\'annulation n'a pas été effectuée");
                         return $this->redirectToRoute('sortie_annulersortie',[
                             'sortie' =>$sortie->getId()
                         ]);
@@ -430,7 +430,7 @@ class SortieController extends AbstractController{
                     $this->addFlash('success', "Votre sortie a bien été publiée");
                     $this->redirectToRoute('sortie_liste');
                 }catch (\Exception $exception){
-                    $this->addFlash('danger', "La publication n'a pu être effectuée". $exception->getMessage() );
+                    $this->addFlash('danger', "La publication n'a pu être effectuée");
                     return $this->redirectToRoute('sortie_publiersortie',[
                         'sortie' =>$sortie->getId()
                     ]);
@@ -444,7 +444,7 @@ class SortieController extends AbstractController{
         }
         else{
             $this->addFlash('danger', 'La publication d\'une sortie
-                                                    dont vous n\'êtes pas l\'organisateur est impossible' );
+                                                    dont vous n\'êtes pas l\'organisateur est impossible');
         }
         return $this->redirectToRoute('sortie_liste');
     }
