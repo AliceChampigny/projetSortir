@@ -1,21 +1,38 @@
 {% extends 'base.html.twig' %}
 {% block title %}Annuler la sortie{% endblock %}
 {% block body %}
-<h1>Annuler la sortie</h1>
 
+<div class="form">
+    <h1 class="title">Annuler la sortie</h1>
     {{ form_start(sortieForm) }}
-
-    {{ form_row(sortieForm.nom, {'attr': {'readonly': true}}) }}
-    {{ form_row(sortieForm.dateHeureDebut, {'attr': {'readonly': true}}) }}
-    {{ form_row(sortieForm.dateLimiteInscription, {'attr': {'readonly': true}}) }}
-    {{ form_row(sortieForm.nbInscriptionsMax, {'attr': {'readonly': true}}) }}
-    {{ form_row(sortieForm.duree, {'attr': {'readonly': true}}) }}
-    {{ form_row(sortieForm.infosSortie, {'attr': {'placeholder': 'Motif d\'annulation'}}) }}
+    <label>
+        {{ form_row(sortieForm.nom, {'attr': {'readonly': true}}) }}
+    </label>
+    <label>
+        {{ form_row(sortieForm.dateHeureDebut, {'attr': {'readonly': true}}) }}
+    </label>
+    <label>
+        {{ form_row(sortieForm.dateLimiteInscription, {'attr': {'readonly': true}}) }}
+    </label>
+    <label>
+        {{ form_row(sortieForm.nbInscriptionsMax, {'attr': {'readonly': true}}) }}
+    </label>
+    <label>
+        {{ form_row(sortieForm.duree, {'attr': {'readonly': true}}) }}
+    </label>
+    <label>
+        {{ form_row(sortieForm.infosSortie, {'attr': {'placeholder': 'Motif d\'annulation'}}) }}
+    </label>
 {#    {{ form_row(sortieForm.campus) }}#}
-    {{ form_row(sortieForm.ville,{'attr': {'readonly': true},'value': sortie.lieu.ville.id }) }}
-    {{ form_row(sortieForm.lieu, {'attr': {'readonly': true},'disabled' : false,'value': sortie.lieu.id }) }}
-<button>Annuler la sortie</button>
+    <label>
+        {{ form_row(sortieForm.ville,{'attr': {'readonly': true},'value': sortie.lieu.ville.id }) }}
+    </label>
+    <label>
+        {{ form_row(sortieForm.lieu, {'attr': {'readonly': true},'disabled' : false,'value': sortie.lieu.id }) }}
+    </label>
+<button class="submit">Annuler la sortie</button>
     {{ form_end(sortieForm) }}
+</div>
 {% endblock %}
 
 

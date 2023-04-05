@@ -65,7 +65,7 @@ class SortieFormType extends AbstractType
                     'placeholder' => 'Nombre de participants max'
                 )
             ))
-            ->add('infosSortie', TextType::class, array(
+            ->add('infosSortie', TextareaType::class, array(
                 'required' => true,
                 'label'  => ' ',
                 'attr' => array(
