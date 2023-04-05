@@ -8,6 +8,7 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\CampusType;
+use App\Form\FileUploadType;
 use App\Form\FilterCampusType;
 use App\Form\FilterType;
 use App\Form\FilterVilleType;
@@ -21,6 +22,7 @@ use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
+use App\Services\FileUploader;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -90,6 +92,7 @@ class AdministrateurController extends AbstractController
             'participants' => $participants,
         ]);
     }
+
 //----------------------------------------------------------------------------------------------------------------------
     #[Route('/statut/{participant}',
         name: '_statut')]
@@ -226,21 +229,21 @@ class AdministrateurController extends AbstractController
                     $entityManager->persist($sortie);
                     $entityManager->flush();
                     $this->addFlash('success', "Votre sortie a bien été annulée");
-//                    $mailParticipants = new ArrayCollection();
-//                    foreach ($sortie->getParticipants() as $participant) {
-//                        $mailParticipants->add(new Address($participant->getEmail()));
-//                    }
-//                    $email = (new TemplatedEmail())
-//                        ->from(new Address('admin@campus-eni.fr', 'Administrateur de "SortiesEnitiennes.com"'))
-//                        ->to(...$mailParticipants)
-//                        ->subject('Annulation de la sortie '.$sortie->getNom())
-//                        ->text('Bonjour !
-//
-//                            L\'administrateur du site SortiesEnniciennes.com vient juste d\'annuler la sortie '.$sortie->getNom().'. Le motif d\'annulation est disponible sur notre au site au niveau du détails de la sortie.
-//                            Nous nous excusons pour la gêne occasionnée.
-//
-//                            Au revoir et à bientôt sur les SortiesEnitiennes.com !');
-//                    $mailer->send($email);
+                    $mailParticipants = new ArrayCollection();
+                    foreach ($sortie->getParticipants() as $participant) {
+                        $mailParticipants->add(new Address($participant->getEmail()));
+                    }
+                    $email = (new TemplatedEmail())
+                        ->from(new Address('admin@campus-eni.fr', 'Administrateur de "SortiesEnitiennes.com"'))
+                        ->to(...$mailParticipants)
+                        ->subject('Annulation de la sortie '.$sortie->getNom())
+                        ->text('Bonjour !
+
+                            L\'administrateur du site SortiesEnniciennes.com vient juste d\'annuler la sortie '.$sortie->getNom().'. Le motif d\'annulation est disponible sur notre au site au niveau du détails de la sortie.
+                            Nous nous excusons pour la gêne occasionnée.
+
+                            Au revoir et à bientôt sur les SortiesEnitiennes.com !');
+                    $mailer->send($email);
 
                     return $this->redirectToRoute('admin_gestionSorties');
 
