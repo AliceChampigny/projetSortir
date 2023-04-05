@@ -54,7 +54,8 @@
                             </div>
                         </div>
 {#                     <a href="{{path('admin_suppressionSorties', {'sortie' : sortie.id}) }}">Supprimer</a>#}
-                    {% elseif sortie.etat.id == 2 or sortie.etat.id == 3 %}
+                    {% elseif sortie.etat.id == constant('App\\Controller\\SortieController::OUVERTE')
+                                                or sortie.etat.id == constant('App\\Controller\\SortieController::CLOTUREE') %}
                         <a href="{{ path('sortie_annulersortie',{'sortie' : sortie.id}) }}">Annuler la sortie</a>
                     {% endif %}
                 </td>
