@@ -28,15 +28,14 @@
         <label>
             {{ form_row(registrationForm.campus) }}
         </label>
-
-        <label>
-            {{ form_row(registrationForm.imageFile) }}
-        </label>
         <label>
             {{ form_row(registrationForm.plainPassword.first) }}
         </label>
         <label>
             {{ form_row(registrationForm.plainPassword.second) }}
+        </label>
+        <label>
+            {{ form_widget(registrationForm.imageFile) }}
         </label>
         <div class="flex">
 
