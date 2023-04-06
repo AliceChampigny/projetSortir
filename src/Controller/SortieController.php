@@ -70,14 +70,10 @@ class SortieController extends AbstractController{
             $sorties = $sortieRepository -> filtreListeSorties($filter, $userConnecte, $sortiesPassees);
 
         } catch (\Exception $exception) {
-            $this->addFlash('danger', "Impossible d'afficher les sorties damandées" . $exception->getMessage());
+            $this->addFlash('danger', "Impossible d'afficher les sorties demandées" . $exception->getMessage());
 
         }
-            return $this->render('main/accueil.html.twig', [
-            'formFilterSortie' => $formFilterSortie->createView(),
-            'sorties' => $sorties,
-            ]
-        );
+            return $this->render('main/accueil.html.twig',compact('formFilterSortie','sorties'));
     }
 //----------------------------------------------------------------------------------------------------------------------
     /**
