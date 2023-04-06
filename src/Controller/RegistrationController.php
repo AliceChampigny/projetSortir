@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Campus;
+
 use App\Entity\Participant;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,9 +14,19 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class RegistrationController extends AbstractController
-{
-    #[Route('/register', name: 'app_register')]
+
+class RegistrationController extends AbstractController{
+    /**
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param EntityManagerInterface $entityManager
+     * @param SluggerInterface $slugger
+     * @return Response
+     */
+    #[Route(
+        '/register',
+        name: 'app_register'
+    )]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $user = new Participant();

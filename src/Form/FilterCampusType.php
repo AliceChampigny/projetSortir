@@ -8,12 +8,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FilterCampusType extends AbstractType
-{
+class FilterCampusType extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('keyWord',TextType::class, ['label'=>'Le nom de la sortie contient :  ', 'required' => false])
+            ->add('keyWord',TextType::class,
+                ['label'=>'Le nom de la sortie contient :  ',
+                    'required' => false])
             ->add("Rechercher", SubmitType::class)
         ;
     }

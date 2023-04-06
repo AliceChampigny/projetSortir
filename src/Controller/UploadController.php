@@ -11,8 +11,7 @@ use App\Form\FileUploadType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UploadController extends AbstractController
-{
+class UploadController extends AbstractController{
     #[Route(
         '/test-upload',
         name: 'app_test_upload')]
@@ -22,8 +21,8 @@ class UploadController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface      $entityManager,
         CampusRepository            $campusRepository
-    )
-    {
+    ){
+
         $form = $this->createForm(FileUploadType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
