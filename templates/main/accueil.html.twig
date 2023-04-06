@@ -55,8 +55,12 @@
                  <div class="non-inscrit">
                      <img
                              class="carousel-item__img"
-                             src="https://images.pexels.com/photos/708392/pexels-photo-708392.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                             alt="people"
+                             {% if sortie.nomImageSortie != null %}
+                                 src="{{ asset('img/profil/'~sortie.nomImageSortie) }}"
+                             {% else %}
+                                 src="https://images.pexels.com/photos/708392/pexels-photo-708392.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                             {% endif %}
+                             alt="image_sortie"
                      />
                      <div class="carousel-item__details">
 

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}Créer une sortie{% endblock %}
 {% block body %}
-<form method="post" class="form" action="#">
+<form method="post" class="form" action="#" enctype="multipart/form-data">
     {{ form_start(sortieForm) }}
     <p class="title">Ajoutez-votre évènement!</p>
     <label>
@@ -15,6 +15,8 @@
         {{ form_row(sortieForm.nbInscriptionsMax) }}
         <br>
         {{ form_row(sortieForm.infosSortie) }}
+
+        {{ form_row(sortieForm.sortieImage) }}
 
     </label>
 
