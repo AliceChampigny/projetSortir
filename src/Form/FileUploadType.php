@@ -13,6 +13,9 @@ class FileUploadType extends AbstractType
     {
         $builder
             ->add('upload_file', FileType::class, [
+                'attr' => [
+                    'class' => 'submit'
+                ],
                 'label' => false,
                 'mapped' => false, // Tell that there is no Entity to link
                 'required' => true,
@@ -36,6 +39,9 @@ class FileUploadType extends AbstractType
                     ])
                 ],
             ])
-            ->add('send', SubmitType::class); // We could have added it in the view, as stated in the framework recommendations
+            ->add('send', SubmitType::class, [
+                'attr' => [
+                    'class' => 'submit'
+                ]]); // We could have added it in the view, as stated in the framework recommendations
     }
 }

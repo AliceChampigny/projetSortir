@@ -3,8 +3,8 @@
 {% block body %}
 
     <h2>Gestion des utilisateurs</h2>
-    {{render(controller('App\\Controller\\UploadController::excelCommunesAction')) }}
-<main>
+
+        <main>
 
         <form method="post" action="#" class="form">
             {{ form_start(registrationForm) }}
@@ -31,12 +31,15 @@
             {{ form_row(registrationForm.campus) }}
             </label>
             <label>
-
             {{ form_row(registrationForm.plainPassword.first) }}
             </label>
             <label>
             {{ form_row(registrationForm.plainPassword.second) }}
             </label>
+            <label>
+                {{ form_widget(registrationForm.imageFile) }}
+            </label>
+
             <div class="flex">
                 <button type="submit" class="submit">Valider l'inscription</button>
                 {{ form_end(registrationForm) }}
@@ -44,10 +47,10 @@
                     <button class="submit">Retour</button>
                 </a>
             </div>
+            <label class="form">
+                {{render(controller('App\\Controller\\UploadController::excelCommunesAction')) }}
+            </label>
         </form>
-
-
-
 </main>
 
              <table>
