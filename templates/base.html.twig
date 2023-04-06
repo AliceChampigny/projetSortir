@@ -24,7 +24,7 @@
         <div class="flex">
         <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
             <div>
-                <img src="{{ asset('img/logoSortie.png') }}" alt="logo" height="150" width="150">
+                <img src="{{ asset('img/logoSortie.png') }}" alt="logo" height="200" width="200">
             </div>
         </a>
         <div class="overlay">
@@ -57,15 +57,7 @@
             </ul>
 
         </div>
-
-
-        <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
-            <div class="logo">
-                <img src="{{ asset('img/logoaccueil/logosortie2.png') }}" alt="logo">
-            </div>
-        </a>
-
-
+        </div>
     </header>
     {% endblock %}
 </main>

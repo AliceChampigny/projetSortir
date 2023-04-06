@@ -85,58 +85,6 @@ h1 {
     text-align: center;
 }
 
-/***********************CSS Liste SORTIES**********************************/
-/*table {*/
-/*    table-layout: fixed;*/
-/*    width: 100%;*/
-/*    border-collapse: collapse;*/
-/*    border: 3px solid purple;*/
-
-/*}*/
-
-/*.scroller {*/
-/*    width: 100%;*/
-/*    height: 65%;*/
-/*    overflow-y: scroll;*/
-/*    scrollbar-color: rebeccapurple green;*/
-/*    scrollbar-width: thin;*/
-/*}*/
-
-/*thead th:nth-child(1) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(2) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(3) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(4) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(5) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(6) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(7) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(8) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*th, td {*/
-/*    padding: 20px;*/
-/*}*/
 
 /***********************CSS FORMULAIRE**********************************/
 .feed-form {
@@ -318,6 +266,7 @@ td {
     padding: 20px;
     border-radius: 20px;
     position: relative;
+    margin-bottom: 50px;
 }
 
 .title {
@@ -624,9 +573,11 @@ td {
 
 .center {
     position: absolute;
-    top: 50%;
+    top: 60%;
+    /*bottom: 60%;*/
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
+    /*margin: 50px 0px 50px 0px;*/
 }
 
 .card2 {
@@ -649,10 +600,11 @@ td {
     position: absolute;
     width: 150px;
     height: 100%;
-    background: #E23858FF;
+    background: #a0c388;
     transition: width 0.4s;
     overflow: hidden;
     z-index: 2;
+
 }
 
 .card2.green .additional {
@@ -663,6 +615,8 @@ td {
 .card2:hover .additional {
     width: 100%;
     border-radius: 0 5px 5px 0;
+
+
 }
 
 .card2 .additional .user-card {
@@ -782,8 +736,8 @@ td {
     right: 0;
     z-index: 1;
     box-sizing: border-box;
-    padding: 1rem;
-    padding-top: 0;
+    padding: 2rem;
+    padding-top: 3rem;
 }
 
 .card2 .general .more {
@@ -1120,12 +1074,13 @@ h3, p {
 
 /*----------------------------------------FORMULAIRE ADMIN USER----------------------------------------------*/
 
-.useradmin{
+.useradmin {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
-
+    margin: 0px 50px 0px 50px;
+}
 
 .formuseradmin {
     display: flex;
@@ -1137,6 +1092,7 @@ h3, p {
     padding: 0px 20px 0px 20px;
     border-radius: 20px;
     position: relative;
+    margin-bottom: 50px;
 
 }
 
@@ -1164,7 +1120,79 @@ margin-top: 20px;
 }
 
 
+.lienadmin{
+    text-decoration: none;
+    color: white;
+}
 
+/***********************CSS Liste Tableaux**********************************/
+.tableVille {
+    table-layout: fixed;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif;
+    overflow-y: scroll;
+    margin: 0px 160px 50px 160px;
+    width: 60%;
+}
+
+.tableUtilisateur {
+    table-layout: fixed;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif;
+    overflow-y: scroll;
+
+}
+
+.scroll{
+
+    height: 35%;
+    overflow-y: scroll;
+    scrollbar-color: #050505 #050505;
+    scrollbar-width: thin;
+}
+
+/*thead th:nth-child(1) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(2) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(3) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(4) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(5) {*/
+/*    width: 2%;*/
+/*}*/
+
+/*thead th:nth-child(6) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(7) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(8) {*/
+/*    width: 12%;*/
+/*}*/
+
+th, td {
+    padding: 10px;
+}
+th{
+
+}
 /*******************************/
 img{
 max-width: 300px;

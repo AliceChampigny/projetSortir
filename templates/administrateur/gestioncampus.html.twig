@@ -2,11 +2,25 @@
 
 {% block body %}
 
-    <h2>Gestion des Campus</h2>
+<div class="useradmin">
+    <div class="form">
+    {{ form_start(formFilterCampus) }}
 
-    {{ form(formFilterCampus) }}
+        <p class="title">Filtrer par campus</p>
 
-    <table>
+        <label class="flex">
+    {{ form_widget(formFilterCampus.keyWord) }}
+        </label>
+        <div class="flex">
+            <button type="submit" class="submit">Rechercher</button>
+        </div>
+    {{ form_start(formFilterCampus) }}
+    </div>
+
+
+
+
+    <table class="tableCampus">
         <thead>
         <tr>
             <th scope="col">Campus</th>
@@ -31,14 +45,14 @@
                     {{ form_row(campusForm.nom) }}
                 </label>
             </div>
-           </td>
+                </td>
                <td>
             <div class="flex">
                 <button type="submit" class="submit">Ajouter</button>
                 {{ form_end(campusForm) }}
             </div>
                </td>
-            </form>
+           </form>
        </tr>
         </tbody>
     </table>
