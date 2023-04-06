@@ -69,7 +69,7 @@
             <div class="horizontal-friends-list">
                 <figure>
                     <picture>
-                        {#                    <img src="https://randomuser.me/api/portraits/women/2.jpg"> #}
+                        <img src={{ asset('/img/profil/'~participant.imageName) }}>
                     </picture>
                     <a href="{{ path('participant_afficherprofil', {'id': participant.id}) }}">
                         <figcaption>{{ participant.pseudo }}</figcaption>
