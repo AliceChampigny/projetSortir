@@ -58,7 +58,6 @@ class FilterType extends AbstractType
             ->add('organisateurSorties', CheckboxType::class, [
                 'label' => "Sorties dont je suis l'organisateur/trice",
                 'required' => false,
-                'data' => true,
                 'attr' => array(
                     'class' => 'input2'
                 )
@@ -66,7 +65,6 @@ class FilterType extends AbstractType
             ->add('inscritSorties', CheckboxType::class, [
                 'label' => "Sorties auxquelles je suis inscrit/e ",
                 'required' => false,
-                'data' => true,
                 'attr' => array(
                     'class' => 'input2'
                 )
@@ -74,7 +72,6 @@ class FilterType extends AbstractType
             ->add('nonInscritSorties', CheckboxType::class, [
                 'label' => "Sorties auxquelles je ne suis pas inscrit/e ",
                 'required' => false,
-                'data' => true,
                 'attr' => array(
                     'class' => 'input2'
                 )

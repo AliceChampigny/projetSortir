@@ -86,57 +86,57 @@ h1 {
 }
 
 /***********************CSS Liste SORTIES**********************************/
-table {
-    table-layout: fixed;
-    width: 100%;
-    border-collapse: collapse;
-    border: 3px solid purple;
+/*table {*/
+/*    table-layout: fixed;*/
+/*    width: 100%;*/
+/*    border-collapse: collapse;*/
+/*    border: 3px solid purple;*/
 
-}
+/*}*/
 
-.scroller {
-    width: 100%;
-    height: 65%;
-    overflow-y: scroll;
-    scrollbar-color: rebeccapurple green;
-    scrollbar-width: thin;
-}
+/*.scroller {*/
+/*    width: 100%;*/
+/*    height: 65%;*/
+/*    overflow-y: scroll;*/
+/*    scrollbar-color: rebeccapurple green;*/
+/*    scrollbar-width: thin;*/
+/*}*/
 
-thead th:nth-child(1) {
-    width: 12%;
-}
+/*thead th:nth-child(1) {*/
+/*    width: 12%;*/
+/*}*/
 
-thead th:nth-child(2) {
-    width: 12%;
-}
+/*thead th:nth-child(2) {*/
+/*    width: 12%;*/
+/*}*/
 
-thead th:nth-child(3) {
-    width: 12%;
-}
+/*thead th:nth-child(3) {*/
+/*    width: 12%;*/
+/*}*/
 
-thead th:nth-child(4) {
-    width: 12%;
-}
+/*thead th:nth-child(4) {*/
+/*    width: 12%;*/
+/*}*/
 
-thead th:nth-child(5) {
-    width: 12%;
-}
+/*thead th:nth-child(5) {*/
+/*    width: 12%;*/
+/*}*/
 
-thead th:nth-child(6) {
-    width: 12%;
-}
+/*thead th:nth-child(6) {*/
+/*    width: 12%;*/
+/*}*/
 
-thead th:nth-child(7) {
-    width: 12%;
-}
+/*thead th:nth-child(7) {*/
+/*    width: 12%;*/
+/*}*/
 
-thead th:nth-child(8) {
-    width: 12%;
-}
+/*thead th:nth-child(8) {*/
+/*    width: 12%;*/
+/*}*/
 
-th, td {
-    padding: 20px;
-}
+/*th, td {*/
+/*    padding: 20px;*/
+/*}*/
 
 /***********************CSS FORMULAIRE**********************************/
 .feed-form {
@@ -168,7 +168,7 @@ th, td {
     height: 54px;
     font-size: 14px;
     color: white;
-    background: #e43858;
+    background: #4a4644;
     border-radius: 5px;
     border: none;
     font-weight: 500;
@@ -322,7 +322,7 @@ td {
 
 .title {
     font-size: 28px;
-    color: #e23858;
+    color: #91b37a;
     font-weight: 600;
     letter-spacing: -1px;
     position: relative;
@@ -338,13 +338,13 @@ td {
     width: 16px;
     border-radius: 50%;
     left: 0px;
-    background-color: #E23858FF;
+    background-color: #91b37a;
 }
 
 .title::before {
     width: 18px;
     height: 18px;
-    background-color: #E23858FF;
+    background-color: #91b37a;
 }
 
 .title::after {
@@ -450,7 +450,7 @@ td {
 
     border: none;
     outline: none;
-    background-color: #E23858FF;
+    background-color: #91b37a;
     padding: 10px;
     border-radius: 10px;
     color: #fff;
@@ -938,7 +938,7 @@ td {
 /**{padding: 0; margin: 0; box-sizing: border-box;}*/
 
 header {
-    background-image:  linear-gradient( 135deg, #9f05ff69 10%, #fd5e086b 100%);
+    background-color: #a0c388;
     text-align: center;
     width: 100%;
     height: 80%;
@@ -957,12 +957,12 @@ header .overlay{
 }
 
 h1 {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Roboto', sans-serif;
     font-size: 70px;
     margin-bottom: 30px;
 }
 h3, p {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin-bottom: 30px;
 }
 
@@ -972,7 +972,7 @@ h3, p {
     padding: 10px 20px;
     border-radius: 50px;
     color: #333;
-    background: #fff;
+    background: #e7e8e3;
     margin-bottom: 50px;
     box-shadow: 0 3px 20px 0 #0000003b;
 }
@@ -1200,7 +1200,7 @@ h3, p {
 }
 
 .carousel-item__details .controls {
-    padding-top: 150px;
+    padding-top: 125px;
 }
 
 .carousel-item__details .carousel-item__details--title,
@@ -1237,4 +1237,50 @@ h3, p {
 #ajout_ville{
     font-size: 0.8em;
 }
+
+/*----------------------------------------FORMULAIRE ADMIN USER----------------------------------------------*/
+
+.useradmin{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+
+
+.formuseradmin {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 450px;
+    max-height: 250px;
+    background-color: #fff;
+    padding: 0px 20px 0px 20px;
+    border-radius: 20px;
+    position: relative;
+
+}
+
+.col-lg-8{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.form-group{
+margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.titleuseradmn {
+    font-size: 28px;
+    color: #91b37a;
+    font-weight: 600;
+    letter-spacing: -1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+}
+
 
