@@ -1,23 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block title %}Profil de {{ participant.pseudo }}{% endblock %}
 {% block body %}
-{#    <h1>Profil de {{ participant.pseudo }}</h1>#}
-{#    <div class="container">#}
-{#        <ul>#}
-{#            <li>Prénom :{{ participant.prenom }}</li>#}
-{#            <li>Nom : {{ participant.nom }}</li>#}
-{#            <li>Téléphone: {{ participant.telephone }}</li>#}
-{#            <li>E-mail : {{ participant.email }}</li>#}
-{#            <li>Campus : {{ participant.campus.nom }}</li>#}
-{#        </ul>#}
-
-{#        <a href="{{ path('sortie_liste') }}">#}
-{#            <button>Retour</button>#}
-{#        </a>#}
-{#    </div>#}
-
+<body>
     <div class="center">
-
         <div class="card2">
             <div class="additional">
                 <div class="user-card">
@@ -107,7 +92,7 @@
                     </svg>
                 </div>
                 <div class="more-info">
-                    <h1>{{ participant.prenom }} {{ participant.nom }}</h1>
+                    <h3>{{ participant.prenom }} {{ participant.nom }}</h3>
                     <div class="coords">
                         <span></span>
                         <span></span>
@@ -119,14 +104,15 @@
                 </div>
             </div>
             <div class="general">
-                <h1>{{ participant.prenom }} {{ participant.nom }}</h1>
+                <h2>{{ participant.prenom }} {{ participant.nom }}</h2>
                 <p><li>Téléphone: {{ participant.telephone }}</li>
                 <li>E-mail : {{ participant.email }}</li>
                 <li>Campus : {{ participant.campus.nom }}</li></p>
-{#                <span class="more">Passez votre souris pour plus d'infos</span>#}
+
             </div>
         </div>
     </div>
+</body>
 {% endblock %}
 
 
