@@ -19,13 +19,22 @@
 <body>
 
 <main>
+
     <header>
+        <div class="flex">
+        <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
+            <div>
+                <img src="{{ asset('img/logoSortie.png') }}" alt="logo" height="150" width="150">
+            </div>
+        </a>
         <div class="overlay">
+
             <h1>Par ici la sortie!</h1>
             <h3>{% if app.user %}
                     <div class="mb-3">
                         Bienvenue {{ app.user.pseudo }} !
                     </div>
+
                 {% endif %}</h3>
 
 
@@ -48,11 +57,7 @@
 
         </div>
 
-        <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
-            <div class="logo">
-                <img src="{{ asset('img/logoSortie.png') }}" alt="logo">
-            </div>
-        </a>
+
 
     </header>
     {% endblock %}
