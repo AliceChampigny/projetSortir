@@ -16,12 +16,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 #[Route(
@@ -70,14 +72,10 @@ class SortieController extends AbstractController{
             $sorties = $sortieRepository -> filtreListeSorties($filter, $userConnecte, $sortiesPassees);
 
         } catch (\Exception $exception) {
-            $this->addFlash('danger', "Impossible d'afficher les sorties damandées" . $exception->getMessage());
+            $this->addFlash('danger', "Impossible d'afficher les sorties demandées" . $exception->getMessage());
 
         }
-            return $this->render('main/accueil.html.twig', [
-            'formFilterSortie' => $formFilterSortie->createView(),
-            'sorties' => $sorties,
-            ]
-        );
+            return $this->render('main/accueil.html.twig',compact('formFilterSortie','sorties'));
     }
 //----------------------------------------------------------------------------------------------------------------------
     /**
@@ -97,7 +95,8 @@ class SortieController extends AbstractController{
         Request                $request,
         EntityManagerInterface $entityManager,
         Participant $organisateur,
-        EtatRepository $etatRepository
+        EtatRepository $etatRepository,
+        SluggerInterface $slugger
 
     ): Response{
 
@@ -114,6 +113,25 @@ class SortieController extends AbstractController{
                 $sortie->setCampus($organisateur->getCampus());
                 $etat->addSorty($sortie);
                 $organisateur->addSortiesOrganisee($sortie);
+
+                $sortieImage = $sortieForm->get('sortieImage')->getData();
+
+                if ($sortieImage) {
+                    $originalFilename = pathinfo($sortieImage->getClientOriginalName(), PATHINFO_FILENAME);
+
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$sortieImage->guessExtension();
+
+                    try {
+
+                        $sortieImage->move(
+                            $this->getParameter('photo'),
+                            $newFilename);
+                    } catch (FileException $e) {
+                        $this->addFlash('danger','Erreur lors du téléchargement de l\'image');
+                    }
+                    $sortie->setNomImageSortie($newFilename);
+                }
 
                 $entityManager->persist($sortie);
                 $entityManager->flush();

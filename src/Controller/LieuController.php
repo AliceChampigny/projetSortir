@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+
 #[Route(
     '/lieu',
     name: 'lieu')]
@@ -44,4 +46,5 @@ class LieuController extends AbstractController{
         }
         return $this->render('lieu/modal_form_lieu.html.twig',compact('lieuForm'));
     }
+
 }

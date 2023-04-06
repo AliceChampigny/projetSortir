@@ -511,148 +511,6 @@ td {
     display: flex;
     justify-content: center;
 }
-/*--------------------Radio button--------------*/
-  .radio-inputs {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      justify-content: center;
-      -webkit-box-pack: center;
-      -ms-flex-pack: center;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-      max-width: 350px;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-  }
-
-.radio-inputs > * {
-    margin: 6px;
-}
-
-.radio-input:checked + .radio-tile {
-    border-color: #E23858FF;
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    color: #E23858FF;
-}
-
-.radio-input:checked + .radio-tile:before {
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-    opacity: 1;
-    background-color: #E23858FF;
-    border-color: #E23858FF;
-}
-
-.radio-input:checked + .radio-tile .radio-icon svg {
-    fill: #E23858FF;
-}
-
-.radio-input:checked + .radio-tile .radio-label {
-    color: #E23858FF;
-}
-
-.radio-input:focus + .radio-tile {
-    border-color: #E23858FF;
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
-}
-
-.radio-input:focus + .radio-tile:before {
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-    opacity: 1;
-}
-
-.radio-tile {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    width: 80px;
-    min-height: 80px;
-    border-radius: 0.5rem;
-    border: 2px solid #b5bfd9;
-    background-color: #fff;
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    -webkit-transition: 0.15s ease;
-    transition: 0.15s ease;
-    cursor: pointer;
-    position: relative;
-}
-
-.radio-tile:before {
-    content: "";
-    position: absolute;
-    display: block;
-    width: 0.75rem;
-    height: 0.75rem;
-    border: 2px solid #b5bfd9;
-    background-color: #fff;
-    border-radius: 50%;
-    top: 0.25rem;
-    left: 0.25rem;
-    opacity: 0;
-    -webkit-transform: scale(0);
-    -ms-transform: scale(0);
-    transform: scale(0);
-    -webkit-transition: 0.25s ease;
-    transition: 0.25s ease;
-
-}
-
-.radio-tile:hover {
-    border-color: #E23858FF;
-}
-
-.radio-tile:hover:before {
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-    opacity: 1;
-}
-
-.radio-icon svg {
-    width: 2rem;
-    height: 2rem;
-    fill: #494949;
-}
-
-.radio-label {
-    color: #707070;
-    -webkit-transition: 0.375s ease;
-    transition: 0.375s ease;
-    text-align: center;
-    font-size: 13px;
-}
-
-.radio-input {
-    clip: rect(0 0 0 0);
-    -webkit-clip-path: inset(100%);
-    clip-path: inset(100%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-}
-
 
 /*------------------------AFFICHER MODAL FORM---------------------------*/
 .modal{
@@ -1141,6 +999,7 @@ h3, p {
     -webkit-transform-origin: center left;
     transform-origin: center left;
     position: relative;
+
 }
 .carousel__container:hover .carousel-item {
     opacity: 0.3;
@@ -1210,6 +1069,26 @@ h3, p {
     margin: 5px 0;
 }
 
+.non-inscrit{
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    border:solid darkblue;
+    background-color: #95bcd6;
+    overflow: hidden;
+    margin-right: 25px;
+    margin-left :25px;
+    margin-top: 70px;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-transition: 1000ms all;
+    transition: 1000ms all;
+    -webkit-transform-origin: center left;
+    transform-origin: center left;
+    position: relative;
+    /*border: solid;*/
+}
+
 
 /*----------------------------------------FORMULAIRE AJOUT VILLE ET LIEU----------------------------------------------*/
 
@@ -1237,6 +1116,7 @@ h3, p {
 #ajout_ville{
     font-size: 0.8em;
 }
+
 
 /*----------------------------------------FORMULAIRE ADMIN USER----------------------------------------------*/
 
@@ -1283,4 +1163,11 @@ margin-top: 20px;
     padding-left: 30px;
 }
 
+
+
+/*******************************/
+img{
+max-width: 300px;
+    max-height: 300px;
+}
 

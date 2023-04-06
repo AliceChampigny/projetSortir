@@ -133,4 +133,8 @@ class Lieu
 
         return $this;
     }
+
+    public function getAdresse() : string{
+        return $this->getNom().' - '.$this->getRue();
+    }
 }

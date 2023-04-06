@@ -16,8 +16,8 @@
                 <p class="text-body">Descriptions : {{ sortie.InfosSortie }}</p>
                 <p class="text-body">Campus : {{ sortie.campus.nom }}</p>
                 <p class="text-body">Lieu :{{ sortie.lieu.nom }}</p>
-                <p class="text-body">Latitude : {{ sortie.lieu.latitude }}</p>
-                <p class="text-body">Longitude : {{ sortie.lieu.longitude }}</p>
+                <p class="text-body">Adresse : {{ sortie.lieu.rue }} {{ sortie.lieu.ville.nom }} {{ sortie.lieu.ville.codePostal }}</p>
+                <p class="text-body"></p>
                 <br>
                 <br>
             </div>
@@ -69,7 +69,7 @@
             <div class="horizontal-friends-list">
                 <figure>
                     <picture>
-                        {#                    <img src="https://randomuser.me/api/portraits/women/2.jpg"> #}
+                        <img src={{ asset('/img/profil/'~participant.imageName) }}>
                     </picture>
                     <a href="{{ path('participant_afficherprofil', {'id': participant.id}) }}">
                         <figcaption>{{ participant.pseudo }}</figcaption>
@@ -84,14 +84,6 @@
 
     {% endif %}
 
-{#    <main>#}
-{#    <div id="buttons_insc_des">#}
-{#        {% if  sortie.etat.id == constant('App\\Controller\\SortieController::OUVERTE')#}
-{#            and  date() < date(sortie.dateLimiteInscription)#}
-{#            and  sortie.participants | length < sortie.nbInscriptionsMax %}#}
-
-{#        {% endif %}#}
-{#    </main>#}
 
 {% endblock %}
 

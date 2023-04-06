@@ -15,16 +15,29 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
+
 <body>
+
 <main>
+
     <header>
+        <div class="flex">
+        <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
+            <div>
+                <img src="{{ asset('img/logoSortie.png') }}" alt="logo" height="150" width="150">
+            </div>
+        </a>
         <div class="overlay">
+
             <h1>Sorties Enitiennes</h1>
+
             <h3>{% if app.user %}
                     <div class="mb-3">
                         Bienvenue {{ app.user.pseudo }} !
                     </div>
+
                 {% endif %}</h3>
+
 
             {% block menu %}
             <ul class="menu">
@@ -45,30 +58,25 @@
 
         </div>
 
+
         <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
             <div class="logo">
                 <img src="{{ asset('img/logoaccueil/logosortie2.png') }}" alt="logo">
             </div>
         </a>
 
+
     </header>
     {% endblock %}
 </main>
-    <main>
-    <section class="section_form">
 
-{% for label, messages in app.flashes(['success', 'danger']) %}
-    {% for message in messages %}
-        <div class="alert alert-{{ label }} text-center" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endfor %}
-    </section>
+    <main>
+
 <div>
     {% block body %}{% endblock %}
 </div>
     </main>
+
 <footer class="footer">
     <p>{{ 'now' | date("Y") }} ©Sorties Enitiennes</p>
 </footer>

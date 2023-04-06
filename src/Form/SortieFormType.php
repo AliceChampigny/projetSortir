@@ -2,30 +2,23 @@
 
 namespace App\Form;
 
-use App\Entity\Campus;
+
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
-use App\Repository\VilleRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\DateTime;
-use function Sodium\add;
+use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class SortieFormType extends AbstractType
-{
+class SortieFormType extends AbstractType{
     public function buildForm(
         FormBuilderInterface $builder,
         array $options
@@ -76,7 +69,7 @@ class SortieFormType extends AbstractType
              ->add('ville',EntityType::class,[
                 'mapped'=>false,
                 'class'=>Ville::class,
-                'choice_label'=>'nom',
+                'choice_label'=>'name',
                 'placeholder'=>'Selectionnez la ville',
                 'attr' => array(
                     'class'=>'input3'
@@ -86,13 +79,29 @@ class SortieFormType extends AbstractType
             ->add('lieu', EntityType::class,[
                 'class'=>Lieu::class,
                 'disabled'=>true,
-               'choice_label'=>'nom',
+               'choice_label'=>'adresse',
                 'placeholder'=>'Lieu [choisissez d\'abord une ville]',
                 'attr'=>array(
-                    'class'=>'input3',
-
+                    'class'=>'input3'
                 )
-                ]);
+                ])
+
+            ->add('sortieImage',VichImageType::class,[
+                'label'=> ' ',
+                'required'=>false,
+                'attr'=> ['class'=>'input3',
+                ],
+                'mapped'=>false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png']
+                    ]),
+                ]
+            ])
+        ;
 
         $formModifier = function (
             FormInterface $form,
@@ -103,11 +112,12 @@ class SortieFormType extends AbstractType
                 ->add('lieu',EntityType::class,[
                     'class'=>Lieu::class,
                     'choices'=>$lieux,
-                    'choice_label'=>'nom',
+                    'choice_label'=>'adresse',
                     'placeholder'=>'Sélectionnez votre lieu',
                     'label'=>'Lieu',
                     'attr'=> array(
-                    'class'=>'input3')
+                    'class'=>'input3'
+                        )
 
                 ]);
         };

@@ -14,8 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class ParticipantType extends AbstractType
-{
+class ParticipantType extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -30,6 +29,7 @@ class ParticipantType extends AbstractType
                 'attr'=> ['class'=>'input3',
                 ],
                 'mapped'=>false,
+                'required'=>false,
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
@@ -44,9 +44,12 @@ class ParticipantType extends AbstractType
                 'mapped' => false,
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe doit être renseigné',
-                'options' => ['attr' => ['class' => 'input2', 'placeholder'=>'Mot de passe']],
+                'options' => [
+                    'attr' => [
+                        'class' => 'input2',
+                        'placeholder'=>'Mot de passe'
+                    ]],
                 'required' => true,
-
                 'first_options'  => ['label' => 'Mot de passe '],
                 'second_options' => ['label' => 'Confirmation du mot de passe ']])
             ->add('campus',EntityType::class,['class'=>Campus::class,'choice_label'=>'nom','disabled'=>true])
