@@ -22,6 +22,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use function Sodium\add;
 
 class SortieFormType extends AbstractType
@@ -91,7 +93,24 @@ class SortieFormType extends AbstractType
                 'attr'=>array(
                     'class'=>'input3'
                 )
-                ]);
+                ])
+
+            ->add('sortieImage',VichImageType::class,[
+                'label'=> ' ',
+                'required'=>false,
+                'attr'=> ['class'=>'input3',
+                ],
+                'mapped'=>false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png']
+                    ]),
+                ]
+            ])
+        ;
 
         $formModifier = function (
             FormInterface $form,

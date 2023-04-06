@@ -15,9 +15,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
 #[Vich\Uploadable]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class Participant implements UserInterface, PasswordAuthenticatedUserInterface
-{
+#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email')]
+class Participant implements UserInterface, PasswordAuthenticatedUserInterface{
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
