@@ -29,7 +29,8 @@
         </a>
         <div class="overlay">
 
-            <h1>Par ici la sortie!</h1>
+            <h1>Sorties Enitiennes</h1>
+
             <h3>{% if app.user %}
                     <div class="mb-3">
                         Bienvenue {{ app.user.pseudo }} !
@@ -57,6 +58,12 @@
 
         </div>
 
+
+        <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
+            <div class="logo">
+                <img src="{{ asset('img/logoaccueil/logosortie2.png') }}" alt="logo">
+            </div>
+        </a>
 
 
     </header>
