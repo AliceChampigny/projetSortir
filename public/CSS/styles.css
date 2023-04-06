@@ -753,7 +753,7 @@ header {
     background-color: #a0c388;
     text-align: center;
     width: 100%;
-    height: 80%;
+    max-height: 35vh;
     background-size: cover;
     background-attachment: fixed;
     position: relative;
@@ -838,6 +838,7 @@ h3, p {
 
 .form2 label .input2 {
     width: 93%;
+    max-height: 5vh;
     padding: 10px 10px 20px 10px;
     outline: 0;
     border: 1px solid rgba(105, 105, 105, 0.397);
@@ -1023,7 +1024,27 @@ h3, p {
     margin: 5px 0;
 }
 
-.non-inscrit{
+.inscrit{
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    border:solid #2ecc71;
+
+    background-color: #95bcd6;
+    overflow: hidden;
+    margin-right: 25px;
+    margin-left :25px;
+    margin-top: 70px;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-transition: 1000ms all;
+    transition: 1000ms all;
+    -webkit-transform-origin: center left;
+    transform-origin: center left;
+    position: relative;
+    /*border: solid;*/
+}
+.organisateur{
     width: 300px;
     height: 300px;
     border-radius: 20px;
