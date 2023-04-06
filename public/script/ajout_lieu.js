@@ -46,9 +46,6 @@ function submitFormVille(){
     let $nomVille=$('#ville_nom');
     let $cpVille=$('#ville_codePostal');
     let $tokenVille=$('#ville__token');
-    // let $select =$('#listeVille').val().split("/");
-    // $nomVille.val($select[0]);
-    // $cpVille.val($select[1]);
     let dataVille ={};
 
     dataVille[$nomVille.attr('name')] = $nomVille.val();
@@ -65,3 +62,5 @@ function submitFormVille(){
             console.log($modal);
         })
 }
+
+

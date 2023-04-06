@@ -87,4 +87,7 @@ class Ville
 
         return $this;
     }
+    public function getName(): string{
+        return $this->getNom().' - '.$this->getCodePostal();
+    }
 }
