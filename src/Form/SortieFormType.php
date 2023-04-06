@@ -76,7 +76,7 @@ class SortieFormType extends AbstractType
              ->add('ville',EntityType::class,[
                 'mapped'=>false,
                 'class'=>Ville::class,
-                'choice_label'=>'nom',
+                'choice_label'=>'name',
                 'placeholder'=>'Selectionnez la ville',
                 'attr' => array(
                     'class'=>'input3'
@@ -86,11 +86,10 @@ class SortieFormType extends AbstractType
             ->add('lieu', EntityType::class,[
                 'class'=>Lieu::class,
                 'disabled'=>true,
-               'choice_label'=>'nom',
+               'choice_label'=>'adresse',
                 'placeholder'=>'Lieu [choisissez d\'abord une ville]',
                 'attr'=>array(
-                    'class'=>'input3',
-
+                    'class'=>'input3'
                 )
                 ]);
 
@@ -103,11 +102,12 @@ class SortieFormType extends AbstractType
                 ->add('lieu',EntityType::class,[
                     'class'=>Lieu::class,
                     'choices'=>$lieux,
-                    'choice_label'=>'nom',
+                    'choice_label'=>'adresse',
                     'placeholder'=>'Sélectionnez votre lieu',
                     'label'=>'Lieu',
                     'attr'=> array(
-                    'class'=>'input3')
+                    'class'=>'input3'
+                        )
 
                 ]);
         };
