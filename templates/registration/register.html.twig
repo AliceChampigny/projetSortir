@@ -38,12 +38,8 @@
             {{ form_widget(registrationForm.imageFile) }}
         </label>
         <div class="flex">
-
-            <a href="{{ path('sortie_liste') }}">
-                <button type="submit" class="submit">Submit</button>
-            </a>
+            <button type="submit" class="submit">S'inscrire</button>
             {{ form_end(registrationForm) }}
-
 
             <a href="{{ path('main_accueil') }}">
                 <button type="button" class="submit">Retour</button>
