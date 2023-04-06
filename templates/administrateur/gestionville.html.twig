@@ -42,7 +42,7 @@
                             <br>
                             <br>
                         </label>
-                        <div class="flex"> <button type="submit" class="submit">Ajouter cette ville</button></div>
+
                     </div>
                 </div>
             </td>
@@ -51,8 +51,10 @@
                 <td> <div class="flex">
 
                         <label>
+
                             {{ form_row(villeForm.nom,{'attr':{'hidden':true}}) }}
                             {{ form_row(villeForm.codePostal,{'attr':{'hidden':true}}) }}
+                            <div class="flex"> <button type="submit" class="submit">Ajouter cette ville</button></div>
                         </label>
                     </div>
                 </td>
@@ -66,8 +68,8 @@
         </tr>
         </tbody>
     </table>
-    <script src="{{ asset('script/rechercher_lieu_api.js') }}"></script>
-{#    <script src="{{ asset('script/ajout_lieu.js') }}"></script>#}
+    <script src="{{ asset('script/rechercher_lieu_et_ville.js') }}"></script>
+{#    <script src="{{ asset('script/ajout_lieu_et_ville.js') }}"></script>#}
 {% endblock %}
 
 
