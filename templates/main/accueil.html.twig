@@ -64,7 +64,7 @@
                          <div class="carousel-item__details">
 
                              <div class="controls">     </div>
-                             <h5 class="carousel-item__details--title">{{ sortie.nom }}</h5>
+                             <h5 class="carousel-item__details--title">{{ sortie.nom| upper }}</h5>
                              <h6 class="carousel-item__details--subtitle"><a href="{{ path('participant_afficherprofil',{'id':sortie.organisateur.id}) }}" style="color:white;">Organisateur(rice) : {{ sortie.organisateur.pseudo }}</a></h6>
                              <h6 class="carousel-item__details--subtitle">Le {{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</h6>
                              <h6 class="carousel-item__details--subtitle">Clotûre inscription le {{ sortie.dateLimiteInscription | date('d/m/Y H:i') }}</h6>

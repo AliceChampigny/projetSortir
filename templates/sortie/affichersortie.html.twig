@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-details">
                 <br>
-                <p class="title" id="title_sortie">{{ sortie.nom }}</p>
+                <p class="title" id="title_sortie">{{ sortie.nom | upper }}</p>
                 <br>
                 {% if sortie.etat.id <= constant('App\\Controller\\SortieController::CLOTUREE') %}
                     <p class="text-body-actif">Date et heure de début : {{ sortie.DateHeureDebut | date ("d/m/Y H:m") }}</p>
