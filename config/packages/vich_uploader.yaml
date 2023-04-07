@@ -11,5 +11,5 @@ vich_uploader:
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
             inject_on_load: false #true : chargement de l'image lors du chargement de l'entité - création d'une instance File
-            delete_on_update: true #fichier effacer si nouvel upload
-            delete_on_remove: true #fichier effacer si user supprimé
+            delete_on_update: true #fichier effacé si nouvel upload
+            delete_on_remove: true #fichier effacé si user supprimé
