@@ -32,17 +32,17 @@
                 <input required="" name="email_or_pseudo" placeholder="E-mail ou Pseudo" type="text" value="{{ last_username }}">
 
                 <input name="password" required="" placeholder="Mot de Passe" type="password">
-                <button type="submit" class="button_submit">Se Connecter</button>
+                <button type="submit" class="submit">Se Connecter</button>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             </form>
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" name="_remember_me"> Se souvenir de moi
-
                 </label>
             </div>
         </section>
     </main>
-{#    <a href="{{ path('sortie_liste') }}"><button>Retour</button></a>#}
-    <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
+    <div class="flex">
+        <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
+    </div>
 {% endblock %}

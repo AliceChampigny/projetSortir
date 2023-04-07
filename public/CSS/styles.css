@@ -158,12 +158,11 @@ td {
 .overflow-x {
     overflow-x: auto;
     overscroll-behavior-x: contain;
-
     border: 1px solid hsl(0, 0%, 80%);
     border-radius: 1ex;
     background-color: hsl(0, 0%, 100%);
     background-color: var(--surface2);
-    padding: 2rem;
+    padding: 1rem;
 }
 
 .horizontal-friends-list {
@@ -483,7 +482,7 @@ td {
 }
 .modal-content{
     background-color: white;
-    max-width: 25vw;
+    max-width: 30vw;
     margin : auto;
     flex : 1;
     position : relative;
@@ -514,11 +513,11 @@ td {
 
 .card {
     width: 500px;
-    height: 560px;
+    height: 520px;
     border-radius: 20px;
     background: #f5f5f5;
     position: relative;
-    padding: 1.8rem;
+    padding: 0;
     border: 2px solid #c3c6ce;
     transition: 0.5s ease-out;
     overflow: visible;
@@ -527,7 +526,7 @@ td {
 .card-details {
     color: black;
     height: 100%;
-    gap: .5em;
+    gap: 0;
     display: grid;
     place-content: center;
 }
@@ -551,6 +550,9 @@ td {
 .text-body {
     color: rgb(134, 134, 134);
 }
+.text-body-actif {
+    color: rgb(23, 22, 22);
+}
 
 /*Text*/
 .text-title {
@@ -560,7 +562,7 @@ td {
 
 /*Hover*/
 .card:hover {
-    border-color: #E23858FF;
+    border-color: darkseagreen;
     box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
 }
 
@@ -1220,3 +1222,18 @@ max-width: 300px;
     max-height: 300px;
 }
 
+#main_bis{
+    max-height : 100vh
+}
+
+#liste_ville_admin{
+    max-height: 30vh;
+    overflow-y: scroll;
+}
+#title_participants{
+    margin-bottom: 0;
+    margin-top :1em;
+}
+#title_sortie{
+    margin-top:1em;
+}
