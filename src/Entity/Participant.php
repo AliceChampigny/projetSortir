@@ -47,13 +47,13 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface{
     #[Assert\NotNull (null,'Le nom ne peut pas être null')]
     private ?string $nom = null;
 
-    #[Vich\UploadableField(mapping: 'photo', fileNameProperty: 'imageName')]
+    #[Vich\UploadableField(mapping: 'photo', fileNameProperty: 'imageName')] //propriété de l'entité correspondant au fichier image - n'est pas entrée en BDD
     private ?File $imageFile = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: true)] //nom du fichier, permettant de l'appeler pour l'affichage
     private ?string $imageName = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: true)] //date d'upload de l'image
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 30)]
@@ -62,7 +62,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface{
     private ?string $prenom = null;
 
     #[ORM\Column(length: 15)]
-    #[Assert\Regex('/^[0]{1}[1-9]{1}[0-9]{8}$/')]//TODO
+    #[Assert\Regex('/^[0]{1}[1-9]{1}[0-9]{8}$/')]
     private ?string $telephone = null;
 
     #[ORM\Column]

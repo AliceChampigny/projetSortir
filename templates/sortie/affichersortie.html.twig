@@ -83,7 +83,7 @@
             <div class="horizontal-friends-list">
                 <figure>
                     <picture>
-                        <img src={{ asset('/img/profil/'~participant.imageName) }}>
+                        <img src={{ asset('/img/profil/'~participant.imageName) }}> {# Affichage de la photo dans la liste des participants #}
                     </picture>
                     <a href="{{ path('participant_afficherprofil', {'id': participant.id}) }}">
                         <figcaption>{{ participant.pseudo }}</figcaption>

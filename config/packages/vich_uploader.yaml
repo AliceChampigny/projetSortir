@@ -3,13 +3,13 @@ vich_uploader:
 
     metadata:
         type: attribute
-
+#pour configurer le directory des images téléchargées
     mappings:
         photo:
             uri_prefix: /img/profil
             upload_destination: '%kernel.project_dir%/public/img/profil'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
-            inject_on_load: false
-            delete_on_update: true
-            delete_on_remove: true
+            inject_on_load: false #true : chargement de l'image lors du chargement de l'entité - création d'une instance File
+            delete_on_update: true #fichier effacer si nouvel upload
+            delete_on_remove: true #fichier effacer si user supprimé

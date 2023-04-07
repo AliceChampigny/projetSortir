@@ -27,8 +27,14 @@ class RegistrationController extends AbstractController{
         '/register',
         name: 'app_register'
     )]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
-    {
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        EntityManagerInterface $entityManager,
+        SluggerInterface $slugger
+
+    ): Response{
+
         $user = new Participant();
         $user->setActif(true);
         $user->setAdministrateur(false);
@@ -40,7 +46,7 @@ class RegistrationController extends AbstractController{
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('imageFile')->getData();
 
-
+            //Début de la procédure de téléchargement de l'image
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
@@ -49,7 +55,7 @@ class RegistrationController extends AbstractController{
                 try {
                     $imageFile->move(
                         $this->getParameter('photo'),
-                        $newFilename
+                        $newFilename //stockage du fichier dans le directory choisi, avec le nom créé
                     );
                 } catch (FileException $e) {
 
@@ -66,15 +72,13 @@ class RegistrationController extends AbstractController{
                 );
                 $entityManager->persist($user);
                 $entityManager->flush();
-                // do anything else you need here, like send an email
 
                 return $this->redirectToRoute('app_login');
             } catch (\Exception $exception) {
-                $this->addFlash('danger', 'L\'inscription n\'a pas été effectuée' . $exception->getMessage());
+                $this->addFlash('danger', 'L\'inscription n\'a pas été effectuée');
                 return $this->redirectToRoute('app_register');
             }
         }
-
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
 
