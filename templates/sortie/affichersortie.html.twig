@@ -6,6 +6,7 @@
     <main>
         <div class="card">
             <div class="card-details">
+                <br>
                 <p class="title" id="title_sortie">{{ sortie.nom }}</p>
                 <br>
                 {% if sortie.etat.id <= constant('App\\Controller\\SortieController::CLOTUREE') %}
@@ -14,9 +15,9 @@
                         : {{ sortie.DateLimiteInscription | date ("d/m/Y H:m") }}</p>
                     <p class="text-body-actif">Nombre max de participants: {{ sortie.NbInscriptionsMax }}</p>
                     <p class="text-body-actif">Durée : {{ sortie.duree }}</p>
-                    <p class="text-body-actif">Descriptions : {{ sortie.InfosSortie }}</p>
+                    <p class="text-body-actif">Description : {{ sortie.InfosSortie }}</p>
                     <p class="text-body-actif">Campus : {{ sortie.campus.nom }}</p>
-                    <p class="text-body-actif">Lieu :{{ sortie.lieu.nom }}</p>
+                    <p class="text-body-actif">Lieu : {{ sortie.lieu.nom }}</p>
                     <p class="text-body-actif">Adresse : {{ sortie.lieu.rue }} {{ sortie.lieu.ville.nom }} {{ sortie.lieu.ville.codePostal }}</p>
                     <p class="text-body-actif"></p>
                     <br>
