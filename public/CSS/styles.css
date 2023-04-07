@@ -3,10 +3,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
-
 }
 
+ .alert-success{
+    color: green;
+}
+
+ .alert-danger{
+     color:red;
+ }
 
 body {
     display: flex;
@@ -872,47 +877,7 @@ h3, p {
     color: green;
 }
 /******************************/
-.clear {
-    clear: both;
-}
 
-.checkBox {
-    display: block;
-    cursor: pointer;
-    width: 10px;
-    height: 10px;
-    border: 3px solid rgba(255, 255, 255, 0);
-    border-radius: 10px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0px 0px 0px 2px #fff;
-}
-
-.checkBox div {
-    width: 60px;
-    height: 60px;
-    background-color: #E23858FF;
-    top: -52px;
-    left: -52px;
-    position: absolute;
-    transform: rotateZ(45deg);
-    z-index: 100;
-}
-
-.checkBox input[type=checkbox]:checked + div {
-    left: -10px;
-    top: -10px;
-}
-
-.checkBox input[type=checkbox] {
-    position: absolute;
-    left: 50px;
-    visibility: hidden;
-}
-
-.transition {
-    transition: 300ms ease;
-}
 /***********************************************/
 
 .carousel {
@@ -1119,15 +1084,15 @@ h3, p {
 
 }
 
-.col-lg-8{
+.col-lg-8 {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 100%;
 }
 
-.form-group{
-margin-top: 20px;
+.form-group {
+    margin-top: 20px;
     margin-bottom: 0px;
 }
 
@@ -1141,6 +1106,8 @@ margin-top: 20px;
     align-items: center;
     padding-left: 30px;
 }
+
+
 
 
 .lienadmin{
@@ -1216,9 +1183,10 @@ th, td {
 th{
 
 }
+
 /*******************************/
-img{
-max-width: 300px;
+img {
+    max-width: 300px;
     max-height: 300px;
 }
 
@@ -1237,3 +1205,4 @@ max-width: 300px;
 #title_sortie{
     margin-top:1em;
 }
+

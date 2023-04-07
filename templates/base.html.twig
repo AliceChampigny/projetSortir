@@ -1,11 +1,12 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Sorties Enitiennes!{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('CSS/styles.css') }}">
+
     <link rel="icon" href="{{ asset('img/logoSortie.png') }}">
+
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -22,6 +23,7 @@
 
     <header>
         <div class="flex">
+
         <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
             <div>
                 <img src="{{ asset('img/logoSortie.png') }}" alt="logo" height="200" width="200">
@@ -60,14 +62,25 @@
         </div>
     </header>
     {% endblock %}
+    
 </main>
 
     <main id="main_bis">
 
-<div>
-    {% block body %}{% endblock %}
-</div>
-    </main>
+    <div>
+        <div  class="flex">
+            {% for label, messages in app.flashes(['danger','success']) %}
+                {% for message in messages %}
+                    <div class="alert-{{ label }} text-center" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        {% block body %}{% endblock %}
+    </div>
+</main>
 
 <footer class="footer">
     <p>{{ 'now' | date("Y") }} ©Sorties Enitiennes</p>
