@@ -6,20 +6,33 @@
     <main>
         <div class="card">
             <div class="card-details">
-                <p class="title">{{ sortie.nom }}</p>
+                <p class="title" id="title_sortie">{{ sortie.nom }}</p>
                 <br>
-                <p class="text-body">Date et heure de début : {{ sortie.DateHeureDebut | date ("d/m/Y H:m") }}</p>
-                <p class="text-body">Date limite d'inscription
-                    : {{ sortie.DateLimiteInscription | date ("d/m/Y H:m") }}</p>
-                <p class="text-body">Nombre max de participants: {{ sortie.NbInscriptionsMax }}</p>
-                <p class="text-body">Durée : {{ sortie.duree }}</p>
-                <p class="text-body">Descriptions : {{ sortie.InfosSortie }}</p>
-                <p class="text-body">Campus : {{ sortie.campus.nom }}</p>
-                <p class="text-body">Lieu :{{ sortie.lieu.nom }}</p>
-                <p class="text-body">Adresse : {{ sortie.lieu.rue }} {{ sortie.lieu.ville.nom }} {{ sortie.lieu.ville.codePostal }}</p>
-                <p class="text-body"></p>
-                <br>
-                <br>
+                {% if sortie.etat.id <= constant('App\\Controller\\SortieController::CLOTUREE') %}
+                    <p class="text-body-actif">Date et heure de début : {{ sortie.DateHeureDebut | date ("d/m/Y H:m") }}</p>
+                    <p class="text-body-actif">Date limite d'inscription
+                        : {{ sortie.DateLimiteInscription | date ("d/m/Y H:m") }}</p>
+                    <p class="text-body-actif">Nombre max de participants: {{ sortie.NbInscriptionsMax }}</p>
+                    <p class="text-body-actif">Durée : {{ sortie.duree }}</p>
+                    <p class="text-body-actif">Descriptions : {{ sortie.InfosSortie }}</p>
+                    <p class="text-body-actif">Campus : {{ sortie.campus.nom }}</p>
+                    <p class="text-body-actif">Lieu :{{ sortie.lieu.nom }}</p>
+                    <p class="text-body-actif">Adresse : {{ sortie.lieu.rue }} {{ sortie.lieu.ville.nom }} {{ sortie.lieu.ville.codePostal }}</p>
+                    <p class="text-body-actif"></p>
+                    <br>
+                {% else %}
+                    <p class="text-body">Date et heure de début : {{ sortie.DateHeureDebut | date ("d/m/Y H:m") }}</p>
+                    <p class="text-body">Date limite d'inscription
+                        : {{ sortie.DateLimiteInscription | date ("d/m/Y H:m") }}</p>
+                    <p class="text-body">Nombre max de participants: {{ sortie.NbInscriptionsMax }}</p>
+                    <p class="text-body">Durée : {{ sortie.duree }}</p>
+                    <p class="text-body">Descriptions : {{ sortie.InfosSortie }}</p>
+                    <p class="text-body">Campus : {{ sortie.campus.nom }}</p>
+                    <p class="text-body">Lieu :{{ sortie.lieu.nom }}</p>
+                    <p class="text-body">Adresse : {{ sortie.lieu.rue }} {{ sortie.lieu.ville.nom }} {{ sortie.lieu.ville.codePostal }}</p>
+                    <p class="text-body"></p>
+                    <br>
+                {% endif %}
             </div>
             {#        <a href="{{path('sortie_inscription', {'sortie' : sortie.id}) }}"> #}
             {#        <button class="card-button">S'inscrire</button> #}
@@ -62,7 +75,7 @@
     {% if sortie.etat.id != constant('App\\Controller\\SortieController::CREEE') %}
         <br>
 
-        <h3>Liste des participants</h3><br>
+        <h3 id="title_participants">Liste des participants</h3><br>
 <section class="overflow-x">
     <div class="horizontal-friends-list">
         {% for participant in sortie.participants %}

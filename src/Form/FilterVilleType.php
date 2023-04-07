@@ -15,8 +15,10 @@ class FilterVilleType extends AbstractType
         $builder
             ->add('keyWord',TextType::class, [
             'label'=>'Le nom de la sortie contient :  ',
-                'required' => false])
-            ->add("Rechercher", SubmitType::class)
+                'required' => false
+                ])
+            ->add("Rechercher", SubmitType::class,
+                ['attr'=>['class'=>'submit']])
         ;
     }
 
