@@ -113,7 +113,7 @@ class AdministrateurController extends AbstractController{
                 return $this->redirectToRoute('admin_accueil');
 
             }catch (\Exception $exception){
-                $this->addFlash('danger','L\'inscription n\'a pas été effectuée'.$exception->getMessage());
+                $this->addFlash('danger','L\'inscription n\'a pas été effectuée');
                 return $this->redirectToRoute('admin_gestionutilisateur');
             } catch (TransportExceptionInterface $e) {
                 $this->addFlash('danger','L\'envoie du(des) mail(s) a échoué');
