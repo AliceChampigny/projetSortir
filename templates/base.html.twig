@@ -22,58 +22,46 @@
 
     <header>
         <div class="flex">
-            <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil') }}">
-                <div>
-                    <img src="{{ asset('img/logoSortie.png') }}" alt="logo" height="150" width="150">
-                </div>
-            </a>
-            <div class="overlay">
 
-                <h1>Sorties Enitiennes</h1>
-
-                <h3>{% if app.user %}
-                        <div class="mb-3">
-                            Bienvenue {{ app.user.pseudo }} !
-                        </div>
-
-                    {% endif %}</h3>
-
-
-                {% block menu %}
-                <ul class="menu">
-                    {% if not app.user %}
-                        <a href="{{ path('main_accueil') }}">
-                            <button id="button">ACCUEIL</button>
-                        </a>
-                        <a href="{{ path('app_login') }}">
-                            <button id="button">SE CONNECTER</button>
-                        </a>
-                        <a href="{{ path('app_register') }}">
-                            <button id="button">S'INSCRIRE</button>
-                        </a>
-                    {% endif %}
-                    {% if app.user %}
-                        <a href="{{ path('participant_modifierprofil',{'id' :app.user.id}) }}">
-                            <button id="button">MON PROFIL</button>
-                        </a>
-                        <a href="{{ path('sortie_ajouter',{'organisateur':app.user.id}) }}">
-                            <button id="button">CREER UNE SORTIE</button>
-                        </a>
-                        <a href="{{ path('app_logout') }}">
-                            <button id="button">SE DECONNECTER</button>
-                        </a>
-                        {% if app.user.administrateur %}
-                            <a href="{{ path('admin_accueil') }}">
-                                <button id="button">ADMINISTRATEUR</button>
-                            </a>
-                        {% endif %}
-                    {% endif %}
-                </ul>
-
+        <a href="{{ (app.user)?  path('sortie_liste') :  path('main_accueil')}}" >
+            <div>
+                <img src="{{ asset('img/logoSortie.png') }}" alt="logo" height="200" width="200">
             </div>
+        </a>
+        <div class="overlay">
 
+            <h1>Sorties Enitiennes</h1>
+
+            <h3>{% if app.user %}
+                    <div class="mb-3">
+                        Bienvenue {{ app.user.pseudo }} !
+                    </div>
+
+                {% endif %}</h3>
+
+
+            {% block menu %}
+            <ul class="menu">
+                {% if not app.user %}
+                    <a href="{{ path('main_accueil') }}"><button id="button">ACCUEIL</button></a>
+                    <a href="{{ path('app_login') }}"><button id="button">SE CONNECTER</button></a>
+                    <a href="{{ path('app_register') }}"><button id="button">S'INSCRIRE</button></a>
+                {% endif %}
+                {% if app.user %}
+                    <a href="{{ path('participant_modifierprofil',{'id' :app.user.id}) }}"><button id="button">MON PROFIL</button></a>
+                    <a href="{{ path('sortie_ajouter',{'organisateur':app.user.id}) }}"><button id="button">CREER UNE SORTIE</button></a>
+                    <a href="{{ path('app_logout') }}"><button id="button">SE DECONNECTER</button></a>
+                    {% if app.user.administrateur %}
+                        <a href="{{ path('admin_accueil') }}"><button id="button">ADMINISTRATEUR</button></a>
+                    {% endif %}
+                {% endif %}
+            </ul>
+
+        </div>
+        </div>
     </header>
     {% endblock %}
+    
 </main>
 
 <main>
@@ -88,7 +76,6 @@
                 {% endfor %}
             {% endfor %}
         </div>
-
 
         {% block body %}{% endblock %}
     </div>

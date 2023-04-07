@@ -13,8 +13,8 @@ class FilterVilleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('keyWord',TextType::class, ['
-            label'=>'Le nom de la sortie contient :  ',
+            ->add('keyWord',TextType::class, [
+            'label'=>'Le nom de la sortie contient :  ',
                 'required' => false])
             ->add("Rechercher", SubmitType::class)
         ;

@@ -52,4 +52,5 @@ class CampusRepository extends ServiceEntityRepository
 
         return $queryBuilder -> getQuery()->getResult();
     }
+
 }

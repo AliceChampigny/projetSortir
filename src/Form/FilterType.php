@@ -21,6 +21,7 @@ class FilterType extends AbstractType{
                 "required" => false,
                 'label' => '',
                 "class" => Campus::class,
+                'placeholder'=>'Sélectionnez le campus',
                 "choice_label" => "nom",
                 'attr' => array(
                     'class' => 'input2'

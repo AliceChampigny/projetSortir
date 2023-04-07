@@ -90,58 +90,6 @@ h1 {
     text-align: center;
 }
 
-/***********************CSS Liste SORTIES**********************************/
-/*table {*/
-/*    table-layout: fixed;*/
-/*    width: 100%;*/
-/*    border-collapse: collapse;*/
-/*    border: 3px solid purple;*/
-
-/*}*/
-
-/*.scroller {*/
-/*    width: 100%;*/
-/*    height: 65%;*/
-/*    overflow-y: scroll;*/
-/*    scrollbar-color: rebeccapurple green;*/
-/*    scrollbar-width: thin;*/
-/*}*/
-
-/*thead th:nth-child(1) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(2) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(3) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(4) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(5) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(6) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(7) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*thead th:nth-child(8) {*/
-/*    width: 12%;*/
-/*}*/
-
-/*th, td {*/
-/*    padding: 20px;*/
-/*}*/
 
 /***********************CSS FORMULAIRE**********************************/
 .feed-form {
@@ -323,6 +271,7 @@ td {
     padding: 20px;
     border-radius: 20px;
     position: relative;
+    margin-bottom: 50px;
 }
 
 .title {
@@ -629,9 +578,11 @@ td {
 
 .center {
     position: absolute;
-    top: 50%;
+    top: 60%;
+    /*bottom: 60%;*/
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
+    /*margin: 50px 0px 50px 0px;*/
 }
 
 .card2 {
@@ -654,10 +605,11 @@ td {
     position: absolute;
     width: 150px;
     height: 100%;
-    background: #E23858FF;
+    background: #a0c388;
     transition: width 0.4s;
     overflow: hidden;
     z-index: 2;
+
 }
 
 .card2.green .additional {
@@ -668,6 +620,8 @@ td {
 .card2:hover .additional {
     width: 100%;
     border-radius: 0 5px 5px 0;
+
+
 }
 
 .card2 .additional .user-card {
@@ -787,8 +741,8 @@ td {
     right: 0;
     z-index: 1;
     box-sizing: border-box;
-    padding: 1rem;
-    padding-top: 0;
+    padding: 2rem;
+    padding-top: 3rem;
 }
 
 .card2 .general .more {
@@ -804,7 +758,7 @@ header {
     background-color: #a0c388;
     text-align: center;
     width: 100%;
-    height: 80%;
+    max-height: 35vh;
     background-size: cover;
     background-attachment: fixed;
     position: relative;
@@ -889,6 +843,7 @@ h3, p {
 
 .form2 label .input2 {
     width: 93%;
+    max-height: 5vh;
     padding: 10px 10px 20px 10px;
     outline: 0;
     border: 1px solid rgba(105, 105, 105, 0.397);
@@ -1034,7 +989,27 @@ h3, p {
     margin: 5px 0;
 }
 
-.non-inscrit{
+.inscrit{
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    border:solid #2ecc71;
+
+    background-color: #95bcd6;
+    overflow: hidden;
+    margin-right: 25px;
+    margin-left :25px;
+    margin-top: 70px;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-transition: 1000ms all;
+    transition: 1000ms all;
+    -webkit-transform-origin: center left;
+    transform-origin: center left;
+    position: relative;
+    /*border: solid;*/
+}
+.organisateur{
     width: 300px;
     height: 300px;
     border-radius: 20px;
@@ -1090,7 +1065,8 @@ h3, p {
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
-
+    margin: 0px 50px 0px 50px;
+}
 
 .formuseradmin {
     display: flex;
@@ -1102,6 +1078,7 @@ h3, p {
     padding: 0px 20px 0px 20px;
     border-radius: 20px;
     position: relative;
+    margin-bottom: 50px;
 
 }
 
@@ -1128,6 +1105,82 @@ h3, p {
     padding-left: 30px;
 }
 
+
+
+
+.lienadmin{
+    text-decoration: none;
+    color: white;
+}
+
+/***********************CSS Liste Tableaux**********************************/
+.tableVille {
+    table-layout: fixed;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif;
+    overflow-y: scroll;
+    margin: 0px 160px 50px 160px;
+    width: 60%;
+}
+
+.tableUtilisateur {
+    table-layout: fixed;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif;
+    overflow-y: scroll;
+
+}
+
+.scroll{
+
+    height: 35%;
+    overflow-y: scroll;
+    scrollbar-color: #050505 #050505;
+    scrollbar-width: thin;
+}
+
+/*thead th:nth-child(1) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(2) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(3) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(4) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(5) {*/
+/*    width: 2%;*/
+/*}*/
+
+/*thead th:nth-child(6) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(7) {*/
+/*    width: 12%;*/
+/*}*/
+
+/*thead th:nth-child(8) {*/
+/*    width: 12%;*/
+/*}*/
+
+th, td {
+    padding: 10px;
+}
+th{
+
+}
 
 /*******************************/
 img {
