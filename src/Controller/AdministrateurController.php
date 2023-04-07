@@ -148,15 +148,20 @@ class AdministrateurController extends AbstractController{
                 $email = (new TemplatedEmail())
                     ->from(new Address('admin@campus-eni.fr', 'Administrateur de "SortiesEnitiennes.com"'))
                     ->to($participant->getEmail())
-                    ->subject('Désactivation de votre compte')
-                    ->text('Bonjour !
+                    ->subject('Nous avons "désactimisé" votre compte')
+                    ->text('Cher utilisateur,
                             
-                            Nous constatons que vous annulez de manière systématique les sorties que vous proposez.
-                            Cela a malheureusement des conséquenses désagréables pour nos utilisateurs.
-                            Votre compte a donc été désactivé.
-                            
+                            Nous sommes désolés de vous informer que votre compte a été "désactimisé" (oui, nous avons inventé ce mot) pour non-respect de nos conditions d\'utilisation.
 
-                            Au revoir et à bientôt sur les SortiesEnitiennes.com !');
+                            Nous sommes conscients que ce n\'est pas une bonne nouvelle, mais il y a toujours une lueur d\'espoir ! 
+                            Vous pouvez prendre cette occasion pour vous reposer, passer du temps avec votre famille et vos amis, lire un bon livre ou regarder une série sur Netflix. 
+                            Ou vous pouvez nous contacter pour discuter de la manière dont vous pouvez récupérer votre compte.
+
+                            Nous vous remercions de votre compréhension et de votre coopération. Nous espérons vous revoir bientôt sur notre plateforme, et cette fois-ci, en respectant les règles !
+
+                            Cordialement,
+                            L\'équipe des SortiesEnitiennes.com');
+
                 $mailer->send($email);
                 $participant->setActif(false);
                 $entityManager->persist($participant);
@@ -247,7 +252,7 @@ class AdministrateurController extends AbstractController{
             $sorties = $sortieRepository -> filtreListeSorties($filter, $userConnecte, $sortiesPassees);
 
         } catch (\Exception $exception) {
-            $this->addFlash('danger', "Impossible d'afficher les sorties damandées");
+            $this->addFlash('danger', "Impossible d'afficher les sorties demandées");
         }
         return $this->render('administrateur/gestionSorties.html.twig', [
                 'formFilterSortie' => $formFilterSortie->createView(),
@@ -300,7 +305,7 @@ class AdministrateurController extends AbstractController{
                 $this->addFlash('danger','Le campus a bien été enregistrée');
                 return $this->redirectToRoute('admin_gestionCampus');
             }catch (\Exception $exception){
-                $this->addFlash('danger','Le nouveau campus n\'a pas pu être ajouté'.$exception->getMessage());
+                $this->addFlash('danger','Le nouveau campus n\'a pas pu être ajouté');
                 return $this->redirectToRoute('admin_gestionCampus');
             }
         }
@@ -334,7 +339,7 @@ class AdministrateurController extends AbstractController{
                 $this->addFlash('success', "Le campus de a bien été supprimée" );
                 return $this->redirectToRoute('admin_gestionCampus');
             }catch (\Exception $exception) {
-                $this->addFlash('danger', "La suppression du campus n'a pas été effectuée" . $exception->getMessage());
+                $this->addFlash('danger', "La suppression du campus n'a pas été effectuée");
                 return $this->redirectToRoute('admin_gestionCampus', [
                     'campus' => $campus->getId()
                 ]);
@@ -371,7 +376,7 @@ class AdministrateurController extends AbstractController{
                 $this->addFlash('danger','Le campus a bien été enregistrée');
                 return $this->redirectToRoute('admin_gestionCampus');
             }catch (\Exception $exception){
-                $this->addFlash('danger','Le nouveau campus n\'a pas pu être ajouté'.$exception->getMessage());
+                $this->addFlash('danger','Le nouveau campus n\'a pas pu être ajouté');
                 return $this->redirectToRoute('admin_modifierCampus');
             }
         }
