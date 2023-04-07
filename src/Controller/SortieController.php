@@ -72,7 +72,7 @@ class SortieController extends AbstractController{
             $sorties = $sortieRepository -> filtreListeSorties($filter, $userConnecte, $sortiesPassees);
 
         } catch (\Exception $exception) {
-            $this->addFlash('danger', "Impossible d'afficher les sorties demandées" . $exception->getMessage());
+            $this->addFlash('danger', "Impossible d'afficher les sorties demandées");
 
         }
             return $this->render('main/accueil.html.twig',compact('formFilterSortie','sorties'));
@@ -396,7 +396,7 @@ class SortieController extends AbstractController{
                         return $this->redirectToRoute('sortie_liste');
 
                     }catch(\Exception $exception){
-                        $this->addFlash('danger', "L\'annulation n'a pas été effectuée");
+                        $this->addFlash('danger', "L'annulation n'a pas été effectuée");
                         return $this->redirectToRoute('sortie_annulersortie',[
                             'sortie' =>$sortie->getId()
                         ]);

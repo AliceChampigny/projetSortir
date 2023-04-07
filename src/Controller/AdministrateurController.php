@@ -252,7 +252,7 @@ class AdministrateurController extends AbstractController{
             $sorties = $sortieRepository -> filtreListeSorties($filter, $userConnecte, $sortiesPassees);
 
         } catch (\Exception $exception) {
-            $this->addFlash('danger', "Impossible d'afficher les sorties damandées");
+            $this->addFlash('danger', "Impossible d'afficher les sorties demandées");
         }
         return $this->render('administrateur/gestionSorties.html.twig', [
                 'formFilterSortie' => $formFilterSortie->createView(),
@@ -305,7 +305,7 @@ class AdministrateurController extends AbstractController{
                 $this->addFlash('danger','Le campus a bien été enregistrée');
                 return $this->redirectToRoute('admin_gestionCampus');
             }catch (\Exception $exception){
-                $this->addFlash('danger','Le nouveau campus n\'a pas pu être ajouté'.$exception->getMessage());
+                $this->addFlash('danger','Le nouveau campus n\'a pas pu être ajouté');
                 return $this->redirectToRoute('admin_gestionCampus');
             }
         }
@@ -339,7 +339,7 @@ class AdministrateurController extends AbstractController{
                 $this->addFlash('success', "Le campus de a bien été supprimée" );
                 return $this->redirectToRoute('admin_gestionCampus');
             }catch (\Exception $exception) {
-                $this->addFlash('danger', "La suppression du campus n'a pas été effectuée" . $exception->getMessage());
+                $this->addFlash('danger', "La suppression du campus n'a pas été effectuée");
                 return $this->redirectToRoute('admin_gestionCampus', [
                     'campus' => $campus->getId()
                 ]);
@@ -376,7 +376,7 @@ class AdministrateurController extends AbstractController{
                 $this->addFlash('danger','Le campus a bien été enregistrée');
                 return $this->redirectToRoute('admin_gestionCampus');
             }catch (\Exception $exception){
-                $this->addFlash('danger','Le nouveau campus n\'a pas pu être ajouté'.$exception->getMessage());
+                $this->addFlash('danger','Le nouveau campus n\'a pas pu être ajouté');
                 return $this->redirectToRoute('admin_modifierCampus');
             }
         }
