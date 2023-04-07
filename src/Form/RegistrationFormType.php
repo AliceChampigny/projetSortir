@@ -83,6 +83,7 @@ class RegistrationFormType extends AbstractType{
                         'class' => 'input3',
 
                     ),
+                    'placeholder'=>'Sélectionnez votre campus !',
                     'class' => Campus::class,
                     'choice_label' => 'nom',
 
