@@ -109,7 +109,7 @@ class AdministrateurController extends AbstractController{
 
                 $entityManagerInscriptionUtilisateur->persist($user);
                 $entityManagerInscriptionUtilisateur->flush();
-                $this->addFlash('danger','L\'inscription a bien été enregistrée');
+                $this->addFlash('success','L\'inscription a bien été enregistrée');
                 return $this->redirectToRoute('admin_accueil');
 
             }catch (\Exception $exception){

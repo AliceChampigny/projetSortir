@@ -7,7 +7,7 @@
 <body>
          <div class="form2">
              {{ form_start(formFilterSortie) }}
-             <p class="title">Filtrer vos recherches</p>
+             <p class="title">Filtrer vos sorties</p>
 
                  <label class="flex">
                      {{ form_widget(formFilterSortie.keyWord) }}
@@ -28,7 +28,8 @@
                  </label>
 
              <div class="flex">
-                 <button type="submit" class="submit">Rechercher</button>
+                 <button type="submit" class="submit">Filtrer</button>
+                 <a href="{{ path('sortie_liste') }}"><button type="button" class="submit">Rafraichir</button></a>
              </div>
              <br>
 
@@ -71,38 +72,6 @@
                              <h6 class="carousel-item__details--subtitle">Etat : {{ sortie.etat.libelle }}</h6>
                          </div>
                  </div>
-
-
-{#                    {% else %}#}
-{#                         <div class="carousel-item">#}
-{#                             <img#}
-{#                                     class="carousel-item__img"#}
-{#                                     {% if sortie.nomImageSortie != null %}#}
-{#                                         src="{{ asset('img/profil/'~sortie.nomImageSortie) }}"#}
-{#                                     {% else %}#}
-{#                                         src="https://images.pexels.com/photos/708392/pexels-photo-708392.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"#}
-{#                                     {% endif %}#}
-{#                                     alt="image_sortie"#}
-{#                             />#}
-{#                             <div class="carousel-item__details">#}
-
-{#                                 <div class="controls">     </div>#}
-{#                                 <h5 class="carousel-item__details--title">{{ sortie.nom }}</h5>#}
-{#                                 <h6 class="carousel-item__details--subtitle"><a href="{{ path('participant_afficherprofil',{'id':sortie.organisateur.id}) }}" style="color:white;">Organisateur(rice) : {{ sortie.organisateur.pseudo }}</a></h6>#}
-{#                                 <h6 class="carousel-item__details--subtitle">Le {{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</h6>#}
-{#                                 <h6 class="carousel-item__details--subtitle">Clotûre inscription le {{ sortie.dateLimiteInscription | date('d/m/Y H:i') }}</h6>#}
-{#                                 <h6 class="carousel-item__details--subtitle">Inscrits/Places : {{ sortie.participants | length }} /{{ sortie.nbInscriptionsMax }}</h6>#}
-{#                                 <h6 class="carousel-item__details--subtitle">Etat : {{ sortie.etat.libelle }}</h6>#}
-{#                             </div>#}
-{#                         </div>#}
-{#                     {% endif %}#}
-
-{#                     {% if sortie.organisateur == app.user  %}#}
-{#                            #}
-{#                     {% endif %}#}
-
-
-
 
              {% endfor %}
          </div>

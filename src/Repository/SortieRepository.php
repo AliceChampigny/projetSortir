@@ -51,7 +51,7 @@ class SortieRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('s');
         $queryBuilder
         -> where("s.etat != 7")
-        ->orderBy('s.dateHeureDebut', 'ASC');
+        ->orderBy('s.dateHeureDebut', 'DESC');
 
         if ($filter -> getCampus() !== null){
             $queryBuilder
